@@ -39,12 +39,15 @@ function erzeugeEinzelneBubble() {
   var randomRadius = (Math.random() * 100 % 11 + 10);
   var randomX = 0;
   var randomY = 0;
-  while (randomX <= randomRadius || randomX >= width - randomX) {
+  console.log('radius: ' + randomRadius);
+  while (randomX <= randomRadius || randomX >= width - randomRadius) {
     randomX = Math.random() * width;
+    console.log(randomX);
   }
-  while (randomY <= randomRadius || randomY >= height - randomY) {
+  while (randomY <= randomRadius || randomY >= height - randomRadius) {
     randomY = Math.random() * height;
   }
+  console.log('jumped out');
   var randomDifX = (Math.random() * 7 -1);
   var randomDifY = (Math.random() * 7 -1);
   var col = '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1,6);
