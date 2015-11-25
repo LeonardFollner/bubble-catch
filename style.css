@@ -74,10 +74,15 @@ a:hover {
   display: inline-block;
   float: left;
   border: 1px solid gray;
+  text-align: center;
 }
 
 #bubbleCanvas {
   border: 1px solid gray;
   display: inline-block;
   /*float: right;*/
+}
+
+#number {
+  /*visibility: hidden;*/
 }

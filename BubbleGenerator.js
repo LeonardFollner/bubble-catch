@@ -4,7 +4,7 @@ function init() {
   var context = canvas.getContext("2d");
   var height = canvas.height;
   var width = canvas.width;
-  var number = 10;
+  var number = document.getElementById('number').value;
   var bubbleList = new Array("");
 
   erzeugeBubbleMenge(number);
