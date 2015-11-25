@@ -55,7 +55,7 @@ function init() {
       context.fillStyle = bubbleList[j].col;
       context.fill();
       context.fillStyle = "white";
-      context.font = "14px 'Comic Sans MS'";
+      context.font = "14px Helvetica";
       context.textAlign="center";
       context.textBaseline="middle";
       context.fillText(bubbleList[j].wert, bubbleList[j].x, bubbleList[j].y);

@@ -1,6 +1,6 @@
 html {
   background-color: aqua;
-  font-family: 'Comic Sans MS';
+  font-family: Helvetica;
 }
 
 li {
@@ -15,18 +15,6 @@ a {
 
 a:hover {
   text-decoration: underline;
-}
-
-.blink {
-    animation-duration: 0.4s;
-    animation-name: blink;
-    animation-iteration-count: infinite;
-    animation-timing-function: steps(2, start);
-}
-@keyframes blink {
-    80% {
-        visibility: hidden;
-    }
 }
 
 .list-inline {
