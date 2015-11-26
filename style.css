@@ -86,3 +86,7 @@ a:hover {
 #settings {
   display: none;
 }
+
+#displayNumber {
+  display: inline;
+}
