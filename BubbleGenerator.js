@@ -72,7 +72,7 @@ function init() {
       context.textBaseline="middle";
       context.fillText(bubbleList[j].wert, bubbleList[j].x, bubbleList[j].y);
     }
-    //update();
+    update();
   }
 
   function update() {
@@ -109,6 +109,7 @@ function init() {
       //console.log("Bubble" + l + ": DistX=" + DistX + " DistY=" + DistY);
       if (Dist < bubbleList[l].radius) {
         console.log("Bubble" + l + ": hit");
+        bubbleList.splice(l, 1, "1");
       }
       else {
         console.log("Bubble" + l + ": Dist=" + Dist);
