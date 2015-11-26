@@ -43,6 +43,10 @@ a:hover {
   color: white;
 }
 
+.display {
+  display: inline;
+}
+
 #all {
   width: 904px;
   border: 5px solid blue;
@@ -85,8 +89,4 @@ a:hover {
 
 #settings {
   display: none;
-}
-
-#displayNumber {
-  display: inline;
 }

@@ -20,8 +20,10 @@
         <li class="button" onclick = "toggle('settings')">Einstellungen</li>
         <li>
           <form name="input" id="settings">
-            Anzahl Bubbles: <p id = "displayNumber">10</p>
-            <input type = "range" name = "number" id = "number" min = "1" max = "50" step = "1" value = "10" onchange = "updateDisplayNumber(this.value);">
+            Anzahl Bubbles: <p id = "displayNumber" class = "display">10</p>
+            <input type = "range" name = "number" id = "number" min = "1" max = "50" step = "1" value = "10" onchange = "updateDisplay('displayNumber', this.value);">
+            Geschwindigkeit: <p id = "displaySpeed" class = "display">10</p>
+            <input type = "range" name = "speed" id = "speed" min = "1" max = "50" step = "1" value = "10" onchange = "updateDisplay('displaySpeed', this.value);">
           </form>
         </li>
       </ul>

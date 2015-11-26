@@ -6,8 +6,8 @@ function toggle(id) {
     e.style.display = 'block';
     }
 
-function updateDisplayNumber(val) {
-  document.getElementById('displayNumber').innerHTML = val;
+function updateDisplay(id, val) {
+  document.getElementById(id).innerHTML = val;
 }
 
 function init() {
@@ -17,11 +17,12 @@ function init() {
   var height = canvas.height;
   var width = canvas.width;
   var number = document.getElementById('number').value;
+  var speed = document.getElementById('speed').value;
   var bubbleList = new Array("");
 
   erzeugeBubbleMenge(number);
   draw();
-  setInterval(draw, 26);
+  setInterval(draw, 30);
 
   function erzeugeBubbleMenge(number) {
     bubbleList.splice(0, bubbleList.length);
@@ -51,8 +52,8 @@ function init() {
     while (randomY <= randomRadius || randomY >= height - randomRadius) {
       randomY = Math.random() * height;
     }
-    var randomDifX = (Math.random() * 7 -1);
-    var randomDifY = (Math.random() * 7 -1);
+    var randomDifX = (Math.random() * speed -1);
+    var randomDifY = (Math.random() * speed -1);
     var col = '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1,6);
     var bubble = new object(randomX, randomY, randomDifX, randomDifY, randomRadius, col);
     bubbleList.push(bubble);
@@ -67,10 +68,11 @@ function init() {
       context.fillStyle = bubbleList[j].col;
       context.fill();
       context.fillStyle = "white";
-      context.font = "14px Helvetica";
+      context.font = "20px Helvetica";
       context.textAlign="center";
       context.textBaseline="middle";
       context.fillText(bubbleList[j].wert, bubbleList[j].x, bubbleList[j].y);
+      context.strokeText(bubbleList[j].wert, bubbleList[j].x, bubbleList[j].y);
     }
     update();
   }
