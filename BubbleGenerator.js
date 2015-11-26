@@ -72,29 +72,51 @@ function init() {
       context.textBaseline="middle";
       context.fillText(bubbleList[j].wert, bubbleList[j].x, bubbleList[j].y);
     }
-    update();
+    //update();
   }
 
   function update() {
-    for (var l = 0; l < number; l++) {
-      bubbleList[l].x += bubbleList[l].difX;
-      bubbleList[l].y += bubbleList[l].difY;
+    for (var k = 0; k < number; k++) {
+      bubbleList[k].x += bubbleList[k].difX;
+      bubbleList[k].y += bubbleList[k].difY;
 
-      if (bubbleList[l].x - bubbleList[l].radius < 0) {
-        bubbleList[l].difX = -(bubbleList[l].difX);
+      if (bubbleList[k].x - bubbleList[k].radius < 0) {
+        bubbleList[k].difX = -(bubbleList[k].difX);
       }
-      else if (bubbleList[l].x + bubbleList[l].radius > width) {
-        bubbleList[l].difX = -(bubbleList[l].difX);
+      else if (bubbleList[k].x + bubbleList[k].radius > width) {
+        bubbleList[k].difX = -(bubbleList[k].difX);
       }
 
-      if (bubbleList[l].y - bubbleList[l].radius < 0) {
-        bubbleList[l].difY = -(bubbleList[l].difY);
+      if (bubbleList[k].y - bubbleList[k].radius < 0) {
+        bubbleList[k].difY = -(bubbleList[k].difY);
       }
-      else if (bubbleList[l].y + bubbleList[l].radius > height) {
-        bubbleList[l].difY = -(bubbleList[l].difY);
+      else if (bubbleList[k].y + bubbleList[k].radius > height) {
+        bubbleList[k].difY = -(bubbleList[k].difY);
       }
     }
   }
+
+  function beiKlick() {
+    var rect = canvas.getBoundingClientRect();
+    var clickX = (event.clientX - rect.left);
+    var clickY = (event.clientY - rect.top);
+    console.log("KlickX: " + clickX + " KlickY: " + clickY);
+
+    for (var l = 0; l < number; l++) {
+      var DistX = bubbleList[l].x - clickX;
+      var DistY = bubbleList[l].y - clickY;
+      var Dist = Math.sqrt(DistX * DistX + DistY * DistY);
+      //console.log("Bubble" + l + ": DistX=" + DistX + " DistY=" + DistY);
+      if (Dist < bubbleList[l].radius) {
+        console.log("Bubble" + l + ": hit");
+      }
+      else {
+        console.log("Bubble" + l + ": Dist=" + Dist);
+      }
+    }
+  }
+
+canvas.addEventListener("click", beiKlick);
 
 }
 window.onload = init;
