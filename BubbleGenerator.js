@@ -20,6 +20,14 @@ function init() {
   var speed = document.getElementById('speed').value;
   var bubbleList = new Array("");
 
+  var timer = document.getElementById('start');
+  var date = new Date();
+  var date0 = date.getTime();
+  var date1 = date0 + 3000;
+  var remaining = date1 - date0;
+
+  var timerInterval = setInterval(updateTimer, 1);
+
   erzeugeBubbleMenge(number);
   draw();
   setInterval(draw, 30);
@@ -119,8 +127,20 @@ function init() {
     }
   }
 
-canvas.addEventListener("click", beiKlick);
+  function updateTimer() {
+    date0++;
+    remaining = date1 - date0;
+    var seconds = Math.floor(remaining / 100);
+    var milliSeconds = Math.floor(remaining % 100);
+    timer.innerHTML = seconds + ":" + milliSeconds;
+    //if (remaining < 100) {timer.innerHTML = seconds + ":0" + milliSeconds;}
+    //if (remaining < 10) {timer.innerHTML = seconds + ":00" + milliSeconds;}
+    if(remaining <= 0){
+      clearInterval(timerInterval);
+    }
+  }
 
+  canvas.addEventListener("click", beiKlick);
 }
 window.onload = init;
 
