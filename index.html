@@ -16,9 +16,9 @@
       <ul>
         <li class="button" onclick = "init()">Starten</a></li>
         <li class="button">Beschreibung</li>
-        <li class="button">Einstellung</li>
+        <li class="button" onclick = "toggle('settings')">Einstellungen</li>
         <li>
-          <form name="input">
+          <form name="input" id="settings">
             Anzahl Bubbles:
             <input type="range" name="number" id ="number" min="1" max="50" step="1" value="10">
           </form>
