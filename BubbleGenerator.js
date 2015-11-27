@@ -30,7 +30,7 @@ function init() {
 
   erzeugeBubbleMenge(number);
   draw();
-  setInterval(draw, 30);
+  var mainInterval = setInterval(draw, 30);
 
   function erzeugeBubbleMenge(number) {
     bubbleList.splice(0, bubbleList.length);
@@ -133,11 +133,49 @@ function init() {
     var seconds = Math.floor(remaining / 100);
     var milliSeconds = Math.floor(remaining % 100);
     timer.innerHTML = seconds + ":" + milliSeconds;
-    //if (remaining < 100) {timer.innerHTML = seconds + ":0" + milliSeconds;}
-    //if (remaining < 10) {timer.innerHTML = seconds + ":00" + milliSeconds;}
+
+    /*if (seconds < 10) {
+      if (milliseconds < 10) {
+        timer.innerHTML = "0" + seconds + ":0" + milliSeconds;
+      }
+      else {
+        timer.innerHTML = "0" + seconds + ":" + milliSeconds;
+      }
+    }
+    else if (seconds <= 5) {
+      if (milliseconds < 10) {
+        timer.innerHTML = "<b>0" + seconds + ":0" + milliSeconds + "</b>";
+      }
+      else {
+        timer.innerHTML = "<b>0" + seconds + ":" + milliSeconds + "</b>";
+      }
+    }*/
+
+    if (milliSeconds < 100) {
+      if (seconds < 10) {
+        timer.innerHTML = "0" + seconds + ":" + milliSeconds;
+      }
+      else {
+        timer.innerHTML = seconds + ":" + milliSeconds;
+      }
+    }
+    else if (milliSeconds < 10) {
+      if (seconds < 10) {
+        timer.innerHTML = "0" + seconds + ":00" + milliSeconds;
+      }
+      else {
+        timer.innerHTML = seconds + ":00" + milliSeconds;
+      }
+    }
     if(remaining <= 0){
       clearInterval(timerInterval);
+      beendeSpiel();
     }
+  }
+
+  function beendeSpiel() {
+      clearInterval(mainInterval);
+      context.clearRect(0, 0, width, height);
   }
 
   canvas.addEventListener("click", beiKlick);
