@@ -32,6 +32,9 @@ function start() {
   var height = canvas.height;
   var width = canvas.width;
   var bubbleList = new Array("");
+  var number = document.getElementById('number').value;
+  var speed = document.getElementById('speed').value;
+  var left = number;
   var currentScore = 0;
 
   if (runTimes != 0) {
@@ -41,20 +44,18 @@ function start() {
   else {
   console.log("starte, weil " + runTimes);
 
-  var number = document.getElementById('number').value;
-  var speed = document.getElementById('speed').value;
   //var bubbleList = new Array("");
 
   var timer = document.getElementById('start');
   var date = new Date();
   var date0 = date.getTime();
   var date1 = date0 + 30000;
-  var remaining = date1 - date0;
+  var remainingTime = date1 - date0;
 
   var timerInterval = setInterval(updateTimer, 1);
   erzeugeBubbleMenge(number);
-  draw();
-  //var mainInterval = setInterval(draw, 30);
+  //draw();
+  var mainInterval = setInterval(draw, 30);
 
   canvas.addEventListener("click", beiKlick);
 
@@ -63,7 +64,6 @@ function start() {
     for (var i = 0; i < number; i++) {
       erzeugeEinzelneBubble();
     }
-    console.log(bubbleList);
   }
 
   function erzeugeEinzelneBubble() {
@@ -144,25 +144,23 @@ function start() {
       var DistY = bubbleList[l].y - clickY;
       var Dist = Math.sqrt(DistX * DistX + DistY * DistY);
       if (Dist < bubbleList[l].radius) {
-        bubbleList.splice(l, 1, "1");
-        console.log(bubbleList[l].radius);
         currentScore += bubbleList[l].wert;
+        bubbleList.splice(l, 1, "hit");
       }
-      /*else {
-        console.log("Bubble" + l + ": Dist=" + Dist);
-      }*/
     }
-    console.log(currentScore);
+    if (remainingBubbles() == 0) {
+      beendeSpiel();
+    }
   }
 
   function updateTimer() {
     var d = new Date;
     date0 = d.getTime();
-    remaining = date1 - date0;
-    var seconds = Math.floor(remaining / 1000);
-    var milliSeconds = Math.floor(remaining % 1000);
+    remainingTime = date1 - date0;
+    var seconds = Math.floor(remainingTime / 1000);
+    var milliSeconds = Math.floor(remainingTime % 1000);
 
-    if(remaining <= 0){
+    if(remainingTime <= 0){
       beendeSpiel();
     }
     else {
@@ -208,30 +206,17 @@ function start() {
           timer.innerHTML = "<strong>0" + seconds + ":" + milliSeconds + "</strong>";
         }
       }
-      //else {
-        //timer.innerHTML = seconds + ":" + milliSeconds;
-      //}
-
-    /*if (milliSeconds < 100) {
-      if (seconds < 10) {
-        timer.innerHTML = "0" + seconds + ":" + milliSeconds;
-      }
-      else {
-        timer.innerHTML = seconds + ":" + milliSeconds;
-      }
     }
-    else if (milliSeconds < 10) {
-      if (seconds < 10) {
-        timer.innerHTML = "0" + seconds + ":00" + milliSeconds;
-      }
-      else {
-        timer.innerHTML = seconds + ":00" + milliSeconds;
-      }
-    }
-    else {
-      timer.innerHTML = seconds + ":" + milliSeconds;
-    }*/
   }
+
+  function remainingBubbles() {
+    for (var m = 0; m < number; m++) {
+      if (bubbleList[m] == "hit") {
+        left--;
+        bubbleList.splice(m, 1, "hitSaved");
+      }
+    }
+    return left;
   }
 
 runTimes++;
@@ -245,6 +230,7 @@ function beendeSpiel() {
   context.clearRect(0, 0, width, height);
   bubbleList.splice(0, number, "");
   runTimes--;
+  leaderboard();
 }
 
 }//end of start()
