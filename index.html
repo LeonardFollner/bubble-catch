@@ -17,13 +17,14 @@
       <ul>
         <li class="button" onclick="start()" id="start">Starten</a></li>
         <li class="button" onclick="displayInsteadOfCanvas('description')">Beschreibung</li>
+        <li class="button" onclick="displayInsteadOfCanvas('leaderboard')">Bestenliste</li>
         <li class="button" onclick="toggle('settings')">Einstellungen</li>
         <li>
           <form name="input" id="settings">
             Anzahl Bubbles: <p id="displayNumber" class="display">10</p>
             <input type="range" name="number" id="number" min="1" max="50" step="1" value="10" onchange="updateDisplay('displayNumber', this.value);">
-            Geschwindigkeit: <p id="displaySpeed" class="display">10</p>
-            <input type="range" name="speed" id="speed" min="1" max="50" step="1" value="10" onchange="updateDisplay('displaySpeed', this.value);">
+            <!--Geschwindigkeit: <p id="displaySpeed" class="display">10</p>
+            <input type="range" name="speed" id="speed" min="1" max="50" step="1" value="10" onchange="updateDisplay('displaySpeed', this.value);">-->
           </form>
         </li>
       </ul>
@@ -34,34 +35,46 @@
       <div id="description"  class="canvasAndCo">
         <h2>Beschreibung</h2>
         <p>In Bubble-Catch geht es darum innerhalb einer halben Minute so viele Punkte wie möglich durch das Anklicken sich bewegender Bubbles zu Sammeln.</p>
+        <p class="display">Du kannst die Anzahl der Bubbles links in den <p class="pointer" onclick="toggle('settings')">Einstellungen</p> ändern. Die Anzahl hat jedoch keinen Einfluss auf deine Wertung. Die geht alleine nach der erreichten Punktzahl.</p>
+        <p>Wenn du einmal ein Spiel gestartet hast, lässt es sich nicht mehr stoppen.</p>
       </div>
       <canvas id="bubbleCanvas" height="400px" width="600px" class="canvasAndCo"></canvas>
       <div id="gameOver"  class="canvasAndCo">
         <h2>Game Over!</h2>
-        <p class="display"> Du hast von <div id="count" class="display"></div> Bubbles <div id="clicked" class="display"></div> getroffen und so <div id="points" class="display"></div> Punkte erreicht.</p>
+        <p class="display"> Du hast <div id="clicked" class="display"></div> von <div id="count" class="display"></div> Bubbles getroffen und so <div id="points" class="display"></div> Punkte erreicht.</p>
+        <p class="display">Dafür hast du <div id="clickCounter" class="display"></div> Klicks gebraucht.</p>
         <form name="playerInfo" autocomplete="off" onsubmit="">
           Gib deinen Namen ein:
-          <input type="text" name="playerName" placeholder="player1"/>
+          <input type="text" name="playerName" value="player1"/>
           <input type="button" value="Abschicken" id="enterLeaderboard" onClick="generateLeaderboard()"/>
         </form>
+        <div id="gz"></div>
       </div>
       <div id="leaderboard" class="canvasAndCo">
         <h2>Bestenliste</h2>
         <table id="tableLeaderboard">
           <tr>
-            <th>Spieler</td>
-            <th>Punkte</td>
+            <th>Spieler</th>
+            <th>Punkte</th>
+            <th>Bubbles</th>
+            <th>Klicks</th>
         </table>
+        <p>Mehr Punkte kannst du erreichen, in dem du mehr Bubbles in der gleichen Zeit trifft.</p>
+        <p class="display">Wenn du jetzt schon alles Bubbles triffst, kannst du ihre Anzahl in den <p class="pointer" onclick="toggle('settings')">Einstellungen</p> erhöhen.</p>
       </div>
     </div>
 
     <div id="footer">
       <ul>
         <li class="display"><a href="mailto:s0682993@msx.tu-dresden.de">Follner, Leonard</a></li>
-        <li class="display">MATRIKELNUMMER</li>
+        <li class="display">Matrikelnummer: 4561389</li>
       </ul>
     </div>
-
+  </div>
+  <div class="textCenter">
+    <ul>
+      <li class="display"><strong>Alle Einstellungen und Bestenlisten werden nur so lange gespeichert, wie dieser Tab geöffnet bleibt.</stong></li>
+    </ul>
   </div>
 </body>
 </html>

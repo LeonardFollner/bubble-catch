@@ -6,8 +6,19 @@ function paint() {
   titleCtx.textAlign="center";
   titleCtx.textBaseline="middle";
   titleCtx.font = "75px Helvetica";
-  titleCtx.fillStyle = "black";
-  titleCtx.fillText("Bubble-Catch", 300, 200);
+  var gradient = titleCtx.createLinearGradient(100, 0, 500, 0);
+    gradient.addColorStop(0, 'red');
+    gradient.addColorStop(1 / 6, 'orange');
+    gradient.addColorStop(2 / 6, 'yellow');
+    gradient.addColorStop(3 / 6, 'green');
+    gradient.addColorStop(4 / 6, 'blue');
+    gradient.addColorStop(5 / 6, 'indigo');
+    gradient.addColorStop(1, 'violet');
+  titleCtx.fillStyle = gradient;
+  titleCtx.fillStyle = gradient;
+  titleCtx.fillText("Bubble-Catch", 300, 170);
+  titleCtx.font = "25px Helvetica";
+  titleCtx.fillText("zum Starten Klicken", 300, 230);
 }
 
 function toggle(id) {
@@ -60,24 +71,25 @@ function displayInsteadOfCanvas(id){
       divLeaderboard.style.display='none';
       break;
     case "leaderboard":
-      divStartCanvas.style.display='none';
-      divBubbleCanvas.style.display='none';
-      divDescription.style.display='none';
-      divGameOver.style.display='none';
-      divLeaderboard.style.display='inline-block';
-      break;
+      if (divLeaderboard.style.display == 'inline-block') {
+        divStartCanvas.style.display='inline-block';
+        divBubbleCanvas.style.display='none';
+        divDescription.style.display='none';
+        divGameOver.style.display='none';
+        divLeaderboard.style.display='none';
+        break;
+      }
+      else {
+        divStartCanvas.style.display='none';
+        divBubbleCanvas.style.display='none';
+        divDescription.style.display='none';
+        divGameOver.style.display='none';
+        divLeaderboard.style.display='inline-block';
+        break;
+    }
     default:
-      console.log("default");
+      console.log("something went wrong");
   }
-
-  /*if(div.style.display == 'inline-block') {
-    div.style.display='none';
-    bubbleCanvas.style.display='inline-block';
-  }
-  else {
-    div.style.display='inline-block';
-    bubbleCanvas.style.display='none';
-  }*/
 }
 
 function updateDisplay(id, val) {
@@ -93,30 +105,28 @@ function start() {
   var width=canvas.width;
   var bubbleList=new Array("");
   var number=document.getElementById('number').value;
-  var speed=document.getElementById('speed').value;
+  var speed=10//document.getElementById('speed').value;
   var left=number;
   var currentScore=0;
 
+  displayInsteadOfCanvas('bubbleCanvas');
+
   if (runTimes != 0) {
-    console.log("beende, weil " + runTimes);
-    beendeSpiel();
+    console.log("Neustart abgebrochen, weil noch " + runTimes + " Spiel läuft");
   }
   else {
-  console.log("starte, weil " + runTimes);
-
-  displayInsteadOfCanvas('bubbleCanvas');
+  console.log("Spiel gestartet, weil " + runTimes + " Spiele gerade laufen");
 
   var timer=document.getElementById('start');
   var date=new Date();
   var date0=date.getTime();
   var date1=date0 + 30000;
   var remainingTime=date1 - date0;
+  var klicks = 0;
 
   var timerInterval=setInterval(updateTimer, 1);
   erzeugeBubbleMenge(number);
-  //draw();
   var mainInterval=setInterval(draw, 30);
-
   canvas.addEventListener("click", beiKlick);
 
   function erzeugeBubbleMenge(number) {
@@ -211,6 +221,7 @@ function start() {
     if (remainingBubbles() == 0) {
       beendeSpiel();
     }
+    klicks++;
   }
 
   function updateTimer() {
@@ -225,6 +236,8 @@ function start() {
     }
     else {
       if (seconds >= 10) {
+        document.getElementById("bubbleCanvas").style.backgroundColor = "lightgreen";
+        document.getElementById("start").style.backgroundColor = "lightgreen";
         if (milliSeconds < 100) {
           timer.innerHTML=seconds + ":0" + milliSeconds;
         }
@@ -239,6 +252,8 @@ function start() {
         }
       }
       else if (seconds > 5) {
+        document. getElementById("bubbleCanvas").style.backgroundColor = "lightsalmon";
+        document. getElementById("start").style.backgroundColor = "lightsalmon";
         if (milliSeconds < 100) {
           timer.innerHTML="0" + seconds + ":0" + milliSeconds;
         }
@@ -253,6 +268,8 @@ function start() {
         }
       }
       else if (seconds >= 0) {
+        document. getElementById("bubbleCanvas").style.backgroundColor = "lightcoral";
+        document. getElementById("start").style.backgroundColor = "lightcoral";
         if (milliSeconds < 10) {
           timer.innerHTML="<strong>0" + seconds + ":0" + milliSeconds + "</strong>";
         }
@@ -283,51 +300,64 @@ function start() {
   }
 
   function generateGameOver() {
-  var clicked = number - remainingBubbles();
-  displayInsteadOfCanvas('gameOver');
-  document.getElementById('count').innerHTML = number;
-  document.getElementById('clicked').innerHTML = clicked;
-  document.getElementById('points').innerHTML = currentScore;
+    var clicked = number - remainingBubbles();
+    displayInsteadOfCanvas('gameOver');
+    document.getElementById('count').innerHTML = number;
+    document.getElementById('clicked').innerHTML = clicked;
+    document.getElementById('points').innerHTML = currentScore;
+    document.getElementById('clickCounter').innerHTML = klicks;
+
+    if (klicks < clicked) {
+      document.getElementById("gz").innerHTML = "<p><strong>WOAH!</strong></p><p>Du hast das (ann&auml;hernd) unmögliche geschafft und weniger geklickt als Du Bubbles getroffen hast. Respekt!</p>";
+    }
+    else if (klicks == clicked) {
+      document.getElementById("gz").innerHTML = "<p>Respekt! Du hast f&uuml;r jede Bubble nur ein mal klicken m&uuml;ssen, um sie zu treffen. Nicht schlecht!</p>"
+    }
+    else if (number == clicked) {
+      document.getElementById("gz").innerHTML = "<p> Herzlichen Glückwunsch!</p><p>Du hast alle Blasen getroffen. Versuch doch mal mehr Blasen in der gleichen Zeit zu treffen.</p><p class='display'>Die Anzahl an Blasen kannst du in den Einstellungen ändern.</p>"//hier geht das mit den Einstellungen iwie nicht :(
+    }
   }
-
-
 
   function beendeSpiel() {
-  timer.innerHTML="Neustarten";
-  console.log(currentScore);
-  clearInterval(mainInterval);
-  clearInterval(timerInterval);
-  context.clearRect(0, 0, width, height);
-  bubbleList.splice(0, number, "");
-  runTimes--;
-  generateGameOver();
+    timer.innerHTML="Neustarten";
+    document. getElementById("start").style.backgroundColor = "green";
+    console.log("Game Over!");
+    clearInterval(mainInterval);
+    clearInterval(timerInterval);
+    context.clearRect(0, 0, width, height);
+    bubbleList.splice(0, number, "");
+    runTimes--;
+    generateGameOver();
   }
 
-}//end of start()
-//window.onload=start;
+}
 
 function generateLeaderboard() {
   var name = document.playerInfo.playerName.value;
   var score = document.getElementById("points").innerHTML;
+  var clicked = document.getElementById("clicked").innerHTML;
+  var count = document.getElementById("count").innerHTML;
+  var clicks = document.getElementById("clickCounter").innerHTML;
   var divLeaderboard = document.getElementById("leaderboard");
-  console.log(name);
+
   var table = document.getElementById("tableLeaderboard");
   var row = table.insertRow(-1);
   var nameCell = row.insertCell(0);
-  var scoreCell = cell1 = row.insertCell(1);
+  var scoreCell =  row.insertCell(1);
+  var bubbleCell = row.insertCell(2);
+  var clickCell = row.insertCell(3);
+
   nameCell.innerHTML = name;
   scoreCell.innerHTML = score;
+  bubbleCell.innerHTML = "" + clicked + " / " + count + "";
+  clickCell.innerHTML = clicks;
   displayInsteadOfCanvas('leaderboard');
 }
 
 window.onload=paint;
 
 /*notes
-*
-* Am Ende window.onload löschen!!
-* setInterval auf 26ms zurücksetzen
 * Barrierefreiheit!
-* Bug mit mehrfachem Funktionsaufruf beheben!!!
 * fix bubbles anklicken!
-* Matrikelnummer hinzufügen
+* fix footer margin-top
 */
