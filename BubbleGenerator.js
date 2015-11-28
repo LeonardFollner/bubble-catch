@@ -36,12 +36,22 @@ function displayInsteadOfCanvas(id){
       divLeaderboard.style.display='none';
       break;
     case "description":
-      divStartCanvas.style.display='none';
-      divBubbleCanvas.style.display='none';
-      divDescription.style.display='inline-block';
-      divGameOver.style.display='none';
-      divLeaderboard.style.display='none';
-      break;
+      if (divDescription.style.display == 'inline-block') {
+        divStartCanvas.style.display='inline-block';
+        divBubbleCanvas.style.display='none';
+        divDescription.style.display='none';
+        divGameOver.style.display='none';
+        divLeaderboard.style.display='none';
+        break;
+      }
+      else {
+        divStartCanvas.style.display='none';
+        divBubbleCanvas.style.display='none';
+        divDescription.style.display='inline-block';
+        divGameOver.style.display='none';
+        divLeaderboard.style.display='none';
+        break;
+      }
     case "gameOver":
       divStartCanvas.style.display='none';
       divBubbleCanvas.style.display='none';
