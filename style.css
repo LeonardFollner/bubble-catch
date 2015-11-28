@@ -73,6 +73,7 @@ strong {
   border: 1px solid gray;
   background-color: #707070;
   display: block;
+  /*margin-top: -4px;*/
 }
 
 #information {
@@ -96,6 +97,15 @@ strong {
   height: 400px;
   border: 1px solid gray;
   display: none;
+  text-align: center;
+}
+
+#leaderbord {
+  width: 600px;
+  height: 400px;
+  border: 1px solid gray;
+  display: none;
+  text-align: center;
 }
 
 #settings {

@@ -1,10 +1,24 @@
 function toggle(id) {
   var e = document.getElementById(id);
-  if(e.style.display == 'block')
+  if(e.style.display == 'block') {
     e.style.display = 'none';
-  else
+  }
+  else {
     e.style.display = 'block';
     }
+}
+
+function displayInsteadOfCanvas(id){
+  var div = document.getElementById(id);
+  if(div.style.display == 'inline-block') {
+    div.style.display = 'none';
+    bubbleCanvas.style.display = 'inline-block';
+  }
+  else {
+    div.style.display = 'inline-block';
+    bubbleCanvas.style.display = 'none';
+    }
+}
 
 function updateDisplay(id, val) {
   document.getElementById(id).innerHTML = val;
@@ -18,14 +32,14 @@ function start() {
   var height = canvas.height;
   var width = canvas.width;
   var bubbleList = new Array("");
-
+  var currentScore = 0;
 
   if (runTimes != 0) {
-    console.log("beende, weil" + runTimes);
+    console.log("beende, weil " + runTimes);
     beendeSpiel();
   }
   else {
-  console.log("starte, weil" + runTimes);
+  console.log("starte, weil " + runTimes);
 
   var number = document.getElementById('number').value;
   var speed = document.getElementById('speed').value;
@@ -39,7 +53,8 @@ function start() {
 
   var timerInterval = setInterval(updateTimer, 1);
   erzeugeBubbleMenge(number);
-  var mainInterval = setInterval(draw, 30);
+  draw();
+  //var mainInterval = setInterval(draw, 30);
 
   canvas.addEventListener("click", beiKlick);
 
@@ -48,18 +63,19 @@ function start() {
     for (var i = 0; i < number; i++) {
       erzeugeEinzelneBubble();
     }
+    console.log(bubbleList);
   }
 
   function erzeugeEinzelneBubble() {
     //bubble object constructor
-    var object = function(x, y, difX, difY, radius, col) {
+    var object = function(x, y, difX, difY, radius, col, wert) {
       this.x = x;
       this.y = y;
       this.difX = difX;
       this.difY = difY;
       this.col = col;
       this.radius = radius;
-      this.wert = Math.ceil(Math.random() * 100 % 10) + 1;
+      this.wert = wert;
     }
 
     var randomRadius = (Math.random() * 100 % 11 + 10);
@@ -74,7 +90,8 @@ function start() {
     var randomDifX = (Math.random() * speed -1);
     var randomDifY = (Math.random() * speed -1);
     var col = '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1,6);
-    var bubble = new object(randomX, randomY, randomDifX, randomDifY, randomRadius, col);
+    var wert = Math.ceil(Math.random() * 100 % 10);
+    var bubble = new object(randomX, randomY, randomDifX, randomDifY, randomRadius, col, wert);
     bubbleList.push(bubble);
   }
 
@@ -121,21 +138,21 @@ function start() {
     var rect = canvas.getBoundingClientRect();
     var clickX = (event.clientX - rect.left);
     var clickY = (event.clientY - rect.top);
-    console.log("KlickX: " + clickX + " KlickY: " + clickY);
 
     for (var l = 0; l < number; l++) {
       var DistX = bubbleList[l].x - clickX;
       var DistY = bubbleList[l].y - clickY;
       var Dist = Math.sqrt(DistX * DistX + DistY * DistY);
-      //console.log("Bubble" + l + ": DistX=" + DistX + " DistY=" + DistY);
       if (Dist < bubbleList[l].radius) {
-        console.log("Bubble" + l + ": hit");
         bubbleList.splice(l, 1, "1");
+        console.log(bubbleList[l].radius);
+        currentScore += bubbleList[l].wert;
       }
-      else {
+      /*else {
         console.log("Bubble" + l + ": Dist=" + Dist);
-      }
+      }*/
     }
+    console.log(currentScore);
   }
 
   function updateTimer() {
@@ -222,6 +239,7 @@ runTimes++;
 
 function beendeSpiel() {
   timer.innerHTML = "Neustarten";
+  console.log(currentScore);
   clearInterval(mainInterval);
   clearInterval(timerInterval);
   context.clearRect(0, 0, width, height);
@@ -230,7 +248,7 @@ function beendeSpiel() {
 }
 
 }//end of start()
-//window.onload = init;
+//window.onload = start;
 
 /*notes
 *
@@ -238,6 +256,6 @@ function beendeSpiel() {
 * setInterval auf 26ms zurücksetzen
 * Barrierefreiheit!
 * Bug mit mehrfachem Funktionsaufruf beheben!!!
-* fix Timer Display & restart
 * fix bubbles anklicken!
+* Matrikelnummer hinzufügen
 */

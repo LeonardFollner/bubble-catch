@@ -16,7 +16,7 @@
     <div id="information">
       <ul>
         <li class="button" onclick = "start()" id = "start">Starten</a></li>
-        <li class="button">Beschreibung</li>
+        <li class="button" onclick = "displayInsteadOfCanvas('description')">Beschreibung</li>
         <li class="button" onclick = "toggle('settings')">Einstellungen</li>
         <li>
           <form name="input" id="settings">
@@ -30,8 +30,12 @@
     </div>
 
     <div id = "gameArea">
-      <div id = "description"></div>
+      <div id = "description">
+        <h2>Beschreibung</h2>
+        <p>In Bubble-Catch geht es darum innerhalb einer halben Minute so viele Punkte wie möglich durch das Anklicken sich bewegender Bubbles zu Sammeln.</p>
+      </div>
       <canvas id="bubbleCanvas" height="400px" width="600px"></canvas>
+      <div id = "Leaderbord"></div>
     </div>
     <div id="footer">
       <ul>
