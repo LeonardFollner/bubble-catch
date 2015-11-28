@@ -15,36 +15,53 @@
 
     <div id="information">
       <ul>
-        <li class="button" onclick = "start()" id = "start">Starten</a></li>
-        <li class="button" onclick = "displayInsteadOfCanvas('description')">Beschreibung</li>
-        <li class="button" onclick = "toggle('settings')">Einstellungen</li>
+        <li class="button" onclick="start()" id="start">Starten</a></li>
+        <li class="button" onclick="displayInsteadOfCanvas('description')">Beschreibung</li>
+        <li class="button" onclick="toggle('settings')">Einstellungen</li>
         <li>
           <form name="input" id="settings">
-            Anzahl Bubbles: <p id = "displayNumber" class = "display">10</p>
-            <input type = "range" name = "number" id = "number" min = "1" max = "50" step = "1" value = "10" onchange = "updateDisplay('displayNumber', this.value);">
-            Geschwindigkeit: <p id = "displaySpeed" class = "display">10</p>
-            <input type = "range" name = "speed" id = "speed" min = "1" max = "50" step = "1" value = "10" onchange = "updateDisplay('displaySpeed', this.value);">
+            Anzahl Bubbles: <p id="displayNumber" class="display">10</p>
+            <input type="range" name="number" id="number" min="1" max="50" step="1" value="10" onchange="updateDisplay('displayNumber', this.value);">
+            Geschwindigkeit: <p id="displaySpeed" class="display">10</p>
+            <input type="range" name="speed" id="speed" min="1" max="50" step="1" value="10" onchange="updateDisplay('displaySpeed', this.value);">
           </form>
         </li>
       </ul>
     </div>
 
-    <div id = "gameArea">
-      <div id = "description">
+    <div id="gameArea">
+      <canvas id="startCanvas" height="400px" width="600px" class="canvasAndCo" onclick="start()"></canvas>
+      <div id="description"  class="canvasAndCo">
         <h2>Beschreibung</h2>
         <p>In Bubble-Catch geht es darum innerhalb einer halben Minute so viele Punkte wie möglich durch das Anklicken sich bewegender Bubbles zu Sammeln.</p>
       </div>
-      <canvas id="bubbleCanvas" height="400px" width="600px"></canvas>
-      <div id = "leaderboard">
-        <h2>Leaderboard</h2>
+      <canvas id="bubbleCanvas" height="400px" width="600px" class="canvasAndCo"></canvas>
+      <div id="gameOver"  class="canvasAndCo">
+        <h2>Game Over!</h2>
+        <p class="display"> Du hast von <div id="count" class="display"></div> Bubbles <div id="clicked" class="display"></div> getroffen und so <div id="points" class="display"></div> Punkte erreicht.</p>
+        <form name="playerInfo" autocomplete="off" onsubmit="">
+          Gib deinen Namen ein:
+          <input type="text" name="playerName" placeholder="player1"/>
+          <input type="button" value="Abschicken" id="enterLeaderboard" onClick="generateLeaderboard()"/>
+        </form>
+      </div>
+      <div id="leaderboard" class="canvasAndCo">
+        <h2>Bestenliste</h2>
+        <table id="tableLeaderboard">
+          <tr>
+            <th>Spieler</td>
+            <th>Punkte</td>
+        </table>
       </div>
     </div>
+
     <div id="footer">
       <ul>
-        <li class="list-inline"><a href="mailto:s0682993@msx.tu-dresden.de">Follner, Leonard</a></li>
-        <li class="list-inline">MATRIKELNUMMER</li>
+        <li class="display"><a href="mailto:s0682993@msx.tu-dresden.de">Follner, Leonard</a></li>
+        <li class="display">MATRIKELNUMMER</li>
       </ul>
     </div>
+
   </div>
 </body>
 </html>
