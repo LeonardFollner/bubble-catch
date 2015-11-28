@@ -10,27 +10,38 @@ function updateDisplay(id, val) {
   document.getElementById(id).innerHTML = val;
 }
 
-function init() {
+var runTimes = 0;
 
+function start() {
   var canvas = document.getElementById('bubbleCanvas');
   var context = canvas.getContext("2d");
   var height = canvas.height;
   var width = canvas.width;
+  var bubbleList = new Array("");
+
+
+  if (runTimes != 0) {
+    console.log("beende, weil" + runTimes);
+    beendeSpiel();
+  }
+  else {
+  console.log("starte, weil" + runTimes);
+
   var number = document.getElementById('number').value;
   var speed = document.getElementById('speed').value;
-  var bubbleList = new Array("");
+  //var bubbleList = new Array("");
 
   var timer = document.getElementById('start');
   var date = new Date();
   var date0 = date.getTime();
-  var date1 = date0 + 3000;
+  var date1 = date0 + 30000;
   var remaining = date1 - date0;
 
   var timerInterval = setInterval(updateTimer, 1);
-
   erzeugeBubbleMenge(number);
-  draw();
   var mainInterval = setInterval(draw, 30);
+
+  canvas.addEventListener("click", beiKlick);
 
   function erzeugeBubbleMenge(number) {
     bubbleList.splice(0, bubbleList.length);
@@ -128,30 +139,63 @@ function init() {
   }
 
   function updateTimer() {
-    date0++;
+    var d = new Date;
+    date0 = d.getTime();
     remaining = date1 - date0;
-    var seconds = Math.floor(remaining / 100);
-    var milliSeconds = Math.floor(remaining % 100);
-    timer.innerHTML = seconds + ":" + milliSeconds;
+    var seconds = Math.floor(remaining / 1000);
+    var milliSeconds = Math.floor(remaining % 1000);
 
-    /*if (seconds < 10) {
-      if (milliseconds < 10) {
-        timer.innerHTML = "0" + seconds + ":0" + milliSeconds;
-      }
-      else {
-        timer.innerHTML = "0" + seconds + ":" + milliSeconds;
-      }
+    if(remaining <= 0){
+      beendeSpiel();
     }
-    else if (seconds <= 5) {
-      if (milliseconds < 10) {
-        timer.innerHTML = "<b>0" + seconds + ":0" + milliSeconds + "</b>";
+    else {
+      if (seconds >= 10) {
+        if (milliSeconds < 100) {
+          timer.innerHTML = seconds + ":0" + milliSeconds;
+        }
+        else if (milliSeconds < 10) {
+          timer.innerHTML = seconds + ":00" + milliSeconds;
+        }
+        else if (milliSeconds == 0) {
+          timer.innerHTML = seconds + ":000";
+        }
+        else {
+          timer.innerHTML = seconds + ":" + milliSeconds;
+        }
       }
-      else {
-        timer.innerHTML = "<b>0" + seconds + ":" + milliSeconds + "</b>";
+      else if (seconds > 5) {
+        if (milliSeconds < 100) {
+          timer.innerHTML = "0" + seconds + ":0" + milliSeconds;
+        }
+        else if (milliSeconds < 10) {
+          timer.innerHTML = "0" + seconds + ":00" + milliSeconds;
+        }
+        else if (milliSeconds == 0) {
+          timer.innerHTML = "0" + seconds + ":000";
+        }
+        else {
+          timer.innerHTML = "0" + seconds + ":" + milliSeconds;
+        }
       }
-    }*/
+      else if (seconds >= 0) {
+        if (milliSeconds < 10) {
+          timer.innerHTML = "<strong>0" + seconds + ":0" + milliSeconds + "</strong>";
+        }
+        else if (milliSeconds < 10) {
+          timer.innerHTML = "<strong>0" + seconds + ":00" + milliSeconds + "</strong>";
+        }
+        else if (milliSeconds == 0) {
+          timer.innerHTML = "<strong>0" + seconds + ":000</strong>";
+        }
+        else {
+          timer.innerHTML = "<strong>0" + seconds + ":" + milliSeconds + "</strong>";
+        }
+      }
+      //else {
+        //timer.innerHTML = seconds + ":" + milliSeconds;
+      //}
 
-    if (milliSeconds < 100) {
+    /*if (milliSeconds < 100) {
       if (seconds < 10) {
         timer.innerHTML = "0" + seconds + ":" + milliSeconds;
       }
@@ -167,23 +211,33 @@ function init() {
         timer.innerHTML = seconds + ":00" + milliSeconds;
       }
     }
-    if(remaining <= 0){
-      clearInterval(timerInterval);
-      beendeSpiel();
-    }
+    else {
+      timer.innerHTML = seconds + ":" + milliSeconds;
+    }*/
+  }
   }
 
-  function beendeSpiel() {
-      clearInterval(mainInterval);
-      context.clearRect(0, 0, width, height);
-  }
-
-  canvas.addEventListener("click", beiKlick);
+runTimes++;
 }
-window.onload = init;
+
+function beendeSpiel() {
+  timer.innerHTML = "Neustarten";
+  clearInterval(mainInterval);
+  clearInterval(timerInterval);
+  context.clearRect(0, 0, width, height);
+  bubbleList.splice(0, number, "");
+  runTimes--;
+}
+
+}//end of start()
+//window.onload = init;
 
 /*notes
 *
 * Am Ende window.onload löschen!!
 * setInterval auf 26ms zurücksetzen
+* Barrierefreiheit!
+* Bug mit mehrfachem Funktionsaufruf beheben!!!
+* fix Timer Display & restart
+* fix bubbles anklicken!
 */

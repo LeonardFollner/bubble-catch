@@ -15,7 +15,7 @@
 
     <div id="information">
       <ul>
-        <li class="button" onclick = "init()" id = "start">Starten</a></li>
+        <li class="button" onclick = "start()" id = "start">Starten</a></li>
         <li class="button">Beschreibung</li>
         <li class="button" onclick = "toggle('settings')">Einstellungen</li>
         <li>
@@ -29,9 +29,10 @@
       </ul>
     </div>
 
-    <canvas id="bubbleCanvas" height="400px" width="600px">
-    </canvas>
-
+    <div id = "gameArea">
+      <div id = "description"></div>
+      <canvas id="bubbleCanvas" height="400px" width="600px"></canvas>
+    </div>
     <div id="footer">
       <ul>
         <li class="list-inline"><a href="mailto:s0682993@msx.tu-dresden.de">Follner, Leonard</a></li>
