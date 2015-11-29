@@ -40,17 +40,37 @@ function displayInsteadOfCanvas(id){
 
   switch (id) {
     case "bubbleCanvas":
-      divStartCanvas.style.display='none';
-      divBubbleCanvas.style.display='inline-block';
-      divDescription.style.display='none';
-      divGameOver.style.display='none';
-      divLeaderboard.style.display='none';
-      break;
+      if (divGameOver.style.display == 'inline-block') {
+        generateLeaderboardWithoutdisplay();
+        divStartCanvas.style.display='none';
+        divBubbleCanvas.style.display='inline-block';
+        divDescription.style.display='none';
+        divGameOver.style.display='none';
+        divLeaderboard.style.display='none';
+        break;
+      }
+      else {
+        divStartCanvas.style.display='none';
+        divBubbleCanvas.style.display='inline-block';
+        divDescription.style.display='none';
+        divGameOver.style.display='none';
+        divLeaderboard.style.display='none';
+        break;
+      }
     case "description":
       if (divDescription.style.display == 'inline-block') {
         divStartCanvas.style.display='inline-block';
         divBubbleCanvas.style.display='none';
         divDescription.style.display='none';
+        divGameOver.style.display='none';
+        divLeaderboard.style.display='none';
+        break;
+      }
+      else if (divGameOver.style.display == 'inline-block') {
+        generateLeaderboardWithoutdisplay();
+        divStartCanvas.style.display='none';
+        divBubbleCanvas.style.display='none';
+        divDescription.style.display='inline-block';
         divGameOver.style.display='none';
         divLeaderboard.style.display='none';
         break;
@@ -79,6 +99,15 @@ function displayInsteadOfCanvas(id){
         divLeaderboard.style.display='none';
         break;
       }
+      else if (divGameOver.style.display == 'inline-block') {
+        generateLeaderboardWithoutdisplay();
+        divStartCanvas.style.display='none';
+        divBubbleCanvas.style.display='none';
+        divDescription.style.display='none';
+        divGameOver.style.display='none';
+        divLeaderboard.style.display='inline-block';
+        break;
+      }
       else {
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='none';
@@ -93,7 +122,7 @@ function displayInsteadOfCanvas(id){
 }
 
 function updateDisplay(id, val) {
-  document.getElementById(id).innerHTML=val;
+  document.getElementById(id).value=val;
 }
 
 var runTimes=0;
@@ -306,15 +335,18 @@ function start() {
     document.getElementById('clicked').innerHTML = clicked;
     document.getElementById('points').innerHTML = currentScore;
     document.getElementById('clickCounter').innerHTML = klicks;
-
     if (klicks < clicked) {
       document.getElementById("gz").innerHTML = "<p><strong>WOAH!</strong></p><p>Du hast das (ann&auml;hernd) unmögliche geschafft und weniger geklickt als Du Bubbles getroffen hast. Respekt!</p>";
     }
-    else if (klicks == clicked) {
+    else if (klicks === clicked) {
       document.getElementById("gz").innerHTML = "<p>Respekt! Du hast f&uuml;r jede Bubble nur ein mal klicken m&uuml;ssen, um sie zu treffen. Nicht schlecht!</p>"
     }
     else if (number == clicked) {
-      document.getElementById("gz").innerHTML = "<p> Herzlichen Glückwunsch!</p><p>Du hast alle Blasen getroffen. Versuch doch mal mehr Blasen in der gleichen Zeit zu treffen.</p><p class='display'>Die Anzahl an Blasen kannst du in den Einstellungen ändern.</p>"//hier geht das mit den Einstellungen iwie nicht :(
+      console.log("all");
+      document.getElementById("gz").innerHTML = "<p> Herzlichen Gl&uuml;ckwunsch!</p><p>Du hast alle Bubbles getroffen. Versuch doch mal mehr Bubbles in der gleichen Zeit zu treffen.</p><p class='display'>Die Anzahl an Blasen kannst du in den Einstellungen ändern.</p>"//hier geht das mit den Einstellungen iwie nicht :(
+    }
+    else {
+      document.getElementById("gz").innerHTML = "";
     }
   }
 
@@ -332,7 +364,7 @@ function start() {
 
 }
 
-function generateLeaderboard() {
+function generateLeaderboardWithoutdisplay() {
   var name = document.playerInfo.playerName.value;
   var score = document.getElementById("points").innerHTML;
   var clicked = document.getElementById("clicked").innerHTML;
@@ -351,6 +383,10 @@ function generateLeaderboard() {
   scoreCell.innerHTML = score;
   bubbleCell.innerHTML = "" + clicked + " / " + count + "";
   clickCell.innerHTML = clicks;
+}
+
+function generateLeaderboard() {
+  generateLeaderboardWithoutdisplay();
   displayInsteadOfCanvas('leaderboard');
 }
 
@@ -360,4 +396,5 @@ window.onload=paint;
 * Barrierefreiheit!
 * fix bubbles anklicken!
 * fix footer margin-top
+* fix error on second game in same tab
 */

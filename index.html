@@ -20,8 +20,8 @@
         <li class="button" onclick="displayInsteadOfCanvas('leaderboard')">Bestenliste</li>
         <li class="button" onclick="toggle('settings')">Einstellungen</li>
         <li>
-          <form name="input" id="settings">
-            Anzahl Bubbles: <p id="displayNumber" class="display">10</p>
+          <form name="input" id="settings" onsubmit="return false">
+            Anzahl Bubbles: <input type="number" id="displayNumber" class="display" value="10" min="1" max="50" step="1" maxlength="2" onchange="updateDisplay('number', this.value)"></input>
             <input type="range" name="number" id="number" min="1" max="50" step="1" value="10" onchange="updateDisplay('displayNumber', this.value);">
             <!--Geschwindigkeit: <p id="displaySpeed" class="display">10</p>
             <input type="range" name="speed" id="speed" min="1" max="50" step="1" value="10" onchange="updateDisplay('displaySpeed', this.value);">-->
@@ -43,7 +43,7 @@
         <h2>Game Over!</h2>
         <p class="display"> Du hast <div id="clicked" class="display"></div> von <div id="count" class="display"></div> Bubbles getroffen und so <div id="points" class="display"></div> Punkte erreicht.</p>
         <p class="display">Dafür hast du <div id="clickCounter" class="display"></div> Klicks gebraucht.</p>
-        <form name="playerInfo" autocomplete="off" onsubmit="">
+        <form name="playerInfo" autocomplete="off" onsubmit="return false">
           Gib deinen Namen ein:
           <input type="text" name="playerName" value="player1"/>
           <input type="button" value="Abschicken" id="enterLeaderboard" onClick="generateLeaderboard()"/>
