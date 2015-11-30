@@ -19,10 +19,10 @@
         <li class="button" onclick="displayInsteadOfCanvas('description')">Beschreibung</li>
         <li class="button" onclick="displayInsteadOfCanvas('leaderboard')">Bestenliste</li>
         <li class="button" onclick="toggle('settings')">Einstellungen</li>
-        <li>
-          <form name="input" id="settings" onsubmit="return false">
+        <li id="settings">
+          <form name="input" onsubmit="return false">
             Anzahl Bubbles: <input type="number" id="displayNumber" class="display" value="10" min="1" max="50" step="1" maxlength="2" onchange="updateDisplay('number', this.value)"></input>
-            <input type="range" name="number" id="number" min="1" max="50" step="1" value="10" onchange="updateDisplay('displayNumber', this.value);">
+            <input type="range" name="number" id="number" min="1" max="50" step="1" value="10" onchange="updateDisplay('displayNumber', this.value);"></input>
             <!--Geschwindigkeit: <p id="displaySpeed" class="display">10</p>
             <input type="range" name="speed" id="speed" min="1" max="50" step="1" value="10" onchange="updateDisplay('displaySpeed', this.value);">-->
           </form>
