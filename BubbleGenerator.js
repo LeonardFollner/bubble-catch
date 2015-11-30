@@ -127,6 +127,12 @@ function displayInsteadOfCanvas(id){
         divLeaderboard.style.display='inline-block';
         break;
     }
+    case "gamOverButton":
+      divStartCanvas.style.display='none';
+      divBubbleCanvas.style.display='none';
+      divDescription.style.display='none';
+      divGameOver.style.display='none';
+      divLeaderboard.style.display='inline-block';
     default:
       console.log("something went wrong");
   }
@@ -191,14 +197,15 @@ function erzeugeEinzelneBubble() {
     this.val=val;
   }
   randomRadius=(Math.random() * 100 % 11 + 10);
-  randomX=0;
-  randomY=0;
-  while (randomX <= randomRadius || randomX >= width - randomRadius) {
+  do {
     randomX=Math.random() * width;
   }
-  while (randomY <= randomRadius || randomY >= height - randomRadius) {
+  while (randomX <= randomRadius || randomX >= width - randomRadius);
+
+  do {
     randomY=Math.random() * height;
   }
+  while (randomY <= randomRadius || randomY >= height - randomRadius);
   randomDifX=(Math.random() * speed - speed/2);
   randomDifY=(Math.random() * speed - speed/2);
   randomCol='#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1,6);
@@ -381,7 +388,7 @@ function generateLeaderboardWithoutdisplay() {
   table = document.getElementById("tableLeaderboard");
   row = table.insertRow(-1);
   nameCell = row.insertCell(0);
-  scoreCell =  row.insertCell(1);
+  scoreCell = row.insertCell(1);
   bubbleCell = row.insertCell(2);
   clickCell = row.insertCell(3);
 
@@ -393,7 +400,7 @@ function generateLeaderboardWithoutdisplay() {
 
 function generateLeaderboard() {
   generateLeaderboardWithoutdisplay();
-  displayInsteadOfCanvas('leaderboard');
+  displayInsteadOfCanvas('gamOverButton');
 }
 
 window.onload=paint;
@@ -402,9 +409,6 @@ window.onload=paint;
 * Barrierefreiheit!
 * fix bubbles anklicken!
 * fix footer margin-top
-* fix error on second game in same tab
-* in erzeugeEinzelneBubble while zu do while ändern
-* fix doppeltes Anzeigen von Ergebnissen & Anzeige von Ergebnis 0, wenn abschicken button benutzt
 * change settings display
 * fix WOAH message
 */
