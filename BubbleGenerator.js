@@ -264,7 +264,7 @@ function draw() {
     context.stroke();
     context.fillStyle=bubbleList[j].col;
     context.fill();
-    context.fillStyle="white";
+    context.fillStyle="#ffffff";
     context.font="20px Helvetica";
     context.textAlign="center";
     context.textBaseline="middle";
@@ -329,8 +329,8 @@ function updateTimer() {
   }
   else {
     if (seconds >= 10) {
-      document.getElementById("bubbleCanvas").style.backgroundColor = "lightgreen";
-      document.getElementById("start").style.backgroundColor = "lightgreen";
+      document.getElementById("bubbleCanvas").style.backgroundColor = "#90ee90";
+      document.getElementById("start").style.backgroundColor = "#90ee90";
       if (milliSeconds < 100) {
         timer.innerHTML=seconds + ":0" + milliSeconds;
       }
@@ -345,8 +345,8 @@ function updateTimer() {
       }
     }
     else if (seconds > 5) {
-      document. getElementById("bubbleCanvas").style.backgroundColor = "lightsalmon";
-      document. getElementById("start").style.backgroundColor = "lightsalmon";
+      document. getElementById("bubbleCanvas").style.backgroundColor = "#ffa07a";
+      document. getElementById("start").style.backgroundColor = "#ffa07a";
       if (milliSeconds < 100) {
         timer.innerHTML="0" + seconds + ":0" + milliSeconds;
       }
@@ -361,8 +361,8 @@ function updateTimer() {
       }
     }
     else if (seconds >= 0) {
-      document. getElementById("bubbleCanvas").style.backgroundColor = "lightcoral";
-      document. getElementById("start").style.backgroundColor = "lightcoral";
+      document. getElementById("bubbleCanvas").style.backgroundColor = "#f08080";
+      document. getElementById("start").style.backgroundColor = "#f08080";
       if (milliSeconds < 10) {
         timer.innerHTML="<strong>0" + seconds + ":0" + milliSeconds + "</strong>";
       }
@@ -416,8 +416,8 @@ function generateGameOver() {
 
 function beendeSpiel() {
   timer.innerHTML="Neustarten";
-  document. getElementById("start").style.backgroundColor = "blue";
-  document. getElementById("start").style.color = "white";
+  document. getElementById("start").style.backgroundColor = "#0000ff";
+  document. getElementById("start").style.color = "#ffffff";
   console.log("Game Over!");
   clearInterval(mainInterval);
   clearInterval(timerInterval);
