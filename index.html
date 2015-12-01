@@ -18,14 +18,7 @@
         <li class="button" onclick="start()" id="start">Starten</li>
         <li class="button" onclick="displayInsteadOfCanvas('description')">Beschreibung</li>
         <li class="button" onclick="displayInsteadOfCanvas('leaderboard')">Bestenliste</li>
-        <li class="button" onclick="toggle('settings')">Einstellungen</li>
-        <li id="settings">
-          <form name="input" onsubmit="return false">
-            Anzahl Bubbles: <input type="number" id="displayNumber" class="display" value="10" min="1" max="50" step="1" maxlength="2" onchange="updateDisplay('number', this.value)"></input>
-            <input type="range" name="number" id="number" min="1" max="50" step="1" value="10" onchange="updateDisplay('displayNumber', this.value);"></input>
-            <!--Geschwindigkeit: <p id="displaySpeed" class="display">10</p>
-            <input type="range" name="speed" id="speed" min="1" max="50" step="1" value="10" onchange="updateDisplay('displaySpeed', this.value);">-->
-          </form>
+        <li class="button" onclick="displayInsteadOfCanvas('settings')">Einstellungen</li>
         </li>
       </ul>
     </div>
@@ -35,8 +28,17 @@
       <div id="description"  class="canvasAndCo">
         <h2>Beschreibung</h2>
         <p>In Bubble-Catch geht es darum innerhalb einer halben Minute so viele Punkte wie möglich durch das Anklicken sich bewegender Bubbles zu Sammeln.</p>
-        <p class="display">Du kannst die Anzahl der Bubbles links in den <p class="pointer" onclick="toggle('settings')">Einstellungen</p> ändern. Die Anzahl hat jedoch keinen Einfluss auf deine Wertung. Die geht alleine nach der erreichten Punktzahl.</p>
+        <p class="display">Du kannst die Anzahl der Bubbles links in den <p class="pointer" onclick="displayInsteadOfCanvas('settings')">Einstellungen</p> ändern. Die Anzahl hat jedoch keinen Einfluss auf deine Wertung. Die geht alleine nach der erreichten Punktzahl.</p>
         <p>Wenn du einmal ein Spiel gestartet hast, lässt es sich nicht mehr stoppen.</p>
+      </div>
+      <div id="settings" class="canvasAndCo">
+        <h2>Einstellungen</h2>
+        <form name="input" onsubmit="return false">
+          Anzahl Bubbles: <input type="number" id="displayNumber" class="display" value="10" min="1" max="50" step="1" maxlength="2" onchange="updateDisplay('number', this.value)"></input>
+          <input type="range" name="number" id="number" min="1" max="50" step="1" value="10" onchange="updateDisplay('displayNumber', this.value);"></input></br>
+          Geschwindigkeit: <p id="displaySpeed">10</p>
+          <input type="range" name="speed" id="speed" min="1" max="50" step="1" value="10" onchange="updateDisplay('displaySpeed', this.value);">
+        </form>
       </div>
       <canvas id="bubbleCanvas" height="400px" width="600px" class="canvasAndCo"></canvas>
       <div id="gameOver"  class="canvasAndCo">
@@ -50,7 +52,7 @@
         </form>
         <div id="gz1" class="noDisplay"><p><strong>WOAH!</strong></p><p>Du hast das (ann&auml;hernd) unmögliche geschafft und weniger geklickt als Du Bubbles getroffen hast. Respekt!</p></div>
         <div id="gz2" class="noDisplay"><p>Respekt! Du hast f&uuml;r jede Bubble nur ein mal klicken m&uuml;ssen, um sie zu treffen. Nicht schlecht!</p></div>
-        <div id="gz3" class="noDisplay"><p> Herzlichen Gl&uuml;ckwunsch!</p><p>Du hast alle Bubbles getroffen. Versuch doch mal mehr Bubbles in der gleichen Zeit zu treffen.</p><p class="display">Die Anzahl an Blasen kannst du in den <p class="pointer" onclick="toggle('settings')">Einstellungen</p> ändern.</p></div>
+        <div id="gz3" class="noDisplay"><p> Herzlichen Gl&uuml;ckwunsch!</p><p>Du hast alle Bubbles getroffen. Versuch doch mal mehr Bubbles in der gleichen Zeit zu treffen.</p><p class="display">Die Anzahl an Blasen kannst du in den <p class="pointer" onclick="displayInsteadOfCanvas('settings')">Einstellungen</p> ändern.</p></div>
       </div>
       <div id="leaderboard" class="canvasAndCo">
         <h2>Bestenliste</h2>
@@ -63,7 +65,7 @@
           </tr>
         </table>
         <p>Mehr Punkte kannst du erreichen, in dem du mehr Bubbles in der gleichen Zeit trifft.</p>
-        <p class="display">Wenn du jetzt schon alles Bubbles triffst, kannst du ihre Anzahl in den <p class="pointer" onclick="toggle('settings')">Einstellungen</p> erhöhen.</p>
+        <p class="display">Wenn du jetzt schon alles Bubbles triffst, kannst du ihre Anzahl in den <p class="pointer" onclick="displayInsteadOfCanvas('settings')">Einstellungen</p> erhöhen.</p>
       </div>
     </div>
 

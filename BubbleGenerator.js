@@ -46,6 +46,7 @@ function displayInsteadOfCanvas(id){
   var divStartCanvas=document.getElementById("startCanvas");
   var divBubbleCanvas=document.getElementById("bubbleCanvas");
   var divDescription=document.getElementById("description");
+  var divSettings=document.getElementById("settings");
   var divGameOver=document.getElementById("gameOver");
   var divLeaderboard=document.getElementById("leaderboard");
 
@@ -56,6 +57,7 @@ function displayInsteadOfCanvas(id){
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='inline-block';
         divDescription.style.display='none';
+        divSettings.style.display='none';
         divGameOver.style.display='none';
         divLeaderboard.style.display='none';
         break;
@@ -64,6 +66,7 @@ function displayInsteadOfCanvas(id){
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='inline-block';
         divDescription.style.display='none';
+        divSettings.style.display='none';
         divGameOver.style.display='none';
         divLeaderboard.style.display='none';
         break;
@@ -73,6 +76,7 @@ function displayInsteadOfCanvas(id){
         divStartCanvas.style.display='inline-block';
         divBubbleCanvas.style.display='none';
         divDescription.style.display='none';
+        divSettings.style.display='none';
         divGameOver.style.display='none';
         divLeaderboard.style.display='none';
         break;
@@ -82,6 +86,7 @@ function displayInsteadOfCanvas(id){
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='none';
         divDescription.style.display='inline-block';
+        divSettings.style.display='none';
         divGameOver.style.display='none';
         divLeaderboard.style.display='none';
         break;
@@ -90,6 +95,36 @@ function displayInsteadOfCanvas(id){
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='none';
         divDescription.style.display='inline-block';
+        divSettings.style.display='none';
+        divGameOver.style.display='none';
+        divLeaderboard.style.display='none';
+        break;
+      }
+    case "settings":
+      if (divSettings.style.display == 'inline-block') {
+        divStartCanvas.style.display='inline-block';
+        divBubbleCanvas.style.display='none';
+        divDescription.style.display='none';
+        divSettings.style.display='none';
+        divGameOver.style.display='none';
+        divLeaderboard.style.display='none';
+        break;
+      }
+      else if (divGameOver.style.display == 'inline-block') {
+        generateLeaderboardWithoutdisplay();
+        divStartCanvas.style.display='none';
+        divBubbleCanvas.style.display='none';
+        divDescription.style.display='none';
+        divSettings.style.display='inline-block';
+        divGameOver.style.display='none';
+        divLeaderboard.style.display='none';
+        break;
+      }
+      else {
+        divStartCanvas.style.display='none';
+        divBubbleCanvas.style.display='none';
+        divDescription.style.display='none';
+        divSettings.style.display='inline-block';
         divGameOver.style.display='none';
         divLeaderboard.style.display='none';
         break;
@@ -98,6 +133,7 @@ function displayInsteadOfCanvas(id){
       divStartCanvas.style.display='none';
       divBubbleCanvas.style.display='none';
       divDescription.style.display='none';
+      divSettings.style.display='none';
       divGameOver.style.display='inline-block';
       divLeaderboard.style.display='none';
       break;
@@ -106,6 +142,7 @@ function displayInsteadOfCanvas(id){
         divStartCanvas.style.display='inline-block';
         divBubbleCanvas.style.display='none';
         divDescription.style.display='none';
+        divSettings.style.display='none';
         divGameOver.style.display='none';
         divLeaderboard.style.display='none';
         break;
@@ -115,6 +152,7 @@ function displayInsteadOfCanvas(id){
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='none';
         divDescription.style.display='none';
+        divSettings.style.display='none';
         divGameOver.style.display='none';
         divLeaderboard.style.display='inline-block';
         break;
@@ -123,6 +161,7 @@ function displayInsteadOfCanvas(id){
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='none';
         divDescription.style.display='none';
+        divSettings.style.display='none';
         divGameOver.style.display='none';
         divLeaderboard.style.display='inline-block';
         break;
@@ -131,6 +170,7 @@ function displayInsteadOfCanvas(id){
       divStartCanvas.style.display='none';
       divBubbleCanvas.style.display='none';
       divDescription.style.display='none';
+      divSettings.style.display='none';
       divGameOver.style.display='none';
       divLeaderboard.style.display='inline-block';
       break;
@@ -162,7 +202,7 @@ function init() {
   width=canvas.width;
   bubbleList=new Array("");
   number=document.getElementById('number').value;
-  speed=10;//document.getElementById('speed').value;
+  speed=document.getElementById('speed').value;
   left=number;
   currentScore=0;
 
