@@ -83,6 +83,10 @@ strong {
   text-align: center;
 }
 
+.message {
+  color: red;
+}
+
 #all {
   width: 904px;
   border: 5px solid blue;

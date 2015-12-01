@@ -19,6 +19,8 @@
         <li class="button" onclick="displayInsteadOfCanvas('description')">Beschreibung</li>
         <li class="button" onclick="displayInsteadOfCanvas('leaderboard')">Bestenliste</li>
         <li class="button" onclick="displayInsteadOfCanvas('settings')">Einstellungen</li>
+        <li class="message noDisplay" id="warning1"><p>Einstellungen sind während des Spiels nicht &auml;nderbar!</p></li>
+        <li class="message noDisplay" id="warning2"><p>Es l&auml;uft noch ein Spiel!</p></li>
         </li>
       </ul>
     </div>
@@ -44,7 +46,7 @@
       <div id="gameOver"  class="canvasAndCo">
         <h2>Game Over!</h2>
         <p class="display"> Du hast <div id="clicked" class="display"></div> von <div id="count" class="display"></div> Bubbles getroffen und so <div id="points" class="display"></div> Punkte erreicht.</p>
-        <p class="display">Dafür hast du <div id="clickCounter" class="display"></div> Klicks gebraucht.</p>
+        <p class="display">Dafür hast du <div id="clickCounter" class="display"></div> Klicks gemacht.</p>
         <form name="playerInfo" autocomplete="off" onsubmit="return false">
           Gib deinen Namen ein:
           <input type="text" name="playerName" value="player1"/>

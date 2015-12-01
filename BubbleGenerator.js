@@ -50,85 +50,90 @@ function displayInsteadOfCanvas(id){
   var divGameOver=document.getElementById("gameOver");
   var divLeaderboard=document.getElementById("leaderboard");
 
+  var divWarning1=document.getElementById("warning1");
+  var divWarning2=document.getElementById("warning2");
+
   switch (id) {
     case "bubbleCanvas":
       if (divGameOver.style.display == 'inline-block') {
         generateLeaderboardWithoutdisplay();
-        divStartCanvas.style.display='none';
-        divBubbleCanvas.style.display='inline-block';
-        divDescription.style.display='none';
-        divSettings.style.display='none';
-        divGameOver.style.display='none';
-        divLeaderboard.style.display='none';
-        break;
       }
-      else {
-        divStartCanvas.style.display='none';
-        divBubbleCanvas.style.display='inline-block';
-        divDescription.style.display='none';
-        divSettings.style.display='none';
-        divGameOver.style.display='none';
-        divLeaderboard.style.display='none';
-        break;
-      }
+      divStartCanvas.style.display='none';
+      divBubbleCanvas.style.display='inline-block';
+      divDescription.style.display='none';
+      divSettings.style.display='none';
+      divGameOver.style.display='none';
+      divLeaderboard.style.display='none';
+      divWarning1.style.display = 'none';
+      divWarning2.style.display = 'none';
+      break;
     case "description":
       if (divDescription.style.display == 'inline-block') {
-        divStartCanvas.style.display='inline-block';
-        divBubbleCanvas.style.display='none';
-        divDescription.style.display='none';
-        divSettings.style.display='none';
-        divGameOver.style.display='none';
-        divLeaderboard.style.display='none';
-        break;
+        if (runTimes === 0) {
+          divStartCanvas.style.display='inline-block';
+          divDescription.style.display='none';
+        }
+        else {
+          divBubbleCanvas.style.display='inline-block';
+          divDescription.style.display='none';
+        }
       }
       else if (divGameOver.style.display == 'inline-block') {
         generateLeaderboardWithoutdisplay();
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='none';
         divDescription.style.display='inline-block';
-        divSettings.style.display='none';
-        divGameOver.style.display='none';
-        divLeaderboard.style.display='none';
-        break;
       }
       else {
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='none';
         divDescription.style.display='inline-block';
-        divSettings.style.display='none';
-        divGameOver.style.display='none';
-        divLeaderboard.style.display='none';
-        break;
       }
+      divSettings.style.display='none';
+      divGameOver.style.display='none';
+      divLeaderboard.style.display='none';
+      divWarning1.style.display = 'none';
+      divWarning2.style.display = 'none';
+      break;
     case "settings":
-      if (divSettings.style.display == 'inline-block') {
-        divStartCanvas.style.display='inline-block';
-        divBubbleCanvas.style.display='none';
-        divDescription.style.display='none';
+      if (runTimes !== 0) {
+        if (divBubbleCanvas.style.display === 'inline-block') {
+          divWarning1.style.display = 'inline-block';
+          divWarning2.style.display = 'none';
+        }
+        else {
+          divWarning1.style.display = 'none';
+          divWarning2.style.display = 'inline-block';
+        }
+        divStartCanvas.style.display='none';
+        divBubbleCanvas.style.display='inline-block';
         divSettings.style.display='none';
-        divGameOver.style.display='none';
-        divLeaderboard.style.display='none';
-        break;
+      }
+      else if (divSettings.style.display == 'inline-block') {
+        divStartCanvas.style.display='inline-block';
+        divSettings.style.display='none';
+        divWarning1.style.display = 'none';
+        divWarning2.style.display = 'none';
       }
       else if (divGameOver.style.display == 'inline-block') {
         generateLeaderboardWithoutdisplay();
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='none';
-        divDescription.style.display='none';
         divSettings.style.display='inline-block';
-        divGameOver.style.display='none';
-        divLeaderboard.style.display='none';
-        break;
+        divWarning1.style.display = 'none';
+        divWarning2.style.display = 'none';
       }
       else {
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='none';
-        divDescription.style.display='none';
         divSettings.style.display='inline-block';
-        divGameOver.style.display='none';
-        divLeaderboard.style.display='none';
-        break;
+        divWarning1.style.display = 'none';
+        divWarning2.style.display = 'none';
       }
+      divDescription.style.display='none';
+      divGameOver.style.display='none';
+      divLeaderboard.style.display='none';
+      break;
     case "gameOver":
       divStartCanvas.style.display='none';
       divBubbleCanvas.style.display='none';
@@ -136,36 +141,29 @@ function displayInsteadOfCanvas(id){
       divSettings.style.display='none';
       divGameOver.style.display='inline-block';
       divLeaderboard.style.display='none';
+      divWarning1.style.display = 'none';
+      divWarning2.style.display = 'none';
       break;
     case "leaderboard":
       if (divLeaderboard.style.display == 'inline-block') {
         divStartCanvas.style.display='inline-block';
-        divBubbleCanvas.style.display='none';
-        divDescription.style.display='none';
-        divSettings.style.display='none';
-        divGameOver.style.display='none';
         divLeaderboard.style.display='none';
-        break;
       }
       else if (divGameOver.style.display == 'inline-block') {
         generateLeaderboardWithoutdisplay();
-        divStartCanvas.style.display='none';
-        divBubbleCanvas.style.display='none';
-        divDescription.style.display='none';
-        divSettings.style.display='none';
-        divGameOver.style.display='none';
         divLeaderboard.style.display='inline-block';
-        break;
       }
       else {
         divStartCanvas.style.display='none';
-        divBubbleCanvas.style.display='none';
-        divDescription.style.display='none';
-        divSettings.style.display='none';
-        divGameOver.style.display='none';
         divLeaderboard.style.display='inline-block';
-        break;
-    }
+      }
+      divBubbleCanvas.style.display='none';
+      divDescription.style.display='none';
+      divSettings.style.display='none';
+      divGameOver.style.display='none';
+      divWarning1.style.display = 'none';
+      divWarning2.style.display = 'none';
+      break;
     case "gamOverButton":
       divStartCanvas.style.display='none';
       divBubbleCanvas.style.display='none';
@@ -173,6 +171,8 @@ function displayInsteadOfCanvas(id){
       divSettings.style.display='none';
       divGameOver.style.display='none';
       divLeaderboard.style.display='inline-block';
+      divWarning1.style.display = 'none';
+      divWarning2.style.display = 'none';
       break;
     default:
       console.log("something went wrong");
