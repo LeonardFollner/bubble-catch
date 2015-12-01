@@ -59,12 +59,16 @@ strong {
 .pointer {
   cursor: pointer;
   display: inline-block;
-  margin: 0px;
+  margin: 0;
   text-decoration: underline;
 }
 
 .display {
   display: inline;
+}
+
+.noDisplay {
+  display: none;
 }
 
 .textCenter {

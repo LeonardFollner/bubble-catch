@@ -15,7 +15,7 @@
 
     <div id="information">
       <ul>
-        <li class="button" onclick="start()" id="start">Starten</a></li>
+        <li class="button" onclick="start()" id="start">Starten</li>
         <li class="button" onclick="displayInsteadOfCanvas('description')">Beschreibung</li>
         <li class="button" onclick="displayInsteadOfCanvas('leaderboard')">Bestenliste</li>
         <li class="button" onclick="toggle('settings')">Einstellungen</li>
@@ -46,9 +46,11 @@
         <form name="playerInfo" autocomplete="off" onsubmit="return false">
           Gib deinen Namen ein:
           <input type="text" name="playerName" value="player1"/>
-          <input type="button" value="Abschicken" id="enterLeaderboard" onClick="generateLeaderboard()"/>
+          <input type="button" value="Abschicken" id="enterLeaderboard" onclick="generateLeaderboard()"/>
         </form>
-        <div id="gz"></div>
+        <div id="gz1" class="noDisplay"><p><strong>WOAH!</strong></p><p>Du hast das (ann&auml;hernd) unmögliche geschafft und weniger geklickt als Du Bubbles getroffen hast. Respekt!</p></div>
+        <div id="gz2" class="noDisplay"><p>Respekt! Du hast f&uuml;r jede Bubble nur ein mal klicken m&uuml;ssen, um sie zu treffen. Nicht schlecht!</p></div>
+        <div id="gz3" class="noDisplay"><p> Herzlichen Gl&uuml;ckwunsch!</p><p>Du hast alle Bubbles getroffen. Versuch doch mal mehr Bubbles in der gleichen Zeit zu treffen.</p><p class="display">Die Anzahl an Blasen kannst du in den <p class="pointer" onclick="toggle('settings')">Einstellungen</p> ändern.</p></div>
       </div>
       <div id="leaderboard" class="canvasAndCo">
         <h2>Bestenliste</h2>
@@ -58,6 +60,7 @@
             <th>Punkte</th>
             <th>Bubbles</th>
             <th>Klicks</th>
+          </tr>
         </table>
         <p>Mehr Punkte kannst du erreichen, in dem du mehr Bubbles in der gleichen Zeit trifft.</p>
         <p class="display">Wenn du jetzt schon alles Bubbles triffst, kannst du ihre Anzahl in den <p class="pointer" onclick="toggle('settings')">Einstellungen</p> erhöhen.</p>

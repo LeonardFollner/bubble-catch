@@ -133,6 +133,7 @@ function displayInsteadOfCanvas(id){
       divDescription.style.display='none';
       divGameOver.style.display='none';
       divLeaderboard.style.display='inline-block';
+      break;
     default:
       console.log("something went wrong");
   }
@@ -144,7 +145,7 @@ function updateDisplay(id, val) {
 
 function start() {
   displayInsteadOfCanvas('bubbleCanvas');
-  if (runTimes != 0) {
+  if (runTimes !== 0) {
     console.log("Neustart abgebrochen, weil noch " + runTimes + " Spiel läuft");
   }
   else {
@@ -161,7 +162,7 @@ function init() {
   width=canvas.width;
   bubbleList=new Array("");
   number=document.getElementById('number').value;
-  speed=10//document.getElementById('speed').value;
+  speed=10;//document.getElementById('speed').value;
   left=number;
   currentScore=0;
 
@@ -195,7 +196,7 @@ function erzeugeEinzelneBubble() {
     this.col=col;
     this.radius=radius;
     this.val=val;
-  }
+  };
   randomRadius=(Math.random() * 100 % 11 + 10);
   do {
     randomX=Math.random() * width;
@@ -258,6 +259,7 @@ function beiKlick() {
   rect=canvas.getBoundingClientRect();
   clickX=(event.clientX - rect.left);
   clickY=(event.clientY - rect.top);
+  klicks++;
 
   for (var l=0; l < number; l++) {
     DistX=bubbleList[l].x - clickX;
@@ -270,14 +272,13 @@ function beiKlick() {
       hitSound.play();
     }
   }
-  if (remainingBubbles() == 0) {
+  if (remainingBubbles() === 0) {
     beendeSpiel();
   }
-  klicks++;
 }
 
 function updateTimer() {
-  var d=new Date;
+  var d=new Date();
   date0=d.getTime();
   remainingTime=date1 - date0;
   var seconds=Math.floor(remainingTime / 1000);
@@ -296,7 +297,7 @@ function updateTimer() {
       else if (milliSeconds < 10) {
         timer.innerHTML=seconds + ":00" + milliSeconds;
       }
-      else if (milliSeconds == 0) {
+      else if (milliSeconds === 0) {
         timer.innerHTML=seconds + ":000";
       }
       else {
@@ -312,7 +313,7 @@ function updateTimer() {
       else if (milliSeconds < 10) {
         timer.innerHTML="0" + seconds + ":00" + milliSeconds;
       }
-      else if (milliSeconds == 0) {
+      else if (milliSeconds === 0) {
         timer.innerHTML="0" + seconds + ":000";
       }
       else {
@@ -328,7 +329,7 @@ function updateTimer() {
       else if (milliSeconds < 10) {
         timer.innerHTML="<strong>0" + seconds + ":00" + milliSeconds + "</strong>";
       }
-      else if (milliSeconds == 0) {
+      else if (milliSeconds === 0) {
         timer.innerHTML="<strong>0" + seconds + ":000</strong>";
       }
       else {
@@ -356,17 +357,20 @@ function generateGameOver() {
   document.getElementById('points').innerHTML = currentScore;
   document.getElementById('clickCounter').innerHTML = klicks;
   if (klicks < clicked) {
-    document.getElementById("gz").innerHTML = "<p><strong>WOAH!</strong></p><p>Du hast das (ann&auml;hernd) unmögliche geschafft und weniger geklickt als Du Bubbles getroffen hast. Respekt!</p>";
+    document.getElementById("gz1").style.display = "inline-block";
+    document.getElementById("gz2").style.display = "none";
+    document.getElementById("gz3").style.display = "none";
   }
   else if (klicks === clicked) {
-    document.getElementById("gz").innerHTML = "<p>Respekt! Du hast f&uuml;r jede Bubble nur ein mal klicken m&uuml;ssen, um sie zu treffen. Nicht schlecht!</p>"
+    document.getElementById("gz1").style.display = "none";
+    document.getElementById("gz2").style.display = "inline-block";
+    document.getElementById("gz3").style.display = "none";
   }
   else if (number == clicked) {
     console.log("all");
-    document.getElementById("gz").innerHTML = "<p> Herzlichen Gl&uuml;ckwunsch!</p><p>Du hast alle Bubbles getroffen. Versuch doch mal mehr Bubbles in der gleichen Zeit zu treffen.</p><p class='display'>Die Anzahl an Blasen kannst du in den Einstellungen ändern.</p>"//hier geht das mit den Einstellungen iwie nicht :(
-  }
-  else {
-    document.getElementById("gz").innerHTML = "";
+    document.getElementById("gz1").style.display = "none";
+    document.getElementById("gz2").style.display = "none";
+    document.getElementById("gz3").style.display = "inline-block";
   }
 }
 
@@ -410,5 +414,4 @@ window.onload=paint;
 * fix bubbles anklicken!
 * fix footer margin-top
 * change settings display
-* fix WOAH message
 */
