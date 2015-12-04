@@ -8,6 +8,8 @@ var hitSound;
 var name, score, clicked, count, clicks, divLeaderboard;
 var table, row, nameCell, scoreCell, bubbleCell, clickCell;
 var runTimes=0;
+var firstRun = 1;
+var gameMode = 0;
 
 function paint() {
   var title = document.getElementById("startCanvas");
@@ -45,6 +47,7 @@ function toggle(id) {
 function displayInsteadOfCanvas(id){
   var divStartCanvas=document.getElementById("startCanvas");
   var divBubbleCanvas=document.getElementById("bubbleCanvas");
+  var divWelcome=document.getElementById("welcome");
   var divDescription=document.getElementById("description");
   var divSettings=document.getElementById("settings");
   var divGameOver=document.getElementById("gameOver");
@@ -60,12 +63,25 @@ function displayInsteadOfCanvas(id){
       }
       divStartCanvas.style.display='none';
       divBubbleCanvas.style.display='inline-block';
+      divWelcome.style.display='none';
       divDescription.style.display='none';
       divSettings.style.display='none';
       divGameOver.style.display='none';
       divLeaderboard.style.display='none';
       divWarning1.style.display = 'none';
       divWarning2.style.display = 'none';
+      break;
+    case "welcome":
+      divStartCanvas.style.display='none';
+      divBubbleCanvas.style.display='none';
+      divWelcome.style.display='inline-block';
+      divDescription.style.display='none';
+      divSettings.style.display='none';
+      divGameOver.style.display='none';
+      divLeaderboard.style.display='none';
+      divWarning1.style.display = 'none';
+      divWarning2.style.display = 'none';
+      firstRun = 0;
       break;
     case "description":
       if (divDescription.style.display == 'inline-block') {
@@ -89,6 +105,7 @@ function displayInsteadOfCanvas(id){
         divBubbleCanvas.style.display='none';
         divDescription.style.display='inline-block';
       }
+      divWelcome.style.display='none';
       divSettings.style.display='none';
       divGameOver.style.display='none';
       divLeaderboard.style.display='none';
@@ -130,6 +147,7 @@ function displayInsteadOfCanvas(id){
         divWarning1.style.display = 'none';
         divWarning2.style.display = 'none';
       }
+      divWelcome.style.display='none';
       divDescription.style.display='none';
       divGameOver.style.display='none';
       divLeaderboard.style.display='none';
@@ -137,6 +155,7 @@ function displayInsteadOfCanvas(id){
     case "gameOver":
       divStartCanvas.style.display='none';
       divBubbleCanvas.style.display='none';
+      divWelcome.style.display='none';
       divDescription.style.display='none';
       divSettings.style.display='none';
       divGameOver.style.display='inline-block';
@@ -158,6 +177,7 @@ function displayInsteadOfCanvas(id){
         divLeaderboard.style.display='inline-block';
       }
       divBubbleCanvas.style.display='none';
+      divWelcome.style.display='none';
       divDescription.style.display='none';
       divSettings.style.display='none';
       divGameOver.style.display='none';
@@ -167,6 +187,7 @@ function displayInsteadOfCanvas(id){
     case "gamOverButton":
       divStartCanvas.style.display='none';
       divBubbleCanvas.style.display='none';
+      divWelcome.style.display='none';
       divDescription.style.display='none';
       divSettings.style.display='none';
       divGameOver.style.display='none';
@@ -185,13 +206,18 @@ function updateDisplay(id, val) {
 
 function start() {
   displayInsteadOfCanvas('bubbleCanvas');
-  if (runTimes !== 0) {
-    console.log("Neustart abgebrochen, weil noch " + runTimes + " Spiel läuft");
+  if (firstRun == 1) {
+    displayInsteadOfCanvas("welcome");
   }
   else {
-    console.log("Spiel gestartet, weil " + runTimes + " Spiele gerade laufen");
-    runTimes++;
-    init();
+    if (runTimes !== 0) {
+      console.log("Neustart abgebrochen, weil noch " + runTimes + " Spiel läuft");
+    }
+    else {
+      console.log("Spiel gestartet, weil " + runTimes + " Spiele gerade laufen");
+      runTimes++;
+      init();
+    }
   }
 }
 
@@ -250,7 +276,13 @@ function erzeugeEinzelneBubble() {
   randomDifX=(Math.random() * speed - speed/2);
   randomDifY=(Math.random() * speed - speed/2);
   randomCol='#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1,6);
-  randomVal=Math.ceil(Math.random() * 100 % 10);
+  if (gameMode == 1) {
+
+  }
+  else {
+    randomVal=Math.ceil(Math.random() * 100 % 10);
+  }
+
   bubble=new object(randomX, randomY, randomDifX, randomDifY, randomRadius, randomCol, randomVal);
   bubbleList.push(bubble);
 }
