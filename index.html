@@ -45,10 +45,9 @@
           Anzahl Bubbles: <input type="number" id="displayNumber" class="display" value="10" min="1" max="50" step="1" maxlength="2" onchange="updateDisplay('number', this.value)"></input>
           <input type="range" name="number" id="number" min="1" max="50" step="1" value="10" onchange="updateDisplay('displayNumber', this.value);"></input></br>
           Geschwindigkeit: <input type="number" id="displaySpeed" class="display" value="10" min="1" max="50" step="1" maxlength="2" onchange="updateDisplay('speed', this.value)"></input>
-          <input type="range" name="speed" id="speed" min="1" max="50" step="1" value="10" onchange="updateDisplay('displaySpeed', this.value);"></br>
+          <input type="range" name="speed" id="speed" min="0" max="50" step="1" value="10" onchange="updateDisplay('displaySpeed', this.value);"></br>
           Sounds <p class="display grey">(experimentell):</p>
           <input type="checkbox" id="sound"></input></br>
-          Bewegungen stoppen: <input type="checkbox" id="motion"></input>
           <h3>Wähle einen Spielmodus</h2>
           <select id="gameMode" onchange="toggle()">
             <option value="0">Standard</option>

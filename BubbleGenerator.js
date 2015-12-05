@@ -10,7 +10,6 @@ var table, row, nameCell, scoreCell, bubbleCell, clickCell;
 var runTimes=0;
 var firstRun = 1;
 var gameMode, gameModeSelector;
-var stopMoving = 0;
 
 function paint() {
   var title = document.getElementById("startCanvas");
@@ -251,12 +250,6 @@ function init() {
   else {
     sound=0;
   }
-  if (document.getElementById('motion').checked) {
-    stopMoving=1;
-  }
-  else {
-    stopMoving=0;
-  }
   gameModeSelector = document.getElementById("gameMode");
   gameMode = gameModeSelector.options[gameModeSelector.selectedIndex].value;
   if (gameMode==2) {currentScore = number;}
@@ -357,10 +350,8 @@ function draw() {
 
 function update() {
   for (var k=0; k < number; k++) {
-    if (!stopMoving) {
     bubbleList[k].x += bubbleList[k].difX;
     bubbleList[k].y += bubbleList[k].difY;
-    }
 
     if (bubbleList[k].x - bubbleList[k].radius < 0) { //left
       bubbleList[k].difX=-(bubbleList[k].difX);
