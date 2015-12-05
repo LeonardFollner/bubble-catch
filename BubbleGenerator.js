@@ -1,5 +1,5 @@
 var canvas, context, height, width, number, speed, left, currentScore;
-var timer, date, date0, date1, remainingTime, klicks;
+var timer, d, date, date0, date1, remainingTime, seconds, milliSeconds, klicks;
 var timerInterval, mainInterval;
 var object, randomRadius, randomX, randomY, randomCol, randomVal, bubble, counter;
 var rect, clickX, clickY;
@@ -258,8 +258,10 @@ function init() {
   timer=document.getElementById('start');
   date=new Date();
   date0=date.getTime();
-  date1=date0 + 30000;
-  remainingTime=date1 - date0;
+  if (gameMode == 0) {
+    date1=date0 + 30000;
+    remainingTime=date1 - date0;
+  }
   klicks = 0;
 
   timerInterval=setInterval(updateTimer, 1);
@@ -330,12 +332,13 @@ function draw() {
     context.fillStyle=bubbleList[j].col;
     context.fill();
     if (gameMode != 2) {
-      context.fillStyle="#ffffff";
+      //context.fillStyle="#ffffff";
+      context.fillStyle="#000000";
       context.font="20px Helvetica";
       context.textAlign="center";
       context.textBaseline="middle";
       context.fillText(bubbleList[j].val, bubbleList[j].x, bubbleList[j].y);
-      context.strokeText(bubbleList[j].val, bubbleList[j].x, bubbleList[j].y);
+      //context.strokeText(bubbleList[j].val, bubbleList[j].x, bubbleList[j].y);
     }
     context.fillStyle="#000000";
     context.font="20px Helvetica";
@@ -447,64 +450,84 @@ function playSound(type) {
 }
 
 function updateTimer() {
-  var d=new Date();
-  date0=d.getTime();
-  remainingTime=date1 - date0;
-  var seconds=Math.floor(remainingTime / 1000);
-  var milliSeconds=Math.floor(remainingTime % 1000);
+  if (gameMode==0) {
+    d=new Date();
+    date0=d.getTime();
+    remainingTime=date1 - date0;
+    seconds=Math.floor(remainingTime / 1000);
+    milliSeconds=Math.floor(remainingTime % 1000);
 
-  if(remainingTime <= 0){
-    beendeSpiel();
+    if(remainingTime <= 0){
+      beendeSpiel();
+    }
+    else {
+      if (seconds >= 10) {
+        document.getElementById("bubbleCanvas").style.backgroundColor = "#90ee90";
+        document.getElementById("start").style.backgroundColor = "#90ee90";
+        if (milliSeconds < 100) {
+          timer.innerHTML=seconds + ":0" + milliSeconds;
+        }
+        else if (milliSeconds < 10) {
+          timer.innerHTML=seconds + ":00" + milliSeconds;
+        }
+        else if (milliSeconds === 0) {
+          timer.innerHTML=seconds + ":000";
+        }
+        else {
+          timer.innerHTML=seconds + ":" + milliSeconds;
+        }
+      }
+      else if (seconds > 5) {
+        document. getElementById("bubbleCanvas").style.backgroundColor = "#ffa07a";
+        document. getElementById("start").style.backgroundColor = "#ffa07a";
+        if (milliSeconds < 100) {
+          timer.innerHTML="0" + seconds + ":0" + milliSeconds;
+        }
+        else if (milliSeconds < 10) {
+          timer.innerHTML="0" + seconds + ":00" + milliSeconds;
+        }
+        else if (milliSeconds === 0) {
+          timer.innerHTML="0" + seconds + ":000";
+        }
+        else {
+          timer.innerHTML="0" + seconds + ":" + milliSeconds;
+        }
+      }
+      else if (seconds >= 0) {
+        document. getElementById("bubbleCanvas").style.backgroundColor = "#f08080";
+        document. getElementById("start").style.backgroundColor = "#f08080";
+        if (milliSeconds < 10) {
+          timer.innerHTML="<strong>0" + seconds + ":0" + milliSeconds + "</strong>";
+        }
+        else if (milliSeconds < 10) {
+          timer.innerHTML="<strong>0" + seconds + ":00" + milliSeconds + "</strong>";
+        }
+        else if (milliSeconds === 0) {
+          timer.innerHTML="<strong>0" + seconds + ":000</strong>";
+        }
+        else {
+          timer.innerHTML="<strong>0" + seconds + ":" + milliSeconds + "</strong>";
+        }
+      }
+    }
   }
   else {
-    if (seconds >= 10) {
-      document.getElementById("bubbleCanvas").style.backgroundColor = "#90ee90";
-      document.getElementById("start").style.backgroundColor = "#90ee90";
-      if (milliSeconds < 100) {
-        timer.innerHTML=seconds + ":0" + milliSeconds;
-      }
-      else if (milliSeconds < 10) {
-        timer.innerHTML=seconds + ":00" + milliSeconds;
-      }
-      else if (milliSeconds === 0) {
-        timer.innerHTML=seconds + ":000";
-      }
-      else {
-        timer.innerHTML=seconds + ":" + milliSeconds;
-      }
+    d=new Date();
+    date1=d.getTime();
+    remainingTime=date1-date0;
+    minutes = Math.floor(remainingTime / 1000 / 60);
+    seconds=Math.floor(remainingTime / 1000 % 60);
+    milliSeconds=Math.ceil(Math.floor(remainingTime % 1000)/100);
+    if (milliSeconds === 10) {
+      milliSeconds = milliSeconds/10;
     }
-    else if (seconds > 5) {
-      document. getElementById("bubbleCanvas").style.backgroundColor = "#ffa07a";
-      document. getElementById("start").style.backgroundColor = "#ffa07a";
-      if (milliSeconds < 100) {
-        timer.innerHTML="0" + seconds + ":0" + milliSeconds;
-      }
-      else if (milliSeconds < 10) {
-        timer.innerHTML="0" + seconds + ":00" + milliSeconds;
-      }
-      else if (milliSeconds === 0) {
-        timer.innerHTML="0" + seconds + ":000";
-      }
-      else {
-        timer.innerHTML="0" + seconds + ":" + milliSeconds;
-      }
+    if (minutes !== 0) {
+      timer.innerHTML=minutes + ":" + seconds + ":" + milliSeconds;
     }
-    else if (seconds >= 0) {
-      document. getElementById("bubbleCanvas").style.backgroundColor = "#f08080";
-      document. getElementById("start").style.backgroundColor = "#f08080";
-      if (milliSeconds < 10) {
-        timer.innerHTML="<strong>0" + seconds + ":0" + milliSeconds + "</strong>";
-      }
-      else if (milliSeconds < 10) {
-        timer.innerHTML="<strong>0" + seconds + ":00" + milliSeconds + "</strong>";
-      }
-      else if (milliSeconds === 0) {
-        timer.innerHTML="<strong>0" + seconds + ":000</strong>";
-      }
-      else {
-        timer.innerHTML="<strong>0" + seconds + ":" + milliSeconds + "</strong>";
-      }
+    else {
+      timer.innerHTML=seconds + ":" + milliSeconds;
     }
+    document.getElementById("start").style.backgroundColor = "#90ee90";
   }
 }
 
