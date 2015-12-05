@@ -1,15 +1,16 @@
 var canvas, context, height, width, number, speed, left, currentScore;
 var timer, date, date0, date1, remainingTime, klicks;
 var timerInterval, mainInterval;
-var object, randomRadius, randomX, randomY, randomCol, randomVal, bubble;
+var object, randomRadius, randomX, randomY, randomCol, randomVal, bubble, counter;
 var rect, clickX, clickY;
-var DistX, DistY, Dist;
+var DistX, DistY, Dist, currentBubble, smaller, comparedBubble;
 var hitSound;
 var name, score, clicked, count, clicks, divLeaderboard;
 var table, row, nameCell, scoreCell, bubbleCell, clickCell;
 var runTimes=0;
 var firstRun = 1;
-var gameMode = 0;
+var sound;
+var gameMode, gameModeSelector;
 
 function paint() {
   var title = document.getElementById("startCanvas");
@@ -34,14 +35,26 @@ function paint() {
   titleCtx.fillText("zum Starten Klicken", 300, 230);
 }
 
-function toggle(id) {
-  var e=document.getElementById(id);
-  if(e.style.display == 'block') {
-    e.style.display='none';
+function toggle() {
+  gameModeSelector = document.getElementById("gameMode");
+  gameMode = gameModeSelector.options[gameModeSelector.selectedIndex].value;
+  switch (gameMode) {
+    case "0":
+      document.getElementById("standard").style.display = 'inline-block';
+      document.getElementById("ordered").style.display = 'none';
+      document.getElementById("puzzle").style.display = 'none';
+      break;
+    case "1":
+      document.getElementById("standard").style.display = 'none';
+      document.getElementById("ordered").style.display = 'inline-block';
+      document.getElementById("puzzle").style.display = 'none';
+      break;
+    case "2":
+      document.getElementById("standard").style.display = 'none';
+      document.getElementById("ordered").style.display = 'none';
+      document.getElementById("puzzle").style.display = 'inline-block';
+      break;
   }
-  else {
-    e.style.display='block';
-    }
 }
 
 function displayInsteadOfCanvas(id){
@@ -227,10 +240,19 @@ function init() {
   height=canvas.height;
   width=canvas.width;
   bubbleList=new Array("");
+  currentScore=0;
+
   number=document.getElementById('number').value;
   speed=document.getElementById('speed').value;
   left=number;
-  currentScore=0;
+  if (document.getElementById('sound').checked) {
+    sound=1;
+  }
+  else {
+    sound=0;
+  }
+  gameModeSelector = document.getElementById("gameMode");
+  gameMode = gameModeSelector.options[gameModeSelector.selectedIndex].value;
 
   timer=document.getElementById('start');
   date=new Date();
@@ -276,13 +298,23 @@ function erzeugeEinzelneBubble() {
   randomDifX=(Math.random() * speed - speed/2);
   randomDifY=(Math.random() * speed - speed/2);
   randomCol='#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1,6);
-  if (gameMode == 1) {
-
-  }
-  else {
+  if (gameMode!=2) {
     randomVal=Math.ceil(Math.random() * 100 % 10);
+    if (gameMode == 1) {
+      while (counter != bubbleList.length) {
+        counter = 0;
+        for (var a = 0; a < bubbleList.length; a++) {
+          if (randomVal == bubbleList[a].val) {
+            randomVal=Math.ceil(Math.random() * 100 % 10);
+            counter = 0;
+          }
+          else {
+            counter++;
+          }
+        }
+      }
+    }
   }
-
   bubble=new object(randomX, randomY, randomDifX, randomDifY, randomRadius, randomCol, randomVal);
   bubbleList.push(bubble);
 }
@@ -296,12 +328,14 @@ function draw() {
     context.stroke();
     context.fillStyle=bubbleList[j].col;
     context.fill();
-    context.fillStyle="#ffffff";
-    context.font="20px Helvetica";
-    context.textAlign="center";
-    context.textBaseline="middle";
-    context.fillText(bubbleList[j].val, bubbleList[j].x, bubbleList[j].y);
-    context.strokeText(bubbleList[j].val, bubbleList[j].x, bubbleList[j].y);
+    if (gameMode != 2) {
+      context.fillStyle="#ffffff";
+      context.font="20px Helvetica";
+      context.textAlign="center";
+      context.textBaseline="middle";
+      context.fillText(bubbleList[j].val, bubbleList[j].x, bubbleList[j].y);
+      context.strokeText(bubbleList[j].val, bubbleList[j].x, bubbleList[j].y);
+    }
   }
   update();
 }
@@ -338,15 +372,52 @@ function beiKlick() {
     DistY=bubbleList[l].y - clickY;
     Dist=Math.sqrt(DistX * DistX + DistY * DistY);
     if (Dist < bubbleList[l].radius) {
-      currentScore += bubbleList[l].val;
-      bubbleList.splice(l, 1, "hit");
-      hitSound = new Audio('shoot.mp3');
-      hitSound.play();
+      currentBubble=bubbleList[l];
+      switch (gameMode) {
+        case "0":
+          currentScore += bubbleList[l].val;
+          if (sound) {playSound();}
+          bubbleList.splice(l, 1, "hit");
+          break;
+        case "1":
+          smaller=0;
+          for (var b=0; b<number; b++) {
+            comparedBubble = bubbleList[b];
+            if (comparedBubble.val < currentBubble.val) {
+              smaller++;
+            }
+          }
+          if (smaller===0) {
+            currentScore++;
+            if (sound) {playSound();}
+            bubbleList.splice(l, 1, "hit");
+          }
+          break;
+        case "2":
+          smaller=0;
+          for (var c=0; c<number; c++) {
+            comparedBubble = bubbleList[c];
+            if (comparedBubble.radius < currentBubble.radius) {
+              smaller++;
+            }
+          }
+          if (smaller===0) {
+            currentScore++;
+            if (sound) {playSound();}
+            bubbleList.splice(l, 1, "hit");
+          }
+          break;
+      }
+      if (remainingBubbles() === 0) {
+        beendeSpiel();
+      }
     }
   }
-  if (remainingBubbles() === 0) {
-    beendeSpiel();
-  }
+}
+
+function playSound() {
+  hitSound = new Audio('shoot.mp3');
+  hitSound.play();
 }
 
 function updateTimer() {
@@ -485,5 +556,4 @@ window.onload=paint;
 * Barrierefreiheit!
 * fix bubbles anklicken!
 * fix footer margin-top
-* change settings display
 */

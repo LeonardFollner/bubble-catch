@@ -3,6 +3,14 @@ html {
   font-family: 'Helvetica';
 }
 
+h1 {
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+}
+
 li {
   padding: 20px;
   list-style: none;
@@ -92,11 +100,17 @@ input {
 }
 
 .canvasAndCo {
-  width: 600px;
-  height: 400px;
+  width: 560px;
+  height: 360px;
   border: 1px solid #808080;
   display: none;
-  text-align: center;
+  padding: 20px;
+  /*text-align: center;*/
+}
+
+.canvasOnly {
+  border: 1px solid #808080;
+  display: none;
 }
 
 .message {
@@ -137,19 +151,7 @@ input {
   text-align: center;
 }
 
-#description {
-  width: 600px;
-  height: 400px;
-  border: 1px solid #808080;
-  display: none;
-  text-align: center;
-}
-
 #startCanvas {
   display: inline-block;
   cursor: pointer;
-}
-
-#settings {
-  display: none;
 }

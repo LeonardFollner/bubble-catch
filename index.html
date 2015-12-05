@@ -26,7 +26,7 @@
     </div>
 
     <div id="gameArea">
-      <canvas id="startCanvas" height="400px" width="600px" class="canvasAndCo" onclick="start()"></canvas>
+      <canvas id="startCanvas" height="400px" width="600px" class="canvasOnly" onclick="start()"></canvas>
       <div id="welcome" class="canvasAndCo">
         <h2>Willkommen zu Bubble-Catch!</h2>
         <p>Bubble-Catch ist ein einfaches Spiel, bei dem es darum geht so viele Bubbles wie möglich platzen zu lassen. Jede Bubble, die du anklickst bringt dir Punkte.</p>
@@ -45,11 +45,21 @@
           Anzahl Bubbles: <input type="number" id="displayNumber" class="display" value="10" min="1" max="50" step="1" maxlength="2" onchange="updateDisplay('number', this.value)"></input>
           <input type="range" name="number" id="number" min="1" max="50" step="1" value="10" onchange="updateDisplay('displayNumber', this.value);"></input></br>
           Geschwindigkeit: <input type="number" id="displaySpeed" class="display" value="10" min="1" max="50" step="1" maxlength="2" onchange="updateDisplay('speed', this.value)"></input>
-          <input type="range" name="speed" id="speed" min="1" max="50" step="1" value="10" onchange="updateDisplay('displaySpeed', this.value);">
-          <input type="submit" onclick="start()" value="Starten" class="notInline center button"></input>
+          <input type="range" name="speed" id="speed" min="1" max="50" step="1" value="10" onchange="updateDisplay('displaySpeed', this.value);"></br>
+          Sound:
+          <input type="checkbox" id="sound" checked></input>
+          <h3>Wähle einen Spielmodus</h2>
+          <select id="gameMode" onchange="toggle()">
+            <option value="0">Standard</option>
+            <option value="1">Geordnet</option>
+            <option value="2">Puzzle</option>
+          </select>
+          <p id="standard">Im Standard-Spiel geht es darum in einer halben Minute so viele Punkte wie möglich zu sammeln.</p>
+          <p id="ordered" class="noDisplay">Im Spielmodus "Geordnet" muss man die Bubbles dem Wert nach, mit dem kleinsten beginnend, anklicken. Wenn man eine falsche Bubble anklickt bringt das Punktabzug.</p>
+          <p id="puzzle" class="noDisplay">Der Puzzle-Modus ist sehr entspannt. Es geht ohne jegliche Zeitvorgabe nur darum die Bubbles der Größe nach anzuklicken. Das ist meist schwieriger als es zuerst klingt.</p>
         </form>
       </div>
-      <canvas id="bubbleCanvas" height="400px" width="600px" class="canvasAndCo"></canvas>
+      <canvas id="bubbleCanvas" height="400px" width="600px" class="canvasOnly"></canvas>
       <div id="gameOver"  class="canvasAndCo">
         <h2>Game Over!</h2>
         <p class="display"> Du hast <div id="clicked" class="display"></div> von <div id="count" class="display"></div> Bubbles getroffen und so <div id="points" class="display"></div> Punkte erreicht.</p>
@@ -65,7 +75,7 @@
       </div>
       <div id="leaderboard" class="canvasAndCo">
         <h2>Bestenliste</h2>
-        <table id="tableLeaderboard">
+        <table id="tableLeaderboard" class="textCenter">
           <tr>
             <th>Spieler</th>
             <th>Punkte</th>
