@@ -308,7 +308,7 @@ function erzeugeEinzelneBubble() {
         counter = 0;
         for (var a = 0; a < bubbleList.length; a++) {
           if (randomVal == bubbleList[a].val) {
-            randomVal=Math.ceil(Math.random() * 100 % 10);
+            randomVal=Math.ceil(Math.random() * 100 % number);
             counter = 0;
           }
           else {
@@ -556,7 +556,7 @@ function generateGameOver() {
       document.getElementById('clicked0').innerHTML = clicked;
       document.getElementById('points0').innerHTML = currentScore;
       document.getElementById('clickCounter0').innerHTML = klicks;
-      
+
       if (klicks < clicked) {
         document.getElementById("gz1").style.display = "inline-block";
         document.getElementById("gz2").style.display = "none";
