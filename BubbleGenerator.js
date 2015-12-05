@@ -522,7 +522,12 @@ function updateTimer() {
       milliSeconds = milliSeconds/10;
     }
     if (minutes !== 0) {
-      timer.innerHTML=minutes + ":" + seconds + ":" + milliSeconds;
+      if (seconds < 10) {
+        timer.innerHTML=minutes + ":0" + seconds + ":" + milliSeconds;
+      }
+      else {
+        timer.innerHTML=minutes + ":" + seconds + ":" + milliSeconds;
+      }
     }
     else {
       timer.innerHTML=seconds + ":" + milliSeconds;
