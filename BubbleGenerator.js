@@ -564,20 +564,25 @@ function generateGameOver() {
       document.getElementById('clickCounter0').innerHTML = klicks;
 
       if (klicks < clicked) {
-        document.getElementById("gz1").style.display = "inline-block";
-        document.getElementById("gz2").style.display = "none";
-        document.getElementById("gz3").style.display = "none";
+        document.getElementById("0gz1").style.display = "inline-block";
+        document.getElementById("0gz2").style.display = "none";
+        document.getElementById("0gz3").style.display = "none";
       }
       else if (klicks === clicked) {
-        document.getElementById("gz1").style.display = "none";
-        document.getElementById("gz2").style.display = "inline-block";
-        document.getElementById("gz3").style.display = "none";
+        document.getElementById("0gz1").style.display = "none";
+        document.getElementById("0gz2").style.display = "inline-block";
+        document.getElementById("0gz3").style.display = "none";
       }
       else if (number == clicked) {
         console.log("all");
-        document.getElementById("gz1").style.display = "none";
-        document.getElementById("gz2").style.display = "none";
-        document.getElementById("gz3").style.display = "inline-block";
+        document.getElementById("0gz1").style.display = "none";
+        document.getElementById("0gz2").style.display = "none";
+        document.getElementById("0gz3").style.display = "inline-block";
+      }
+      else {
+        document.getElementById("0gz1").style.display = "none";
+        document.getElementById("0gz2").style.display = "none";
+        document.getElementById("0gz3").style.display = "none";
       }
 
       document.getElementById("gameOver0").style.display = "inline-block";
@@ -590,6 +595,13 @@ function generateGameOver() {
       document.getElementById('points1').innerHTML = currentScore;
       document.getElementById('clickCounter1').innerHTML = klicks;
 
+      if (number == klicks) {
+        document.getElementById("1gz1").style.display = "inline-block";
+      }
+      else {
+        document.getElementById("1gz1").style.display = "none";
+      }
+
       document.getElementById("gameOver0").style.display = "none";
       document.getElementById("gameOver1").style.display = "inline-block";
       document.getElementById("gameOver2").style.display = "none";
@@ -599,6 +611,13 @@ function generateGameOver() {
       document.getElementById('count2').innerHTML = number;
       document.getElementById('points2').innerHTML = currentScore;
       document.getElementById('clickCounter2').innerHTML = klicks;
+
+      if (number == klicks) {
+        document.getElementById("2gz1").style.display = "inline-block";
+      }
+      else {
+        document.getElementById("2gz1").style.display = "none";
+      }
 
       document.getElementById("gameOver0").style.display = "none";
       document.getElementById("gameOver1").style.display = "none";
