@@ -251,6 +251,12 @@ function init() {
   else {
     sound=0;
   }
+  if (document.getElementById('motion').checked) {
+    stopMoving=1;
+  }
+  else {
+    stopMoving=0;
+  }
   gameModeSelector = document.getElementById("gameMode");
   gameMode = gameModeSelector.options[gameModeSelector.selectedIndex].value;
   if (gameMode==2) {currentScore = number;}
