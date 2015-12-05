@@ -4,13 +4,13 @@ var timerInterval, mainInterval;
 var object, randomRadius, randomX, randomY, randomCol, randomVal, bubble, counter;
 var rect, clickX, clickY;
 var DistX, DistY, Dist, currentBubble, smaller, comparedBubble;
-var hitSound;
+var sound, hitSound, wrongSound;
 var name, score, clicked, count, clicks, divLeaderboard;
 var table, row, nameCell, scoreCell, bubbleCell, clickCell;
 var runTimes=0;
 var firstRun = 1;
-var sound;
 var gameMode, gameModeSelector;
+var stopMoving = 0;
 
 function paint() {
   var title = document.getElementById("startCanvas");
@@ -253,6 +253,7 @@ function init() {
   }
   gameModeSelector = document.getElementById("gameMode");
   gameMode = gameModeSelector.options[gameModeSelector.selectedIndex].value;
+  if (gameMode==2) {currentScore = number;}
 
   timer=document.getElementById('start');
   date=new Date();
@@ -336,14 +337,21 @@ function draw() {
       context.fillText(bubbleList[j].val, bubbleList[j].x, bubbleList[j].y);
       context.strokeText(bubbleList[j].val, bubbleList[j].x, bubbleList[j].y);
     }
+    context.fillStyle="#000000";
+    context.font="20px Helvetica";
+    context.textAlign="end";
+    context.textBaseline="top";
+    context.fillText(currentScore, 580, 20);
   }
   update();
 }
 
 function update() {
   for (var k=0; k < number; k++) {
+    if (!stopMoving) {
     bubbleList[k].x += bubbleList[k].difX;
     bubbleList[k].y += bubbleList[k].difY;
+    }
 
     if (bubbleList[k].x - bubbleList[k].radius < 0) { //left
       bubbleList[k].difX=-(bubbleList[k].difX);
@@ -376,7 +384,7 @@ function beiKlick() {
       switch (gameMode) {
         case "0":
           currentScore += bubbleList[l].val;
-          if (sound) {playSound();}
+          if (sound) {playSound("hit");}
           bubbleList.splice(l, 1, "hit");
           break;
         case "1":
@@ -388,9 +396,13 @@ function beiKlick() {
             }
           }
           if (smaller===0) {
-            currentScore++;
-            if (sound) {playSound();}
+            currentScore += bubbleList[l].val;
+            if (sound) {playSound("hit");}
             bubbleList.splice(l, 1, "hit");
+          }
+          else {
+            currentScore -= bubbleList[l].val;
+            if (sound) {playSound("wrong");}
           }
           break;
         case "2":
@@ -402,8 +414,8 @@ function beiKlick() {
             }
           }
           if (smaller===0) {
-            currentScore++;
-            if (sound) {playSound();}
+            currentScore = remainingBubbles();
+            if (sound) {playSound("hit");}
             bubbleList.splice(l, 1, "hit");
           }
           break;
@@ -415,9 +427,23 @@ function beiKlick() {
   }
 }
 
-function playSound() {
-  hitSound = new Audio('shoot.mp3');
-  hitSound.play();
+function playSound(type) {
+  hitSound = new Audio('coin.wav');
+  wrongSound = new Audio('implosion.wav');
+  endSound = new Audio('complete.wav');
+  timerSound = new Audio('timer.wav');
+  if (type == "hit") {
+    hitSound.play();
+  }
+  else if (type == "wrong") {
+    wrongSound.play();
+  }
+  else if (type == "end") {
+    endSound.play();
+  }
+  else if (type == "timer") {
+    timerSound.play();
+  }
 }
 
 function updateTimer() {
@@ -518,6 +544,7 @@ function generateGameOver() {
 }
 
 function beendeSpiel() {
+  if (sound) {playSound("end");}
   timer.innerHTML="Neustarten";
   document. getElementById("start").style.backgroundColor = "#0000ff";
   document. getElementById("start").style.color = "#ffffff";
