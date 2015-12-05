@@ -549,25 +549,55 @@ function remainingBubbles() {
 function generateGameOver() {
   clicked = number - remainingBubbles();
   displayInsteadOfCanvas('gameOver');
-  document.getElementById('count').innerHTML = number;
-  document.getElementById('clicked').innerHTML = clicked;
-  document.getElementById('points').innerHTML = currentScore;
-  document.getElementById('clickCounter').innerHTML = klicks;
-  if (klicks < clicked) {
-    document.getElementById("gz1").style.display = "inline-block";
-    document.getElementById("gz2").style.display = "none";
-    document.getElementById("gz3").style.display = "none";
-  }
-  else if (klicks === clicked) {
-    document.getElementById("gz1").style.display = "none";
-    document.getElementById("gz2").style.display = "inline-block";
-    document.getElementById("gz3").style.display = "none";
-  }
-  else if (number == clicked) {
-    console.log("all");
-    document.getElementById("gz1").style.display = "none";
-    document.getElementById("gz2").style.display = "none";
-    document.getElementById("gz3").style.display = "inline-block";
+
+  switch (gameMode) {
+    case "0":
+      document.getElementById('count0').innerHTML = number;
+      document.getElementById('clicked0').innerHTML = clicked;
+      document.getElementById('points0').innerHTML = currentScore;
+      document.getElementById('clickCounter0').innerHTML = klicks;
+      
+      if (klicks < clicked) {
+        document.getElementById("gz1").style.display = "inline-block";
+        document.getElementById("gz2").style.display = "none";
+        document.getElementById("gz3").style.display = "none";
+      }
+      else if (klicks === clicked) {
+        document.getElementById("gz1").style.display = "none";
+        document.getElementById("gz2").style.display = "inline-block";
+        document.getElementById("gz3").style.display = "none";
+      }
+      else if (number == clicked) {
+        console.log("all");
+        document.getElementById("gz1").style.display = "none";
+        document.getElementById("gz2").style.display = "none";
+        document.getElementById("gz3").style.display = "inline-block";
+      }
+
+      document.getElementById("gameOver0").style.display = "inline-block";
+      document.getElementById("gameOver1").style.display = "none";
+      document.getElementById("gameOver2").style.display = "none";
+      break;
+    case "1":
+      document.getElementById('time1').innerHTML = minutes + " Minuten und " + seconds + " Sekunden";
+      document.getElementById('count1').innerHTML = number;
+      document.getElementById('points1').innerHTML = currentScore;
+      document.getElementById('clickCounter1').innerHTML = klicks;
+
+      document.getElementById("gameOver0").style.display = "none";
+      document.getElementById("gameOver1").style.display = "inline-block";
+      document.getElementById("gameOver2").style.display = "none";
+      break;
+    case "2":
+      document.getElementById('time2').innerHTML = minutes + " Minuten und " + seconds + " Sekunden";
+      document.getElementById('count2').innerHTML = number;
+      document.getElementById('points2').innerHTML = currentScore;
+      document.getElementById('clickCounter2').innerHTML = klicks;
+
+      document.getElementById("gameOver0").style.display = "none";
+      document.getElementById("gameOver1").style.display = "none";
+      document.getElementById("gameOver2").style.display = "inline-block";
+      break;
   }
 }
 
@@ -586,7 +616,17 @@ function beendeSpiel() {
 }
 
 function generateLeaderboardWithoutdisplay() {
-  name = document.playerInfo.playerName.value;
+  switch (gameMode) {
+    case "0":
+      name = document.playerInfo0.playerName.value;
+      break;
+    case "1":
+      name = document.playerInfo1.playerName.value;
+      break;
+    case "2":
+      name = document.playerInfo2.playerName.value;
+      break;
+  }
   table = document.getElementById("tableLeaderboard");
   row = table.insertRow(-1);
   nameCell = row.insertCell(0);
