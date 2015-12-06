@@ -581,7 +581,12 @@ function generateGameOver() {
       document.getElementById("gameOver2").style.display = "none";
       break;
     case "1":
-      document.getElementById('time1').innerHTML = minutes + " Minuten und " + seconds + " Sekunden";
+      if (minutes === 0) {
+        document.getElementById('time1').innerHTML = seconds + " Sekunden";
+      }
+      else {
+        document.getElementById('time1').innerHTML = minutes + " Minuten und " + seconds + " Sekunden";
+      }
       document.getElementById('count1').innerHTML = number;
       document.getElementById('points1').innerHTML = currentScore;
       document.getElementById('clickCounter1').innerHTML = klicks;
@@ -598,7 +603,12 @@ function generateGameOver() {
       document.getElementById("gameOver2").style.display = "none";
       break;
     case "2":
-      document.getElementById('time2').innerHTML = minutes + " Minuten und " + seconds + " Sekunden";
+      if (minutes === 0) {
+        document.getElementById('time2').innerHTML = seconds + " Sekunden";
+      }
+      else {
+        document.getElementById('time2').innerHTML = minutes + " Minuten und " + seconds + " Sekunden";
+      }
       document.getElementById('count2').innerHTML = number;
       document.getElementById('points2').innerHTML = currentScore;
       document.getElementById('clickCounter2').innerHTML = klicks;
@@ -657,7 +667,7 @@ function generateLeaderboardWithoutdisplay() {
       timeCell = row.insertCell(3);
 
       bubbleCell.innerHTML = number;
-      if (minutes == 0) {
+      if (minutes === 0) {
         if (seconds < 10) {
           timeCell.innerHTML = "00:0" + seconds;
         }
@@ -692,7 +702,7 @@ function generateLeaderboardWithoutdisplay() {
       timeCell = row.insertCell(2);
 
       bubbleCell.innerHTML = number;
-      if (minutes == 0) {
+      if (minutes === 0) {
         if (seconds < 10) {
           timeCell.innerHTML = "00:0" + seconds;
         }
