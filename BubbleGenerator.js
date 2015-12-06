@@ -6,7 +6,7 @@ var rect, clickX, clickY;
 var DistX, DistY, Dist, currentBubble, smaller, comparedBubble;
 var sound, hitSound, wrongSound;
 var name, score, clicked, count, clicks, divLeaderboard;
-var table, row, nameCell, scoreCell, bubbleCell, clickCell;
+var table, row, nameCell, scoreCell, bubbleCell, timeCell, clickCell;
 var runTimes=0;
 var firstRun = 1;
 var gameMode, gameModeSelector;
@@ -635,25 +635,91 @@ function generateLeaderboardWithoutdisplay() {
   switch (gameMode) {
     case "0":
       name = document.playerInfo0.playerName.value;
+      table = document.getElementById("tableLeaderboard0");
+
+      row = table.insertRow(-1);
+      nameCell = row.insertCell(0);
+      scoreCell = row.insertCell(1);
+      bubbleCell = row.insertCell(2);
+      clickCell = row.insertCell(3);
+
+      bubbleCell.innerHTML = clicked + " / " + number;
+      clickCell.innerHTML = klicks;
       break;
     case "1":
       name = document.playerInfo1.playerName.value;
+      table = document.getElementById("tableLeaderboard1");
+
+      row = table.insertRow(-1);
+      nameCell = row.insertCell(0);
+      scoreCell = row.insertCell(1);
+      bubbleCell = row.insertCell(2);
+      timeCell = row.insertCell(3);
+
+      bubbleCell.innerHTML = number;
+      if (minutes == 0) {
+        if (seconds < 10) {
+          timeCell.innerHTML = "00:0" + seconds;
+        }
+        else {
+          timeCell.innerHTML = "00:" + seconds;
+        }
+      }
+      else if (minutes < 10) {
+        if (seconds < 10) {
+          timeCell.innerHTML = "0" + minutes + ":0" + seconds;
+        }
+        else {
+          timeCell.innerHTML = "0" + minutes + ":" + seconds;
+        }
+      }
+      else {
+        if (seconds < 10) {
+          timeCell.innerHTML = minutes + ":0" + seconds;
+        }
+        else {
+          timeCell.innerHTML = minutes + ":" + seconds;
+        }
+      }
       break;
     case "2":
       name = document.playerInfo2.playerName.value;
+      table = document.getElementById("tableLeaderboard2");
+
+      row = table.insertRow(-1);
+      nameCell = row.insertCell(0);
+      bubbleCell = row.insertCell(1);
+      timeCell = row.insertCell(2);
+
+      bubbleCell.innerHTML = number;
+      if (minutes == 0) {
+        if (seconds < 10) {
+          timeCell.innerHTML = "00:0" + seconds;
+        }
+        else {
+          timeCell.innerHTML = "00:" + seconds;
+        }
+      }
+      else if (minutes < 10) {
+        if (seconds < 10) {
+          timeCell.innerHTML = "0" + minutes + ":0" + seconds;
+        }
+        else {
+          timeCell.innerHTML = "0" + minutes + ":" + seconds;
+        }
+      }
+      else {
+        if (seconds < 10) {
+          timeCell.innerHTML = minutes + ":0" + seconds;
+        }
+        else {
+          timeCell.innerHTML = minutes + ":" + seconds;
+        }
+      }
       break;
   }
-  table = document.getElementById("tableLeaderboard");
-  row = table.insertRow(-1);
-  nameCell = row.insertCell(0);
-  scoreCell = row.insertCell(1);
-  bubbleCell = row.insertCell(2);
-  clickCell = row.insertCell(3);
-
   nameCell.innerHTML = name;
   scoreCell.innerHTML = currentScore;
-  bubbleCell.innerHTML = "" + clicked + " / " + number + "";
-  clickCell.innerHTML = klicks;
 }
 
 function generateLeaderboard() {
