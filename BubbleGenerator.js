@@ -636,6 +636,7 @@ function updateTimer() {
       timer.innerHTML=seconds + ":" + milliSeconds;
     }
     document.getElementById("start").style.backgroundColor = "#90ee90";
+    document.getElementById("bubbleCanvas").style.backgroundColor = "#90ee90";
   }
 }
 
@@ -738,8 +739,9 @@ function generateGameOver() {
 function beendeSpiel() {
   if (sound) {playSound("end");}
   timer.innerHTML="Neustarten";
-  document. getElementById("start").style.backgroundColor = "#0000ff";
-  document. getElementById("start").style.color = "#ffffff";
+  document.getElementById("start").style.backgroundColor = "#0000ff";
+  document.getElementById("start").style.color = "#ffffff";
+  //document.getElementById("start").style.borderColor = "#ffa500";
   console.log("Game Over!");
   clearInterval(mainInterval);
   clearInterval(timerInterval);
