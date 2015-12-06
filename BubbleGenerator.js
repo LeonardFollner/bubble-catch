@@ -14,6 +14,7 @@ var table, row, nameCell, scoreCell, bubbleCell, timeCell, clickCell;
 var runTimes=0;
 var firstRun = 1;
 var gameMode, gameModeSelector;
+name = "player1";
 
 function paint() {
   var title = document.getElementById("startCanvas");
@@ -321,7 +322,6 @@ function updateDisplay(id, val) {
 function start() {
   displayInsteadOfCanvas('bubbleCanvas');
   if (firstRun == 1) {
-    name = "player1";
     displayInsteadOfCanvas("welcome");
   }
   else {
@@ -360,7 +360,7 @@ function init() {
   timer=document.getElementById('start');
   date=new Date();
   date0=date.getTime();
-  if (gameMode == 0) {
+  if (gameMode === "0") {
     date1=date0 + 30000;
     remainingTime=date1 - date0;
   }
@@ -553,7 +553,7 @@ function playSound(type) {
 }
 
 function updateTimer() {
-  if (gameMode==0) {
+  if (gameMode==="0") {
     d=new Date();
     date0=d.getTime();
     remainingTime=date1 - date0;

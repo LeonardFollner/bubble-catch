@@ -21,7 +21,6 @@
         <li class="button buttonList" onclick="displayInsteadOfCanvas('settings')" id="settingsButton">Einstellungen</li>
         <li class="message noDisplay" id="warning1"><p>Einstellungen sind während des Spiels nicht &auml;nderbar!</p></li>
         <li class="message noDisplay" id="warning2"><p>Es l&auml;uft noch ein Spiel!</p></li>
-        </li>
       </ul>
     </div>
 
@@ -36,7 +35,7 @@
       </div>
       <div id="description"  class="canvasAndCo">
         <h2>Beschreibung</h2>
-        <p>In Bubble-Catch geht es darum Bubbles platzen zu lassen. Je nach Spielmodus gibt es daür verschiedene Regeln.
+        <p>In Bubble-Catch geht es darum Bubbles platzen zu lassen. Je nach Spielmodus gibt es daür verschiedene Regeln.</p>
         <p class="display">Im <h3 class="display">Standard-Modus</h3> musst du in einer halben Minute so viele Punkte, wie möglich durch das Anklicken von Bubbles sammeln. Mehr Punkte erreichst du, in dem du mehr Bubbles in der gleichen Zeit anklickst.</p>
         <p class="display">Im <h3 class="display">Geordneten Modus</h3> musst du die Bubbles der Reihenfolge nach anklicken und mit dem kleinsten Wert anfangen. Wenn du aber eine falsche Bubble anklickst bekommst du Punkte abgezogen.</p>
         <p class="display">Im <h3 class="display">Puzzle</h3> kannst du dir Zeit lassen. Du musst die Bubbles der Größe nach anklicken. Dafür hast unbegrenzt Zeit und es gibt keine Punkte dafür.</p>
@@ -46,13 +45,13 @@
       <div id="settings" class="canvasAndCo">
         <h2>Einstellungen</h2>
         <form name="input" onsubmit="return false">
-          Anzahl Bubbles: <input type="number" id="displayNumber" class="display" value="10" min="1" max="50" step="1" maxlength="2" onchange="updateDisplay('number', this.value)"></input>
-          <input type="range" name="number" id="number" min="1" max="50" step="1" value="10" onchange="updateDisplay('displayNumber', this.value);"></input></br>
-          Geschwindigkeit: <input type="number" id="displaySpeed" class="display" value="10" min="1" max="50" step="1" maxlength="2" onchange="updateDisplay('speed', this.value)"></input>
-          <input type="range" name="speed" id="speed" min="0" max="50" step="1" value="10" onchange="updateDisplay('displaySpeed', this.value);"></br>
+          Anzahl Bubbles: <input type="number" id="displayNumber" class="display" value="10" min="1" max="50" step="1" maxlength="2" onchange="updateDisplay('number', this.value)">
+          <input type="range" name="number" id="number" min="1" max="50" step="1" value="10" onchange="updateDisplay('displayNumber', this.value);"><br>
+          Maximale Geschwindigkeit: <input type="number" id="displaySpeed" class="display" value="10" min="1" max="50" step="1" maxlength="2" onchange="updateDisplay('speed', this.value)">
+          <input type="range" name="speed" id="speed" min="0" max="50" step="1" value="10" onchange="updateDisplay('displaySpeed', this.value);"><br>
           Sounds <p class="display grey">(experimentell):</p>
-          <input type="checkbox" id="sound"></input></br>
-          <h3>Wähle einen Spielmodus</h2>
+          <input type="checkbox" id="sound"><br>
+          <h3>Wähle einen Spielmodus</h3>
           <select id="gameMode" onchange="toggleGameMode()">
             <option value="0">Standard</option>
             <option value="1">Geordnet</option>
@@ -72,7 +71,7 @@
           <form name="playerInfo0" autocomplete="off" onsubmit="return false">
             Gib deinen Namen ein:
             <input type="text" name="playerName" value="player1"/>
-            <input type="button" value="Auf die Bestenliste!" id="enterLeaderboard" onclick="generateLeaderboard()"/>
+            <input type="button" value="Auf die Bestenliste!" id="enterLeaderboard0" onclick="generateLeaderboard()"/>
           </form>
           <div id="0gz1" class="noDisplay"><p><strong>WOAH!</strong></p><p>Du hast das (ann&auml;hernd) unmögliche geschafft und weniger geklickt als Du Bubbles getroffen hast. Respekt!</p></div>
           <div id="0gz2" class="noDisplay"><p>Respekt! Du hast f&uuml;r jede Bubble nur ein mal klicken m&uuml;ssen, um sie zu treffen. Nicht schlecht!</p></div>
@@ -84,7 +83,7 @@
           <form name="playerInfo1" autocomplete="off" onsubmit="return false">
             Gib deinen Namen ein:
             <input type="text" name="playerName" value="player1"/>
-            <input type="button" value="Auf die Bestenliste!" id="enterLeaderboard" onclick="generateLeaderboard()"/>
+            <input type="button" value="Auf die Bestenliste!" id="enterLeaderboard1" onclick="generateLeaderboard()"/>
           </form>
           <div id="1gz1" class="noDisplay"><p>Sehr gut! Du hast dich nie verklickt.</p></div>
         </div>
@@ -94,7 +93,7 @@
           <form name="playerInfo2" autocomplete="off" onsubmit="return false">
             Gib deinen Namen ein:
             <input type="text" name="playerName" value="player1"/>
-            <input type="button" value="Auf die Bestenliste!" id="enterLeaderboard" onclick="generateLeaderboard()"/>
+            <input type="button" value="Auf die Bestenliste!" id="enterLeaderboard2" onclick="generateLeaderboard()"/>
           </form>
           <div id="2gz1" class="noDisplay"><p>Sehr gut! Du hast dich nie verklickt.</p></div>
         </div>
@@ -144,7 +143,7 @@
   </div>
   <div class="textCenter">
     <ul>
-      <li class="display"><strong>Alle Einstellungen und Bestenlisten werden nur so lange gespeichert, wie dieser Tab geöffnet bleibt.</stong></li>
+      <li class="display"><strong>Alle Einstellungen und Bestenlisten werden nur so lange gespeichert, wie dieser Tab geöffnet bleibt.</strong></li>
     </ul>
   </div>
 </body>
