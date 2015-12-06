@@ -135,6 +135,10 @@ function displayInsteadOfCanvas(id){
       divLeaderboard.style.display='none';
       divWarning1.style.display = 'none';
       divWarning2.style.display = 'none';
+
+      divDescriptionButton.className = 'button buttonList';
+      divLeaderboardButton.className = 'button buttonList';
+      divSettingsButton.className = 'button buttonList';
       break;
     case "welcome":
       divStartCanvas.style.display='none';
@@ -146,6 +150,10 @@ function displayInsteadOfCanvas(id){
       divLeaderboard.style.display='none';
       divWarning1.style.display = 'none';
       divWarning2.style.display = 'none';
+
+      divDescriptionButton.className = 'button buttonList';
+      divLeaderboardButton.className = 'button buttonList';
+      divSettingsButton.className = 'button buttonList';
       firstRun = 0;
       break;
     case "description":
@@ -153,12 +161,12 @@ function displayInsteadOfCanvas(id){
         if (runTimes === 0) {
           divStartCanvas.style.display='inline-block';
           divDescription.style.display='none';
-          divDescriptionButton.className = 'button';
+          divDescriptionButton.className = 'button buttonList';
         }
         else {
           divBubbleCanvas.style.display='inline-block';
           divDescription.style.display='none';
-          divDescriptionButton.className = 'button buttonClicked';
+          divDescriptionButton.className = 'button buttonClicked buttonList';
         }
       }
       else if (divGameOver.style.display == 'inline-block') {
@@ -166,13 +174,13 @@ function displayInsteadOfCanvas(id){
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='none';
         divDescription.style.display='inline-block';
-        divDescriptionButton.className = 'button buttonClicked';
+        divDescriptionButton.className = 'button buttonClicked buttonList';
       }
       else {
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='none';
         divDescription.style.display='inline-block';
-        divDescriptionButton.className = 'button buttonClicked';
+        divDescriptionButton.className = 'button buttonClicked buttonList';
       }
       divWelcome.style.display='none';
       divSettings.style.display='none';
@@ -180,8 +188,8 @@ function displayInsteadOfCanvas(id){
       divLeaderboard.style.display='none';
       divWarning1.style.display = 'none';
       divWarning2.style.display = 'none';
-      divLeaderboardButton.className = 'button';
-      divSettingsButton.className = 'button';
+      divLeaderboardButton.className = 'button buttonList';
+      divSettingsButton.className = 'button buttonList';
       break;
     case "settings":
       if (runTimes !== 0) {
@@ -196,14 +204,14 @@ function displayInsteadOfCanvas(id){
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='inline-block';
         divSettings.style.display='none';
-        divSettingsButton.className = 'button';
+        divSettingsButton.className = 'button buttonList';
       }
       else if (divSettings.style.display == 'inline-block') {
         divStartCanvas.style.display='inline-block';
         divSettings.style.display='none';
         divWarning1.style.display = 'none';
         divWarning2.style.display = 'none';
-        divSettingsButton.className = 'button';
+        divSettingsButton.className = 'button buttonList';
       }
       else if (divGameOver.style.display == 'inline-block') {
         generateLeaderboardWithoutdisplay();
@@ -212,7 +220,7 @@ function displayInsteadOfCanvas(id){
         divSettings.style.display='inline-block';
         divWarning1.style.display = 'none';
         divWarning2.style.display = 'none';
-        divSettingsButton.className = 'button buttonClicked';
+        divSettingsButton.className = 'button buttonClicked buttonList';
       }
       else {
         divStartCanvas.style.display='none';
@@ -220,14 +228,14 @@ function displayInsteadOfCanvas(id){
         divSettings.style.display='inline-block';
         divWarning1.style.display = 'none';
         divWarning2.style.display = 'none';
-        divSettingsButton.className = 'button buttonClicked';
+        divSettingsButton.className = 'button buttonClicked buttonList';
       }
       divWelcome.style.display='none';
       divDescription.style.display='none';
       divGameOver.style.display='none';
       divLeaderboard.style.display='none';
-      divDescriptionButton.className = 'button';
-      divLeaderboardButton.className = 'button';
+      divDescriptionButton.className = 'button buttonList';
+      divLeaderboardButton.className = 'button buttonList';
       break;
     case "gameOver":
       divStartCanvas.style.display='none';
@@ -244,17 +252,17 @@ function displayInsteadOfCanvas(id){
       if (divLeaderboard.style.display == 'inline-block') {
         divStartCanvas.style.display='inline-block';
         divLeaderboard.style.display='none';
-        divLeaderboardButton.className='button';
+        divLeaderboardButton.className='button buttonList';
       }
       else if (divGameOver.style.display == 'inline-block') {
         generateLeaderboardWithoutdisplay();
         divLeaderboard.style.display='inline-block';
-        divLeaderboardButton.className='button buttonClicked';
+        divLeaderboardButton.className='button buttonClicked buttonList';
       }
       else {
         divStartCanvas.style.display='none';
         divLeaderboard.style.display='inline-block';
-        divLeaderboardButton.className='button buttonClicked';
+        divLeaderboardButton.className='button buttonClicked buttonList';
       }
       divBubbleCanvas.style.display='none';
       divWelcome.style.display='none';
@@ -264,8 +272,8 @@ function displayInsteadOfCanvas(id){
       divWarning1.style.display = 'none';
       divWarning2.style.display = 'none';
 
-      divDescriptionButton.className = 'button';
-      divSettingsButton.className = 'button';
+      divDescriptionButton.className = 'button buttonList';
+      divSettingsButton.className = 'button buttonList';
 
       switch (gameMode) {
         case "0":
@@ -289,6 +297,17 @@ function displayInsteadOfCanvas(id){
       divLeaderboard.style.display='inline-block';
       divWarning1.style.display = 'none';
       divWarning2.style.display = 'none';
+      switch (gameMode) {
+        case "0":
+          toggleLeaderboard("leaderboard0");
+          break;
+        case "1":
+          toggleLeaderboard("leaderboard1");
+          break;
+        case "2":
+          toggleLeaderboard("leaderboard2");
+          break;
+      }
       break;
     default:
       console.log("something went wrong");
@@ -302,6 +321,7 @@ function updateDisplay(id, val) {
 function start() {
   displayInsteadOfCanvas('bubbleCanvas');
   if (firstRun == 1) {
+    name = "player1";
     displayInsteadOfCanvas("welcome");
   }
   else {
@@ -501,6 +521,9 @@ function beiKlick() {
             if (sound) {playSound("hit");}
             bubbleList.splice(l, 1, "hit");
           }
+          else {
+            if (sound) {playSound("wrong");}
+          }
           break;
       }
       if (remainingBubbles() === 0) {
@@ -632,6 +655,7 @@ function generateGameOver() {
 
   switch (gameMode) {
     case "0":
+      document.playerInfo0.playerName.value = name;
       document.getElementById('count0').innerHTML = number;
       document.getElementById('clicked0').innerHTML = clicked;
       document.getElementById('points0').innerHTML = currentScore;
@@ -664,6 +688,7 @@ function generateGameOver() {
       document.getElementById("gameOver2").style.display = "none";
       break;
     case "1":
+      document.playerInfo1.playerName.value = name;
       if (minutes === 0) {
         document.getElementById('time1').innerHTML = seconds + " Sekunden";
       }
@@ -686,6 +711,7 @@ function generateGameOver() {
       document.getElementById("gameOver2").style.display = "none";
       break;
     case "2":
+      document.playerInfo2.playerName.value = name;
       if (minutes === 0) {
         document.getElementById('time2').innerHTML = seconds + " Sekunden";
       }
@@ -693,7 +719,6 @@ function generateGameOver() {
         document.getElementById('time2').innerHTML = minutes + " Minuten und " + seconds + " Sekunden";
       }
       document.getElementById('count2').innerHTML = number;
-      document.getElementById('points2').innerHTML = currentScore;
       document.getElementById('clickCounter2').innerHTML = klicks;
 
       if (number == klicks) {
@@ -737,6 +762,7 @@ function generateLeaderboardWithoutdisplay() {
       clickCell = row.insertCell(3);
 
       bubbleCell.innerHTML = clicked + " / " + number;
+      scoreCell.innerHTML = currentScore;
       clickCell.innerHTML = klicks;
       break;
     case "1":
@@ -750,6 +776,7 @@ function generateLeaderboardWithoutdisplay() {
       timeCell = row.insertCell(3);
 
       bubbleCell.innerHTML = number;
+      scoreCell.innerHTML = currentScore;
       if (minutes === 0) {
         if (seconds < 10) {
           timeCell.innerHTML = "00:0" + seconds;
@@ -812,7 +839,6 @@ function generateLeaderboardWithoutdisplay() {
       break;
   }
   nameCell.innerHTML = name;
-  scoreCell.innerHTML = currentScore;
 }
 
 function generateLeaderboard() {

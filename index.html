@@ -15,10 +15,10 @@
 
     <div id="information">
       <ul>
-        <li class="button" onclick="start()" id="start">Starten</li>
-        <li class="button" onclick="displayInsteadOfCanvas('description')" id="descriptionButton">Beschreibung</li>
-        <li class="button" onclick="displayInsteadOfCanvas('leaderboard')" id="leaderboardButton">Bestenliste</li>
-        <li class="button" onclick="displayInsteadOfCanvas('settings')" id="settingsButton">Einstellungen</li>
+        <li class="button buttonList" onclick="start()" id="start">Starten</li>
+        <li class="button buttonList" onclick="displayInsteadOfCanvas('description')" id="descriptionButton">Beschreibung</li>
+        <li class="button buttonList" onclick="displayInsteadOfCanvas('leaderboard')" id="leaderboardButton">Bestenliste</li>
+        <li class="button buttonList" onclick="displayInsteadOfCanvas('settings')" id="settingsButton">Einstellungen</li>
         <li class="message noDisplay" id="warning1"><p>Einstellungen sind während des Spiels nicht &auml;nderbar!</p></li>
         <li class="message noDisplay" id="warning2"><p>Es l&auml;uft noch ein Spiel!</p></li>
         </li>
@@ -90,7 +90,7 @@
         </div>
         <div id="gameOver2" class="noDisplay">
           <p class="display">Du hast im Puzzle-Modus <div id="time2" class="display"></div> für <div id="count2" class="display"></div> Bubbles gebraucht.</p>
-          <p class="display"> Für <div id="points2" class="display"></div> Punkte hast du <div id="clickCounter2" class="display"></div> Klicks gemacht.</p>
+          <p class="display">Du hast <div id="clickCounter2" class="display"></div> Klicks gemacht.</p>
           <form name="playerInfo2" autocomplete="off" onsubmit="return false">
             Gib deinen Namen ein:
             <input type="text" name="playerName" value="player1"/>
