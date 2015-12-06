@@ -16,9 +16,9 @@
     <div id="information">
       <ul>
         <li class="button" onclick="start()" id="start">Starten</li>
-        <li class="button" onclick="displayInsteadOfCanvas('description')">Beschreibung</li>
-        <li class="button" onclick="displayInsteadOfCanvas('leaderboard')">Bestenliste</li>
-        <li class="button" onclick="displayInsteadOfCanvas('settings')">Einstellungen</li>
+        <li class="button" onclick="displayInsteadOfCanvas('description')" id="descriptionButton">Beschreibung</li>
+        <li class="button" onclick="displayInsteadOfCanvas('leaderboard')" id="leaderboardButton">Bestenliste</li>
+        <li class="button" onclick="displayInsteadOfCanvas('settings')" id="settingsButton">Einstellungen</li>
         <li class="message noDisplay" id="warning1"><p>Einstellungen sind während des Spiels nicht &auml;nderbar!</p></li>
         <li class="message noDisplay" id="warning2"><p>Es l&auml;uft noch ein Spiel!</p></li>
         </li>
@@ -32,7 +32,7 @@
         <p>Bubble-Catch ist ein einfaches Spiel, bei dem es darum geht so viele Bubbles wie möglich platzen zu lassen. Jede Bubble, die du anklickst bringt dir Punkte.</p>
         <p>Fang einfach im Satndard-Modus an, oder wähle in den Einstellungen einen anderen Modus.</p>
         <p>Bereit?</p>
-        <p class="button" onclick="start()">Los geht's</p>
+        <p class="button buttonStart" onclick="start()">Los geht's</p>
       </div>
       <div id="description"  class="canvasAndCo">
         <h2>Beschreibung</h2>
@@ -53,7 +53,7 @@
           Sounds <p class="display grey">(experimentell):</p>
           <input type="checkbox" id="sound"></input></br>
           <h3>Wähle einen Spielmodus</h2>
-          <select id="gameMode" onchange="toggle()">
+          <select id="gameMode" onchange="toggleGameMode()">
             <option value="0">Standard</option>
             <option value="1">Geordnet</option>
             <option value="2">Puzzle</option>
@@ -99,9 +99,14 @@
           <div id="2gz1" class="noDisplay"><p>Sehr gut! Du hast dich nie verklickt.</p></div>
         </div>
       </div>
-      <div id="leaderboard" class="canvasAndCo">
+      <div id="leaderboard" class="canvasAndCo textCenter">
         <h2>Bestenliste</h2>
-        <table id="tableLeaderboard0" class="textCenter display">
+        <ul>
+          <li class="button" id ="leaderboard0" onclick="toggleLeaderboard(this.id)">Standard</li>
+          <li class="button" id ="leaderboard1" onclick="toggleLeaderboard(this.id)">Geordnet</li>
+          <li class="button" id ="leaderboard2" onclick="toggleLeaderboard(this.id)">Puzzle</li>
+        </ul>
+        <table id="tableLeaderboard0" class="noDisplay">
           <tr>
             <th>Spieler</th>
             <th>Punkte</th>
@@ -109,7 +114,7 @@
             <th>Klicks</th>
           </tr>
         </table>
-        <table id="tableLeaderboard1" class="textCenter display">
+        <table id="tableLeaderboard1" class="noDisplay">
           <tr>
             <th>Spieler</th>
             <th>Punkte</th>
@@ -117,7 +122,7 @@
             <th>Zeit</th>
           </tr>
         </table>
-        <table id="tableLeaderboard2" class="textCenter display">
+        <table id="tableLeaderboard2" class="noDisplay">
           <tr>
             <th>Spieler</th>
             <th>Bubbles</th>
@@ -125,8 +130,8 @@
           </tr>
         </table>
 
-        <p>Mehr Punkte kannst du erreichen, in dem du mehr Bubbles in der gleichen Zeit trifft.</p>
-        <p class="display">Wenn du jetzt schon alles Bubbles triffst, kannst du ihre Anzahl in den <p class="pointer" onclick="displayInsteadOfCanvas('settings')">Einstellungen</p> erhöhen.</p>
+        <!--<p>Mehr Punkte kannst du erreichen, in dem du mehr Bubbles in der gleichen Zeit trifft.</p>
+        <p class="display">Wenn du jetzt schon alles Bubbles triffst, kannst du ihre Anzahl in den <p class="pointer" onclick="displayInsteadOfCanvas('settings')">Einstellungen</p> erhöhen.</p>-->
       </div>
     </div>
 

@@ -1,4 +1,8 @@
 var canvas, context, height, width, number, speed, left, currentScore;
+var divStandard, divOrdered, divPuzzle;
+var divLeaderboard1, divLeaderboard2, divLeaderboard3, leaderboard0, leaderboard1, leaderboard2;
+var divStartCanvas, divBubbleCanvas, divWelcome, divDescription, divSettings, divGameOver, divLeaderboard, divWarning1, divWarning2;
+var divDescriptionButton, divLeaderboardButton, divSettingsButton;
 var timer, d, date, date0, date1, remainingTime, seconds, milliSeconds, klicks;
 var timerInterval, mainInterval;
 var object, randomRadius, randomX, randomY, randomCol, randomVal, bubble, counter;
@@ -34,39 +38,88 @@ function paint() {
   titleCtx.fillText("zum Starten Klicken", 300, 230);
 }
 
-function toggle() {
+function toggleGameMode() {
   gameModeSelector = document.getElementById("gameMode");
   gameMode = gameModeSelector.options[gameModeSelector.selectedIndex].value;
+
+  divStandard = document.getElementById("standard");
+  divOrdered = document.getElementById("ordered");
+  divPuzzle = document.getElementById("puzzle");
+
   switch (gameMode) {
     case "0":
-      document.getElementById("standard").style.display = 'inline-block';
-      document.getElementById("ordered").style.display = 'none';
-      document.getElementById("puzzle").style.display = 'none';
+      divStandard.style.display = 'inline-block';
+      divOrdered.style.display = 'none';
+      divPuzzle.style.display = 'none';
       break;
     case "1":
-      document.getElementById("standard").style.display = 'none';
-      document.getElementById("ordered").style.display = 'inline-block';
-      document.getElementById("puzzle").style.display = 'none';
+      divStandard.style.display = 'none';
+      divOrdered.style.display = 'inline-block';
+      divPuzzle.style.display = 'none';
       break;
     case "2":
-      document.getElementById("standard").style.display = 'none';
-      document.getElementById("ordered").style.display = 'none';
-      document.getElementById("puzzle").style.display = 'inline-block';
+      divStandard.style.display = 'none';
+      divOrdered.style.display = 'none';
+      divPuzzle.style.display = 'inline-block';
+      break;
+  }
+}
+
+function toggleLeaderboard(id) {
+  divLeaderboard0 = document.getElementById('tableLeaderboard0');
+  divLeaderboard1 = document.getElementById('tableLeaderboard1');
+  divLeaderboard2 = document.getElementById('tableLeaderboard2');
+
+  leaderboard0 = document.getElementById('leaderboard0');
+  leaderboard1 = document.getElementById('leaderboard1');
+  leaderboard2 = document.getElementById('leaderboard2');
+
+  switch (id) {
+    case "leaderboard0":
+      divLeaderboard0.style.display = 'inline-block';
+      divLeaderboard1.style.display = 'none';
+      divLeaderboard2.style.display = 'none';
+
+      leaderboard0.className = 'button buttonClicked';
+      leaderboard1.className = 'button';
+      leaderboard2.className = 'button';
+      break;
+    case "leaderboard1":
+      divLeaderboard0.style.display = 'none';
+      divLeaderboard1.style.display = 'inline-block';
+      divLeaderboard2.style.display = 'none';
+
+      leaderboard0.className = 'button';
+      leaderboard1.className = 'button buttonClicked';
+      leaderboard2.className = 'button';
+      break;
+    case "leaderboard2":
+      divLeaderboard0.style.display = 'none';
+      divLeaderboard1.style.display = 'none';
+      divLeaderboard2.style.display = 'inline-block';
+
+      leaderboard0.className = 'button';
+      leaderboard1.className = 'button';
+      leaderboard2.className = 'button buttonClicked';
       break;
   }
 }
 
 function displayInsteadOfCanvas(id){
-  var divStartCanvas=document.getElementById("startCanvas");
-  var divBubbleCanvas=document.getElementById("bubbleCanvas");
-  var divWelcome=document.getElementById("welcome");
-  var divDescription=document.getElementById("description");
-  var divSettings=document.getElementById("settings");
-  var divGameOver=document.getElementById("gameOver");
-  var divLeaderboard=document.getElementById("leaderboard");
+  divStartCanvas=document.getElementById("startCanvas");
+  divBubbleCanvas=document.getElementById("bubbleCanvas");
+  divWelcome=document.getElementById("welcome");
+  divDescription=document.getElementById("description");
+  divSettings=document.getElementById("settings");
+  divGameOver=document.getElementById("gameOver");
+  divLeaderboard=document.getElementById("leaderboard");
 
-  var divWarning1=document.getElementById("warning1");
-  var divWarning2=document.getElementById("warning2");
+  divDescriptionButton=document.getElementById("descriptionButton");
+  divLeaderboardButton=document.getElementById("leaderboardButton");
+  divSettingsButton=document.getElementById("settingsButton");
+
+  divWarning1=document.getElementById("warning1");
+  divWarning2=document.getElementById("warning2");
 
   switch (id) {
     case "bubbleCanvas":
@@ -100,10 +153,12 @@ function displayInsteadOfCanvas(id){
         if (runTimes === 0) {
           divStartCanvas.style.display='inline-block';
           divDescription.style.display='none';
+          divDescriptionButton.className = 'button';
         }
         else {
           divBubbleCanvas.style.display='inline-block';
           divDescription.style.display='none';
+          divDescriptionButton.className = 'button buttonClicked';
         }
       }
       else if (divGameOver.style.display == 'inline-block') {
@@ -111,11 +166,13 @@ function displayInsteadOfCanvas(id){
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='none';
         divDescription.style.display='inline-block';
+        divDescriptionButton.className = 'button buttonClicked';
       }
       else {
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='none';
         divDescription.style.display='inline-block';
+        divDescriptionButton.className = 'button buttonClicked';
       }
       divWelcome.style.display='none';
       divSettings.style.display='none';
@@ -123,6 +180,8 @@ function displayInsteadOfCanvas(id){
       divLeaderboard.style.display='none';
       divWarning1.style.display = 'none';
       divWarning2.style.display = 'none';
+      divLeaderboardButton.className = 'button';
+      divSettingsButton.className = 'button';
       break;
     case "settings":
       if (runTimes !== 0) {
@@ -137,12 +196,14 @@ function displayInsteadOfCanvas(id){
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='inline-block';
         divSettings.style.display='none';
+        divSettingsButton.className = 'button';
       }
       else if (divSettings.style.display == 'inline-block') {
         divStartCanvas.style.display='inline-block';
         divSettings.style.display='none';
         divWarning1.style.display = 'none';
         divWarning2.style.display = 'none';
+        divSettingsButton.className = 'button';
       }
       else if (divGameOver.style.display == 'inline-block') {
         generateLeaderboardWithoutdisplay();
@@ -151,6 +212,7 @@ function displayInsteadOfCanvas(id){
         divSettings.style.display='inline-block';
         divWarning1.style.display = 'none';
         divWarning2.style.display = 'none';
+        divSettingsButton.className = 'button buttonClicked';
       }
       else {
         divStartCanvas.style.display='none';
@@ -158,11 +220,14 @@ function displayInsteadOfCanvas(id){
         divSettings.style.display='inline-block';
         divWarning1.style.display = 'none';
         divWarning2.style.display = 'none';
+        divSettingsButton.className = 'button buttonClicked';
       }
       divWelcome.style.display='none';
       divDescription.style.display='none';
       divGameOver.style.display='none';
       divLeaderboard.style.display='none';
+      divDescriptionButton.className = 'button';
+      divLeaderboardButton.className = 'button';
       break;
     case "gameOver":
       divStartCanvas.style.display='none';
@@ -179,14 +244,17 @@ function displayInsteadOfCanvas(id){
       if (divLeaderboard.style.display == 'inline-block') {
         divStartCanvas.style.display='inline-block';
         divLeaderboard.style.display='none';
+        divLeaderboardButton.className='button';
       }
       else if (divGameOver.style.display == 'inline-block') {
         generateLeaderboardWithoutdisplay();
         divLeaderboard.style.display='inline-block';
+        divLeaderboardButton.className='button buttonClicked';
       }
       else {
         divStartCanvas.style.display='none';
         divLeaderboard.style.display='inline-block';
+        divLeaderboardButton.className='button buttonClicked';
       }
       divBubbleCanvas.style.display='none';
       divWelcome.style.display='none';
@@ -195,6 +263,21 @@ function displayInsteadOfCanvas(id){
       divGameOver.style.display='none';
       divWarning1.style.display = 'none';
       divWarning2.style.display = 'none';
+
+      divDescriptionButton.className = 'button';
+      divSettingsButton.className = 'button';
+
+      switch (gameMode) {
+        case "0":
+          toggleLeaderboard("leaderboard0");
+          break;
+        case "1":
+          toggleLeaderboard("leaderboard1");
+          break;
+        case "2":
+          toggleLeaderboard("leaderboard2");
+          break;
+      }
       break;
     case "gamOverButton":
       divStartCanvas.style.display='none';
