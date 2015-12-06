@@ -30,13 +30,17 @@
       <div id="welcome" class="canvasAndCo">
         <h2>Willkommen zu Bubble-Catch!</h2>
         <p>Bubble-Catch ist ein einfaches Spiel, bei dem es darum geht so viele Bubbles wie möglich platzen zu lassen. Jede Bubble, die du anklickst bringt dir Punkte.</p>
+        <p>Fang einfach im Satndard-Modus an, oder wähle in den Einstellungen einen anderen Modus.</p>
         <p>Bereit?</p>
         <p class="button" onclick="start()">Los geht's</p>
       </div>
       <div id="description"  class="canvasAndCo">
         <h2>Beschreibung</h2>
-        <p>In Bubble-Catch geht es darum innerhalb einer halben Minute so viele Punkte wie möglich durch das Anklicken sich bewegender Bubbles zu Sammeln.</p>
-        <p class="display">Du kannst die Anzahl der Bubbles links in den <p class="pointer" onclick="displayInsteadOfCanvas('settings')">Einstellungen</p> ändern. Die Anzahl hat jedoch keinen Einfluss auf deine Wertung. Die geht alleine nach der erreichten Punktzahl.</p>
+        <p>In Bubble-Catch geht es darum Bubbles platzen zu lassen. Je nach Spielmodus gibt es daür verschiedene Regeln.
+        <p class="display">Im <h3 class="display">Standard-Modus</h3> musst du in einer halben Minute so viele Punkte, wie möglich durch das Anklicken von Bubbles sammeln. Mehr Punkte erreichst du, in dem du mehr Bubbles in der gleichen Zeit anklickst.</p>
+        <p class="display">Im <h3 class="display">Geordneten Modus</h3> musst du die Bubbles der Reihenfolge nach anklicken und mit dem kleinsten Wert anfangen. Wenn du aber eine falsche Bubble anklickst bekommst du Punkte abgezogen.</p>
+        <p class="display">Im <h3 class="display">Puzzle</h3> kannst du dir Zeit lassen. Du musst die Bubbles der Größe nach anklicken. Dafür hast unbegrenzt Zeit und es gibt keine Punkte dafür.</p>
+        <p class="display">Das alles findest du in den <p class="pointer" onclick="displayInsteadOfCanvas('settings')">Einstellungen</p>.</p>
         <p>Wenn du einmal ein Spiel gestartet hast, lässt es sich nicht mehr stoppen.</p>
       </div>
       <div id="settings" class="canvasAndCo">
