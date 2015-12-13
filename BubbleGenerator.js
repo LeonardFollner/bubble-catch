@@ -517,9 +517,9 @@ function beiKlick() {
             }
           }
           if (smaller===0) {
-            currentScore = remainingBubbles();
             if (sound) {playSound("hit");}
             bubbleList.splice(l, 1, "hit");
+            currentScore = remainingBubbles();
           }
           else {
             if (sound) {playSound("wrong");}
@@ -850,8 +850,9 @@ function generateLeaderboard() {
 
 window.onload=paint;
 
-/*notes
+/*ToDo
 * Barrierefreiheit!
 * fix bubbles anklicken!
 * fix footer margin-top
+* (add sorting algorithm)
 */
