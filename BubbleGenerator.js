@@ -3,7 +3,7 @@ var divStandard, divOrdered, divPuzzle;
 var divLeaderboard1, divLeaderboard2, divLeaderboard3, leaderboard0, leaderboard1, leaderboard2;
 var divStartCanvas, divBubbleCanvas, divWelcome, divDescription, divSettings, divGameOver, divLeaderboard, divWarning1, divWarning2;
 var divDescriptionButton, divLeaderboardButton, divSettingsButton;
-var timer, d, date, date0, date1, dateC, remainingTime, seconds, milliSeconds, klicks;
+var timer, d, date, date0, date1, dateC, datePaused, dateContinued, remainingTime, seconds, milliSeconds, klicks;
 var countdownInterval, timerInterval, mainInterval;
 var object, randomRadius, randomX, randomY, randomCol, randomVal, bubble, counter;
 var rect, clickX, clickY;
@@ -14,7 +14,7 @@ var table, row, nameCell, scoreCell, bubbleCell, timeCell, clickCell;
 var runTimes=0;
 var firstRun = 1;
 var pauseButtonBlock=0;
-var isRunning;
+var isRunning, pauseTime;
 var gameMode, gameModeSelector;
 name = "player1";
 
@@ -328,7 +328,6 @@ function start() {
   }
   else {
     if (runTimes !== 0) {
-      console.log("Pausiert");
       if (!pauseButtonBlock) {
         pause();
       }
@@ -367,10 +366,6 @@ function init() {
   date=new Date();
   date0=date.getTime();
   dateC=date0+3700;
-  if (gameMode === "0") {
-    date1=date0 + 30000;
-    remainingTime=date1 - date0;
-  }
   klicks = 0;
 
   countdownInterval=setInterval(countdown, 1);
@@ -439,6 +434,11 @@ function countdown() {
   document.getElementById("start").style.backgroundColor = "#d3d3d3";
 
   if(seconds <= 0){
+    if (gameMode === "0") {
+      date1=date0 + 30000;
+      remainingTime=date1 - date0;
+    }
+
     timerInterval=setInterval(updateTimer, 1);
     erzeugeBubbleMenge(number);
     mainInterval=setInterval(draw, 26);
@@ -692,7 +692,9 @@ function remainingBubbles() {
 
 function pause() {
   if (isRunning) {
-    datePause=date.getTime();
+      date2=new Date();
+      datePaused=date2.getTime();
+
     clearInterval(mainInterval);
     clearInterval(timerInterval);
     timer.innerHTML="<strong>Pausiert</strong>";
@@ -707,12 +709,22 @@ function pause() {
     context.fillText("zum Fortsetzen Klicken", 300, 230);
 
     isRunning=0;
+    console.log("Pausiert");
   }
   else {
-    pauseTime=datePause-date0;
+    date3=new Date();
+    dateContinued=date3.getTime();
+    pauseTime=dateContinued-datePaused;
+    if (gameMode==="0") {
+      date1+=pauseTime;
+    }
+    else {
+      date0+=pauseTime;
+    }
     timerInterval=setInterval(updateTimer, 1);
     mainInterval=setInterval(draw, 26);
     isRunning=1;
+    console.log("Fortgesetzt");
   }
 }
 
@@ -928,4 +940,7 @@ window.onload=paint;
 * fix bubbles anklicken!
 * fix footer margin-top
 * (add sorting algorithm)
+* clean up code
+* sort functions
+* rename dates
 */
