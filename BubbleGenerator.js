@@ -3,8 +3,8 @@ var divStandard, divOrdered, divPuzzle;
 var divLeaderboard1, divLeaderboard2, divLeaderboard3, leaderboard0, leaderboard1, leaderboard2;
 var divStartCanvas, divBubbleCanvas, divWelcome, divDescription, divSettings, divGameOver, divLeaderboard, divWarning1, divWarning2;
 var divDescriptionButton, divLeaderboardButton, divSettingsButton;
-var timer, d, date, date0, date1, remainingTime, seconds, milliSeconds, klicks;
-var timerInterval, mainInterval;
+var timer, d, date, date0, date1, dateC, remainingTime, seconds, milliSeconds, klicks;
+var countdownInterval, timerInterval, mainInterval;
 var object, randomRadius, randomX, randomY, randomCol, randomVal, bubble, counter;
 var rect, clickX, clickY;
 var DistX, DistY, Dist, currentBubble, smaller, comparedBubble;
@@ -360,16 +360,13 @@ function init() {
   timer=document.getElementById('start');
   date=new Date();
   date0=date.getTime();
+  dateC=date0+3700;
   if (gameMode === "0") {
     date1=date0 + 30000;
     remainingTime=date1 - date0;
   }
   klicks = 0;
-
-  timerInterval=setInterval(updateTimer, 1);
-  erzeugeBubbleMenge(number);
-  mainInterval=setInterval(draw, 26);
-  canvas.addEventListener("click", beiKlick);
+  countdownInterval=setInterval(countdown, 1);
 }
 
 function erzeugeBubbleMenge(number) {
@@ -422,6 +419,31 @@ function erzeugeEinzelneBubble() {
   }
   bubble=new object(randomX, randomY, randomDifX, randomDifY, randomRadius, randomCol, randomVal);
   bubbleList.push(bubble);
+}
+
+function countdown() {
+  d=new Date();
+  date0=d.getTime();
+  remainingTime=dateC - date0;
+  seconds=Math.floor(remainingTime / 1000);
+
+  if(seconds <= 0){
+    timerInterval=setInterval(updateTimer, 1);
+    erzeugeBubbleMenge(number);
+    mainInterval=setInterval(draw, 26);
+    canvas.addEventListener("click", beiKlick);
+    clearInterval(countdownInterval);
+  }
+  else {
+    context.clearRect(0, 0, width, height);
+    context.fillStyle="#ff0000";
+    context.font="100px Helvetica";
+    context.textAlign="center";
+    context.textBaseline="middle";
+    context.fillText(seconds, 300, 200);
+
+    timer.innerHTML="<strong>"+seconds+"</strong>";
+  }
 }
 
 function draw() {
