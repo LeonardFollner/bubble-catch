@@ -13,6 +13,8 @@ var name, score, clicked, count, clicks, divLeaderboard;
 var table, row, nameCell, scoreCell, bubbleCell, timeCell, clickCell;
 var runTimes=0;
 var firstRun = 1;
+var pauseButtonBlock=0;
+var isRunning;
 var gameMode, gameModeSelector;
 name = "player1";
 
@@ -326,11 +328,15 @@ function start() {
   }
   else {
     if (runTimes !== 0) {
-      console.log("Neustart abgebrochen, weil noch " + runTimes + " Spiel läuft");
+      console.log("Pausiert");
+      if (!pauseButtonBlock) {
+        pause();
+      }
     }
     else {
       console.log("Spiel gestartet, weil " + runTimes + " Spiele gerade laufen");
       runTimes++;
+      isRunning=1;
       init();
     }
   }
@@ -437,6 +443,7 @@ function countdown() {
     erzeugeBubbleMenge(number);
     mainInterval=setInterval(draw, 26);
     canvas.addEventListener("click", beiKlick);
+    pauseButtonBlock=0;
     clearInterval(countdownInterval);
   }
   else {
@@ -448,6 +455,7 @@ function countdown() {
     context.fillText(seconds, 300, 200);
 
     timer.innerHTML="<strong>"+seconds+"</strong>";
+    pauseButtonBlock=1;
   }
 }
 
@@ -675,6 +683,30 @@ function remainingBubbles() {
     }
   }
   return left;
+}
+
+function pause() {
+  if (isRunning) {
+    datePause=date.getTime();
+    clearInterval(mainInterval);
+    clearInterval(timerInterval);
+    timer.innerHTML="<strong>Pausiert</strong>";
+
+    context.clearRect(0, 0, width, height);
+    context.fillStyle="#ff0000";
+    context.font="100px Helvetica";
+    context.textAlign="center";
+    context.textBaseline="middle";
+    context.fillText("Pausiert", 300, 200);
+
+    isRunning=0;
+  }
+  else {
+    pauseTime=datePause-date0;
+    timerInterval=setInterval(updateTimer, 1);
+    mainInterval=setInterval(draw, 26);
+    isRunning=1;
+  }
 }
 
 function generateGameOver() {
