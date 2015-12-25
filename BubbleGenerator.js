@@ -366,6 +366,7 @@ function init() {
     remainingTime=date1 - date0;
   }
   klicks = 0;
+
   countdownInterval=setInterval(countdown, 1);
 }
 
@@ -426,6 +427,10 @@ function countdown() {
   date0=d.getTime();
   remainingTime=dateC - date0;
   seconds=Math.floor(remainingTime / 1000);
+
+  document.getElementById("bubbleCanvas").style.backgroundColor = "transparent";
+  document.getElementById("start").style.color = "#000000";
+  document.getElementById("start").style.backgroundColor = "#d3d3d3";
 
   if(seconds <= 0){
     timerInterval=setInterval(updateTimer, 1);
