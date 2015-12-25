@@ -690,9 +690,16 @@ function generateGameOver() {
         document.getElementById("0gz3").style.display = "none";
       }
       else if (klicks === clicked) {
-        document.getElementById("0gz1").style.display = "none";
-        document.getElementById("0gz2").style.display = "inline-block";
-        document.getElementById("0gz3").style.display = "none";
+          if (klicks === 0 || clicked === 0) {
+            document.getElementById("0gz1").style.display = "none";
+            document.getElementById("0gz2").style.display = "none";
+            document.getElementById("0gz3").style.display = "none";
+          }
+          else {
+            document.getElementById("0gz1").style.display = "none";
+            document.getElementById("0gz2").style.display = "inline-block";
+            document.getElementById("0gz3").style.display = "none";
+          }
       }
       else if (number == clicked) {
         console.log("all");
