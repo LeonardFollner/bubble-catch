@@ -508,63 +508,68 @@ function update() {
 }
 
 function beiKlick() {
-  rect=canvas.getBoundingClientRect();
-  clickX=(event.clientX - rect.left);
-  clickY=(event.clientY - rect.top);
-  klicks++;
+  if (isRunning) {
+    rect=canvas.getBoundingClientRect();
+    clickX=(event.clientX - rect.left);
+    clickY=(event.clientY - rect.top);
+    klicks++;
 
-  for (var l=0; l < number; l++) {
-    DistX=bubbleList[l].x - clickX;
-    DistY=bubbleList[l].y - clickY;
-    Dist=Math.sqrt(DistX * DistX + DistY * DistY);
-    if (Dist < bubbleList[l].radius) {
-      currentBubble=bubbleList[l];
-      switch (gameMode) {
-        case "0":
-          currentScore += bubbleList[l].val;
-          if (sound) {playSound("hit");}
-          bubbleList.splice(l, 1, "hit");
-          break;
-        case "1":
-          smaller=0;
-          for (var b=0; b<number; b++) {
-            comparedBubble = bubbleList[b];
-            if (comparedBubble.val < currentBubble.val) {
-              smaller++;
-            }
-          }
-          if (smaller===0) {
+    for (var l=0; l < number; l++) {
+      DistX=bubbleList[l].x - clickX;
+      DistY=bubbleList[l].y - clickY;
+      Dist=Math.sqrt(DistX * DistX + DistY * DistY);
+      if (Dist < bubbleList[l].radius) {
+        currentBubble=bubbleList[l];
+        switch (gameMode) {
+          case "0":
             currentScore += bubbleList[l].val;
             if (sound) {playSound("hit");}
             bubbleList.splice(l, 1, "hit");
-          }
-          else {
-            currentScore -= bubbleList[l].val;
-            if (sound) {playSound("wrong");}
-          }
-          break;
-        case "2":
-          smaller=0;
-          for (var c=0; c<number; c++) {
-            comparedBubble = bubbleList[c];
-            if (comparedBubble.radius < currentBubble.radius) {
-              smaller++;
+            break;
+          case "1":
+            smaller=0;
+            for (var b=0; b<number; b++) {
+              comparedBubble = bubbleList[b];
+              if (comparedBubble.val < currentBubble.val) {
+                smaller++;
+              }
             }
-          }
-          if (smaller===0) {
-            if (sound) {playSound("hit");}
-            bubbleList.splice(l, 1, "hit");
-            currentScore = remainingBubbles();
-          }
-          else {
-            if (sound) {playSound("wrong");}
-          }
-          break;
-      }
-      if (remainingBubbles() === 0) {
-        beendeSpiel();
+            if (smaller===0) {
+              currentScore += bubbleList[l].val;
+              if (sound) {playSound("hit");}
+              bubbleList.splice(l, 1, "hit");
+            }
+            else {
+              currentScore -= bubbleList[l].val;
+              if (sound) {playSound("wrong");}
+            }
+            break;
+          case "2":
+            smaller=0;
+            for (var c=0; c<number; c++) {
+              comparedBubble = bubbleList[c];
+              if (comparedBubble.radius < currentBubble.radius) {
+                smaller++;
+              }
+            }
+            if (smaller===0) {
+              if (sound) {playSound("hit");}
+              bubbleList.splice(l, 1, "hit");
+              currentScore = remainingBubbles();
+            }
+            else {
+              if (sound) {playSound("wrong");}
+            }
+            break;
+        }
+        if (remainingBubbles() === 0) {
+          beendeSpiel();
+        }
       }
     }
+  }
+  else {
+    pause();
   }
 }
 
@@ -693,11 +698,13 @@ function pause() {
     timer.innerHTML="<strong>Pausiert</strong>";
 
     context.clearRect(0, 0, width, height);
-    context.fillStyle="#ff0000";
-    context.font="100px Helvetica";
+    context.fillStyle="#000000";
+    context.font="75px Helvetica";
     context.textAlign="center";
     context.textBaseline="middle";
-    context.fillText("Pausiert", 300, 200);
+    context.fillText("Pausiert", 300, 170);
+    context.font = "25px Helvetica";
+    context.fillText("zum Fortsetzen Klicken", 300, 230);
 
     isRunning=0;
   }
