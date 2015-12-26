@@ -13,7 +13,7 @@ var name, score, clicked, count, clicks, divLeaderboard;
 var table, row, nameCell, scoreCell, bubbleCell, timeCell, clickCell;
 var runTimes=0;
 var firstRun = 1;
-var pauseButtonBlock=0;
+var countdownActive=0;
 var isRunning, pauseTime, size;
 var gameMode, gameModeSelector;
 name = "player1";
@@ -109,211 +109,231 @@ function toggleLeaderboard(id) {
 }
 
 function displayInsteadOfCanvas(id){
-  divStartCanvas=document.getElementById("startCanvas");
-  divBubbleCanvas=document.getElementById("bubbleCanvas");
-  divWelcome=document.getElementById("welcome");
-  divDescription=document.getElementById("description");
-  divSettings=document.getElementById("settings");
-  divGameOver=document.getElementById("gameOver");
-  divLeaderboard=document.getElementById("leaderboard");
+  if (!countdownActive) {
+    divStartCanvas=document.getElementById("startCanvas");
+    divBubbleCanvas=document.getElementById("bubbleCanvas");
+    divWelcome=document.getElementById("welcome");
+    divDescription=document.getElementById("description");
+    divSettings=document.getElementById("settings");
+    divGameOver=document.getElementById("gameOver");
+    divLeaderboard=document.getElementById("leaderboard");
 
-  divDescriptionButton=document.getElementById("descriptionButton");
-  divLeaderboardButton=document.getElementById("leaderboardButton");
-  divSettingsButton=document.getElementById("settingsButton");
+    divDescriptionButton=document.getElementById("descriptionButton");
+    divLeaderboardButton=document.getElementById("leaderboardButton");
+    divSettingsButton=document.getElementById("settingsButton");
 
-  divWarning1=document.getElementById("warning1");
-  divWarning2=document.getElementById("warning2");
+    divWarning1=document.getElementById("warning1");
+    divWarning2=document.getElementById("warning2");
 
-  switch (id) {
-    case "bubbleCanvas":
-      if (divGameOver.style.display == 'inline-block') {
-        generateLeaderboardWithoutdisplay();
-      }
-      divStartCanvas.style.display='none';
-      divBubbleCanvas.style.display='inline-block';
-      divWelcome.style.display='none';
-      divDescription.style.display='none';
-      divSettings.style.display='none';
-      divGameOver.style.display='none';
-      divLeaderboard.style.display='none';
-      divWarning1.style.display = 'none';
-      divWarning2.style.display = 'none';
-
-      divDescriptionButton.className = 'button buttonList';
-      divLeaderboardButton.className = 'button buttonList';
-      divSettingsButton.className = 'button buttonList';
-      break;
-    case "welcome":
-      divStartCanvas.style.display='none';
-      divBubbleCanvas.style.display='none';
-      divWelcome.style.display='inline-block';
-      divDescription.style.display='none';
-      divSettings.style.display='none';
-      divGameOver.style.display='none';
-      divLeaderboard.style.display='none';
-      divWarning1.style.display = 'none';
-      divWarning2.style.display = 'none';
-
-      divDescriptionButton.className = 'button buttonList';
-      divLeaderboardButton.className = 'button buttonList';
-      divSettingsButton.className = 'button buttonList';
-      firstRun = 0;
-      break;
-    case "description":
-      if (divDescription.style.display == 'inline-block') {
-        if (runTimes === 0) {
-          divStartCanvas.style.display='inline-block';
-          divDescription.style.display='none';
-          divDescriptionButton.className = 'button buttonList';
-        }
-        else {
-          divBubbleCanvas.style.display='inline-block';
-          divDescription.style.display='none';
-          divDescriptionButton.className = 'button buttonClicked buttonList';
-        }
-      }
-      else if (divGameOver.style.display == 'inline-block') {
-        generateLeaderboardWithoutdisplay();
-        divStartCanvas.style.display='none';
-        divBubbleCanvas.style.display='none';
-        divDescription.style.display='inline-block';
-        divDescriptionButton.className = 'button buttonClicked buttonList';
-      }
-      else {
-        divStartCanvas.style.display='none';
-        divBubbleCanvas.style.display='none';
-        divDescription.style.display='inline-block';
-        divDescriptionButton.className = 'button buttonClicked buttonList';
-      }
-      divWelcome.style.display='none';
-      divSettings.style.display='none';
-      divGameOver.style.display='none';
-      divLeaderboard.style.display='none';
-      divWarning1.style.display = 'none';
-      divWarning2.style.display = 'none';
-      divLeaderboardButton.className = 'button buttonList';
-      divSettingsButton.className = 'button buttonList';
-      break;
-    case "settings":
-      if (runTimes !== 0) {
-        if (divBubbleCanvas.style.display === 'inline-block') {
-          divWarning1.style.display = 'inline-block';
-          divWarning2.style.display = 'none';
-        }
-        else {
-          divWarning1.style.display = 'none';
-          divWarning2.style.display = 'inline-block';
+    switch (id) {
+      case "bubbleCanvas":
+        if (divGameOver.style.display == 'inline-block') {
+          generateLeaderboardWithoutdisplay();
         }
         divStartCanvas.style.display='none';
         divBubbleCanvas.style.display='inline-block';
+        divWelcome.style.display='none';
+        divDescription.style.display='none';
         divSettings.style.display='none';
-        divSettingsButton.className = 'button buttonList';
-      }
-      else if (divSettings.style.display == 'inline-block') {
-        divStartCanvas.style.display='inline-block';
-        divSettings.style.display='none';
-        divWarning1.style.display = 'none';
-        divWarning2.style.display = 'none';
-        divSettingsButton.className = 'button buttonList';
-      }
-      else if (divGameOver.style.display == 'inline-block') {
-        generateLeaderboardWithoutdisplay();
-        divStartCanvas.style.display='none';
-        divBubbleCanvas.style.display='none';
-        divSettings.style.display='inline-block';
-        divWarning1.style.display = 'none';
-        divWarning2.style.display = 'none';
-        divSettingsButton.className = 'button buttonClicked buttonList';
-      }
-      else {
-        divStartCanvas.style.display='none';
-        divBubbleCanvas.style.display='none';
-        divSettings.style.display='inline-block';
-        divWarning1.style.display = 'none';
-        divWarning2.style.display = 'none';
-        divSettingsButton.className = 'button buttonClicked buttonList';
-      }
-      divWelcome.style.display='none';
-      divDescription.style.display='none';
-      divGameOver.style.display='none';
-      divLeaderboard.style.display='none';
-      divDescriptionButton.className = 'button buttonList';
-      divLeaderboardButton.className = 'button buttonList';
-      break;
-    case "gameOver":
-      divStartCanvas.style.display='none';
-      divBubbleCanvas.style.display='none';
-      divWelcome.style.display='none';
-      divDescription.style.display='none';
-      divSettings.style.display='none';
-      divGameOver.style.display='inline-block';
-      divLeaderboard.style.display='none';
-      divWarning1.style.display = 'none';
-      divWarning2.style.display = 'none';
-      break;
-    case "leaderboard":
-      if (divLeaderboard.style.display == 'inline-block') {
-        divStartCanvas.style.display='inline-block';
+        divGameOver.style.display='none';
         divLeaderboard.style.display='none';
-        divLeaderboardButton.className='button buttonList';
-      }
-      else if (divGameOver.style.display == 'inline-block') {
-        generateLeaderboardWithoutdisplay();
-        divLeaderboard.style.display='inline-block';
-        divLeaderboardButton.className='button buttonClicked buttonList';
-      }
-      else {
+        divWarning1.style.display = 'none';
+        divWarning2.style.display = 'none';
+
+        divDescriptionButton.className = 'button buttonList';
+        divLeaderboardButton.className = 'button buttonList';
+        divSettingsButton.className = 'button buttonList';
+        break;
+      case "welcome":
         divStartCanvas.style.display='none';
+        divBubbleCanvas.style.display='none';
+        divWelcome.style.display='inline-block';
+        divDescription.style.display='none';
+        divSettings.style.display='none';
+        divGameOver.style.display='none';
+        divLeaderboard.style.display='none';
+        divWarning1.style.display = 'none';
+        divWarning2.style.display = 'none';
+
+        divDescriptionButton.className = 'button buttonList';
+        divLeaderboardButton.className = 'button buttonList';
+        divSettingsButton.className = 'button buttonList';
+        firstRun = 0;
+        break;
+      case "description":
+        if (divDescription.style.display == 'inline-block') {
+          if (runTimes === 0) {
+            divStartCanvas.style.display='inline-block';
+            divDescription.style.display='none';
+            divDescriptionButton.className = 'button buttonList';
+          }
+          else {
+            divBubbleCanvas.style.display='inline-block';
+            divDescription.style.display='none';
+            divDescriptionButton.className = 'button buttonClicked buttonList';
+          }
+        }
+        else {
+          if (divGameOver.style.display == 'inline-block') {
+            generateLeaderboardWithoutdisplay();
+            divStartCanvas.style.display='none';
+            divBubbleCanvas.style.display='none';
+            divDescription.style.display='inline-block';
+            divDescriptionButton.className = 'button buttonClicked buttonList';
+          }
+          else {
+            if (runTimes !== 0) {
+              pause("stop");
+            }
+            divStartCanvas.style.display='none';
+            divBubbleCanvas.style.display='none';
+            divDescription.style.display='inline-block';
+            divDescriptionButton.className = 'button buttonClicked buttonList';
+          }
+        }
+        divWelcome.style.display='none';
+        divSettings.style.display='none';
+        divGameOver.style.display='none';
+        divLeaderboard.style.display='none';
+        divWarning1.style.display = 'none';
+        divWarning2.style.display = 'none';
+        divLeaderboardButton.className = 'button buttonList';
+        divSettingsButton.className = 'button buttonList';
+        break;
+      case "settings":
+        if (runTimes !== 0) {
+          if (divBubbleCanvas.style.display === 'inline-block') {
+            divWarning1.style.display = 'inline-block';
+            divWarning2.style.display = 'none';
+          }
+          else {
+            divWarning1.style.display = 'none';
+            divWarning2.style.display = 'inline-block';
+          }
+          divStartCanvas.style.display='none';
+          divBubbleCanvas.style.display='inline-block';
+          divSettings.style.display='none';
+          divSettingsButton.className = 'button buttonList';
+        }
+        else if (divSettings.style.display == 'inline-block') {
+          divStartCanvas.style.display='inline-block';
+          divSettings.style.display='none';
+          divWarning1.style.display = 'none';
+          divWarning2.style.display = 'none';
+          divSettingsButton.className = 'button buttonList';
+        }
+        else if (divGameOver.style.display == 'inline-block') {
+          generateLeaderboardWithoutdisplay();
+          divStartCanvas.style.display='none';
+          divBubbleCanvas.style.display='none';
+          divSettings.style.display='inline-block';
+          divWarning1.style.display = 'none';
+          divWarning2.style.display = 'none';
+          divSettingsButton.className = 'button buttonClicked buttonList';
+        }
+        else {
+          divStartCanvas.style.display='none';
+          divBubbleCanvas.style.display='none';
+          divSettings.style.display='inline-block';
+          divWarning1.style.display = 'none';
+          divWarning2.style.display = 'none';
+          divSettingsButton.className = 'button buttonClicked buttonList';
+        }
+        divWelcome.style.display='none';
+        divDescription.style.display='none';
+        divGameOver.style.display='none';
+        divLeaderboard.style.display='none';
+        divDescriptionButton.className = 'button buttonList';
+        divLeaderboardButton.className = 'button buttonList';
+        break;
+      case "gameOver":
+        divStartCanvas.style.display='none';
+        divBubbleCanvas.style.display='none';
+        divWelcome.style.display='none';
+        divDescription.style.display='none';
+        divSettings.style.display='none';
+        divGameOver.style.display='inline-block';
+        divLeaderboard.style.display='none';
+        divWarning1.style.display = 'none';
+        divWarning2.style.display = 'none';
+        break;
+      case "leaderboard":
+        if (divLeaderboard.style.display == 'inline-block') {
+          if (runTimes===0) {
+            divStartCanvas.style.display='inline-block';
+            divBubbleCanvas.style.display='none';
+            divLeaderboard.style.display='none';
+            divLeaderboardButton.className='button buttonList';
+          }
+          else {
+            divStartCanvas.style.display='none';
+            divBubbleCanvas.style.display='inline-block';
+            divLeaderboard.style.display='none';
+            divLeaderboardButton.className='button buttonList';
+          }
+        }
+        else if (divGameOver.style.display == 'inline-block') {
+          generateLeaderboardWithoutdisplay();
+          divBubbleCanvas.style.display='none';
+          divLeaderboard.style.display='inline-block';
+          divLeaderboardButton.className='button buttonClicked buttonList';
+        }
+        else {
+          divStartCanvas.style.display='none';
+          divBubbleCanvas.style.display='none';
+          divLeaderboard.style.display='inline-block';
+          divLeaderboardButton.className='button buttonClicked buttonList';
+        }
+        if (runTimes !== 0) {
+          pause("stop");
+        }
+        divWelcome.style.display='none';
+        divDescription.style.display='none';
+        divSettings.style.display='none';
+        divGameOver.style.display='none';
+        divWarning1.style.display = 'none';
+        divWarning2.style.display = 'none';
+
+        divDescriptionButton.className = 'button buttonList';
+        divSettingsButton.className = 'button buttonList';
+
+        switch (gameMode) {
+          case "0":
+            toggleLeaderboard("leaderboard0");
+            break;
+          case "1":
+            toggleLeaderboard("leaderboard1");
+            break;
+          case "2":
+            toggleLeaderboard("leaderboard2");
+            break;
+        }
+        break;
+      case "gamOverButton":
+        divStartCanvas.style.display='none';
+        divBubbleCanvas.style.display='none';
+        divWelcome.style.display='none';
+        divDescription.style.display='none';
+        divSettings.style.display='none';
+        divGameOver.style.display='none';
         divLeaderboard.style.display='inline-block';
-        divLeaderboardButton.className='button buttonClicked buttonList';
-      }
-      divBubbleCanvas.style.display='none';
-      divWelcome.style.display='none';
-      divDescription.style.display='none';
-      divSettings.style.display='none';
-      divGameOver.style.display='none';
-      divWarning1.style.display = 'none';
-      divWarning2.style.display = 'none';
-
-      divDescriptionButton.className = 'button buttonList';
-      divSettingsButton.className = 'button buttonList';
-
-      switch (gameMode) {
-        case "0":
-          toggleLeaderboard("leaderboard0");
-          break;
-        case "1":
-          toggleLeaderboard("leaderboard1");
-          break;
-        case "2":
-          toggleLeaderboard("leaderboard2");
-          break;
-      }
-      break;
-    case "gamOverButton":
-      divStartCanvas.style.display='none';
-      divBubbleCanvas.style.display='none';
-      divWelcome.style.display='none';
-      divDescription.style.display='none';
-      divSettings.style.display='none';
-      divGameOver.style.display='none';
-      divLeaderboard.style.display='inline-block';
-      divWarning1.style.display = 'none';
-      divWarning2.style.display = 'none';
-      switch (gameMode) {
-        case "0":
-          toggleLeaderboard("leaderboard0");
-          break;
-        case "1":
-          toggleLeaderboard("leaderboard1");
-          break;
-        case "2":
-          toggleLeaderboard("leaderboard2");
-          break;
-      }
-      break;
-    default:
-      console.log("something went wrong");
+        divWarning1.style.display = 'none';
+        divWarning2.style.display = 'none';
+        switch (gameMode) {
+          case "0":
+            toggleLeaderboard("leaderboard0");
+            break;
+          case "1":
+            toggleLeaderboard("leaderboard1");
+            break;
+          case "2":
+            toggleLeaderboard("leaderboard2");
+            break;
+        }
+        break;
+      default:
+        console.log("something went wrong");
+    }
   }
 }
 
@@ -322,20 +342,30 @@ function updateDisplay(id, val) {
 }
 
 function start() {
-  displayInsteadOfCanvas('bubbleCanvas');
   if (firstRun == 1) {
     displayInsteadOfCanvas("welcome");
   }
   else {
     if (runTimes !== 0) {
-      if (!pauseButtonBlock) {
-        pause();
+      if (!countdownActive) {
+        if (isRunning) {
+          pause("stop");
+        }
+        else {
+          if (divBubbleCanvas.style.display == 'none') {
+            displayInsteadOfCanvas('bubbleCanvas');
+          }
+          else {
+            pause("play");
+          }
+        }
       }
     }
     else {
       console.log("Spiel gestartet, weil " + runTimes + " Spiele gerade laufen");
       runTimes++;
       isRunning=1;
+      displayInsteadOfCanvas('bubbleCanvas');
       init();
     }
   }
@@ -440,15 +470,15 @@ function countdown() {
       date1=date0 + 30000;
       remainingTime=date1 - date0;
     }
-
+    countdownActive=0;
     timerInterval=setInterval(updateTimer, 1);
     erzeugeBubbleMenge(number);
     mainInterval=setInterval(draw, 26);
     canvas.addEventListener("click", beiKlick);
-    pauseButtonBlock=0;
     clearInterval(countdownInterval);
   }
   else {
+    countdownActive=1;
     context.clearRect(0, 0, width, height);
     context.fillStyle="#ff0000";
     context.font=size+"px Helvetica";
@@ -462,7 +492,6 @@ function countdown() {
       context.fillText("LOS!", 300, 200);
       timer.innerHTML="<strong>LOS!</strong>";
     }
-    pauseButtonBlock=1;
     size++;
     if (milliSeconds<20) {
       size=100;
@@ -580,7 +609,7 @@ function beiKlick() {
     }
   }
   else {
-    pause();
+    pause("play");
   }
 }
 
@@ -701,26 +730,27 @@ function remainingBubbles() {
   return left;
 }
 
-function pause() {
-  if (isRunning) {
+function pause(status) {
+  if (status=="stop") {
+    if (isRunning==1) {
       date2=new Date();
       datePaused=date2.getTime();
+      isRunning=0;
+      console.log("Pausiert");
 
-    clearInterval(mainInterval);
-    clearInterval(timerInterval);
-    timer.innerHTML="<strong>Pausiert</strong>";
+      clearInterval(mainInterval);
+      clearInterval(timerInterval);
+      timer.innerHTML="<strong>Pausiert</strong>";
 
-    context.clearRect(0, 0, width, height);
-    context.fillStyle="#000000";
-    context.font="75px Helvetica";
-    context.textAlign="center";
-    context.textBaseline="middle";
-    context.fillText("Pausiert", 300, 170);
-    context.font = "25px Helvetica";
-    context.fillText("zum Fortsetzen Klicken", 300, 230);
-
-    isRunning=0;
-    console.log("Pausiert");
+      context.clearRect(0, 0, width, height);
+      context.fillStyle="#000000";
+      context.font="75px Helvetica";
+      context.textAlign="center";
+      context.textBaseline="middle";
+      context.fillText("Pausiert", 300, 170);
+      context.font = "25px Helvetica";
+      context.fillText("zum Fortsetzen Klicken", 300, 230);
+    }
   }
   else {
     date3=new Date();
