@@ -14,7 +14,7 @@ var table, row, nameCell, scoreCell, bubbleCell, timeCell, clickCell;
 var runTimes=0;
 var firstRun = 1;
 var pauseButtonBlock=0;
-var isRunning, pauseTime;
+var isRunning, pauseTime, size;
 var gameMode, gameModeSelector;
 name = "player1";
 
@@ -368,6 +368,7 @@ function init() {
   dateC=date0+3700;
   klicks = 0;
 
+  size=100;
   countdownInterval=setInterval(countdown, 1);
 }
 
@@ -428,12 +429,13 @@ function countdown() {
   date0=d.getTime();
   remainingTime=dateC - date0;
   seconds=Math.floor(remainingTime / 1000);
+  milliSeconds=Math.floor(remainingTime % 1000);
 
   document.getElementById("bubbleCanvas").style.backgroundColor = "transparent";
   document.getElementById("start").style.color = "#000000";
   document.getElementById("start").style.backgroundColor = "#d3d3d3";
 
-  if(seconds <= 0){
+  if(seconds < 0){
     if (gameMode === "0") {
       date1=date0 + 30000;
       remainingTime=date1 - date0;
@@ -449,13 +451,22 @@ function countdown() {
   else {
     context.clearRect(0, 0, width, height);
     context.fillStyle="#ff0000";
-    context.font="100px Helvetica";
+    context.font=size+"px Helvetica";
     context.textAlign="center";
     context.textBaseline="middle";
-    context.fillText(seconds, 300, 200);
-
-    timer.innerHTML="<strong>"+seconds+"</strong>";
+    if (seconds>0) {
+      context.fillText(seconds, 300, 200);
+      timer.innerHTML="<strong>"+seconds+"</strong>";
+    }
+    else {
+      context.fillText("LOS!", 300, 200);
+      timer.innerHTML="<strong>LOS!</strong>";
+    }
     pauseButtonBlock=1;
+    size++;
+    if (milliSeconds<20) {
+      size=100;
+    }
   }
 }
 
