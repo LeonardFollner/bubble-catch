@@ -509,13 +509,12 @@ function draw() {
     context.fillStyle=bubbleList[j].col;
     context.fill();
     if (gameMode != 2) {
-      //context.fillStyle="#ffffff";
-      context.fillStyle="#000000";
+      context.fillStyle="#ffffff";
       context.font="20px Helvetica";
       context.textAlign="center";
       context.textBaseline="middle";
       context.fillText(bubbleList[j].val, bubbleList[j].x, bubbleList[j].y);
-      //context.strokeText(bubbleList[j].val, bubbleList[j].x, bubbleList[j].y);
+      context.strokeText(bubbleList[j].val, bubbleList[j].x, bubbleList[j].y);
     }
     context.fillStyle="#000000";
     context.font="20px Helvetica";
@@ -977,7 +976,6 @@ function generateLeaderboard() {
 window.onload=paint;
 
 /*ToDo
-* Barrierefreiheit!
 * fix bubbles anklicken!
 * fix footer margin-top
 * (add sorting algorithm)
