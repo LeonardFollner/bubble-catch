@@ -49,7 +49,8 @@
           <input type="range" name="number" id="number" min="1" max="50" step="1" value="10" onchange="updateDisplay('displayNumber', this.value);"><br>
           Maximale Geschwindigkeit: <input type="number" id="displaySpeed" class="display" value="10" min="1" max="50" step="1" maxlength="2" onchange="updateDisplay('speed', this.value)">
           <input type="range" name="speed" id="speed" min="0" max="50" step="1" value="10" onchange="updateDisplay('displaySpeed', this.value);"><br>
-          Sounds <p class="display grey">(experimentell):</p>
+          Tails: <input type="checkbox" id="tails"></br>
+          Sounds <p class="display grey">(experimentell)</p>:
           <input type="checkbox" id="sound"><br>
           <h3>Wähle einen Spielmodus</h3>
           <select id="gameMode" onchange="toggleGameMode()">
