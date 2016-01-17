@@ -18,12 +18,14 @@ var DistX, DistY, Dist, currentBubble, smaller, comparedBubble;
 var sound, hitSound, wrongSound;
 var tails;
 var name, score, clicked, count, clicks, divLeaderboard;
-var table, row, nameCell, scoreCell, bubbleCell, timeCell, clickCell;
+var table, row, nameCell, scoreCell;
+var x, y, inserted, numberOfRows;
 var runTimes = 0;
 var firstRun = 1;
 var countdownActive = 0;
 var isRunning, pauseTime, size;
 var gameMode, gameModeSelector;
+var score;
 name = "player1";
 
 function paint() {                                                              //Funktion, um in den Canvas am Anfang schön bunt den Titel des Spiels zu zeichnen
@@ -799,47 +801,51 @@ function generateGameOver() {                                                   
   displayInsteadOfCanvas('gameOver');                                           //Anzeigen des Bildschirms "GameOver"
 
   switch (gameMode) {                                                           //für jeden Spielmodus ein anderes Feedback
-    case "0":
-      document.playerInfo0.playerName.value = name;
-      document.getElementById('count0').innerHTML = number;
-      document.getElementById('clicked0').innerHTML = clicked;
-      document.getElementById('points0').innerHTML = currentScore;
-      document.getElementById('clickCounter0').innerHTML = klicks;
+    case "0":                                                                   //Spielmodus "Standard"
+      score = Math.floor(currentScore*speed*clicked*clicked/number/klicks);     //Berechnung des Scores
 
-      if (klicks < clicked) {
-        document.getElementById("0gz1").style.display = "inline-block";
+      document.playerInfo0.playerName.value = name;                             //Einfügen der Informationen aus dem Spiel in die Ausgabe; Name
+      document.getElementById('count0').innerHTML = number;                     //gesamtZahl Bubbles
+      document.getElementById('clicked0').innerHTML = clicked;                  //angeklickte Bubbles
+      document.getElementById('points0').innerHTML = score;                     //erreichte Punktzahl
+      document.getElementById('clickCounter0').innerHTML = klicks;              //benötigte Klicks
+
+      if (klicks < clicked) {                                                   //wenn mehrere Bubbles auf ein Mal angeklickt wurden
+        document.getElementById("0gz1").style.display = "inline-block";         //soll Nachricht 1 angezeigt werden
         document.getElementById("0gz2").style.display = "none";
         document.getElementById("0gz3").style.display = "none";
       }
-      else if (klicks === clicked) {
+      else if (klicks === clicked) {                                            //wenn jede Bubble nur ein Mal angeklickt wurde
           if (klicks === 0 || clicked === 0) {
             document.getElementById("0gz1").style.display = "none";
             document.getElementById("0gz2").style.display = "none";
             document.getElementById("0gz3").style.display = "none";
           }
-          else {
+          else {                                                                //soll Nachricht 2 ausgegeben werden
             document.getElementById("0gz1").style.display = "none";
             document.getElementById("0gz2").style.display = "inline-block";
             document.getElementById("0gz3").style.display = "none";
           }
       }
-      else if (number == clicked) {
+      else if (number == clicked) {                                             //wenn alle Bubbles angeklickt wurden
         console.log("all");
-        document.getElementById("0gz1").style.display = "none";
+        document.getElementById("0gz1").style.display = "none";                 //soll Nachricht 3 angezeigt werden
         document.getElementById("0gz2").style.display = "none";
         document.getElementById("0gz3").style.display = "inline-block";
       }
-      else {
+      else {                                                                    //sonst keine
         document.getElementById("0gz1").style.display = "none";
         document.getElementById("0gz2").style.display = "none";
         document.getElementById("0gz3").style.display = "none";
       }
 
-      document.getElementById("gameOver0").style.display = "inline-block";
+      document.getElementById("gameOver0").style.display = "inline-block";      //Anzeigen des GameOverBildschirms für Spielmodus "Standard"
       document.getElementById("gameOver1").style.display = "none";
       document.getElementById("gameOver2").style.display = "none";
       break;
-    case "1":
+    case "1":                                                                   //Spielmodus "Geordnet", wie oben
+      score = Math.floor(speed*number/klicks*(currentScore-((minutes*60+seconds)/number/number))); //Berechnung des Scores
+
       document.playerInfo1.playerName.value = name;
       if (minutes === 0) {
         document.getElementById('time1').innerHTML = seconds + " Sekunden";
@@ -848,7 +854,7 @@ function generateGameOver() {                                                   
         document.getElementById('time1').innerHTML = minutes + " Minuten und " + seconds + " Sekunden";
       }
       document.getElementById('count1').innerHTML = number;
-      document.getElementById('points1').innerHTML = currentScore;
+      document.getElementById('points1').innerHTML = score;
       document.getElementById('clickCounter1').innerHTML = klicks;
 
       if (number == klicks) {
@@ -862,7 +868,9 @@ function generateGameOver() {                                                   
       document.getElementById("gameOver1").style.display = "inline-block";
       document.getElementById("gameOver2").style.display = "none";
       break;
-    case "2":
+    case "2":                                                                   //Spielmodus "Puzzle", wie oben
+      score = Math.floor(10*number*number/klicks*speed);                        //Berechnung des Scores
+
       document.playerInfo2.playerName.value = name;
       if (minutes === 0) {
         document.getElementById('time2').innerHTML = seconds + " Sekunden";
@@ -872,6 +880,7 @@ function generateGameOver() {                                                   
       }
       document.getElementById('count2').innerHTML = number;
       document.getElementById('clickCounter2').innerHTML = klicks;
+      document.getElementById('points2').innerHTML = score;
 
       if (number == klicks) {
         document.getElementById("2gz1").style.display = "inline-block";
@@ -887,96 +896,75 @@ function generateGameOver() {                                                   
   }
 }
 
-function generateLeaderboardWithoutdisplay() {
+function generateLeaderboardWithoutdisplay() {                                  //Funktion, die eine Bestenliste erstellt
   switch (gameMode) {
     case "0":
-      name = document.playerInfo0.playerName.value;
       table = document.getElementById("tableLeaderboard0");
-
-      row = table.insertRow(-1);
-      nameCell = row.insertCell(0);
-      scoreCell = row.insertCell(1);
-      bubbleCell = row.insertCell(2);
-      clickCell = row.insertCell(3);
-
-      bubbleCell.innerHTML = clicked + " / " + number;
-      scoreCell.innerHTML = currentScore;
-      clickCell.innerHTML = klicks;
+      sort(table);
       break;
     case "1":
-      name = document.playerInfo1.playerName.value;
       table = document.getElementById("tableLeaderboard1");
-
-      row = table.insertRow(-1);
-      nameCell = row.insertCell(0);
-      scoreCell = row.insertCell(1);
-      bubbleCell = row.insertCell(2);
-      timeCell = row.insertCell(3);
-
-      bubbleCell.innerHTML = number;
-      scoreCell.innerHTML = currentScore;
-      if (minutes === 0) {
-        if (seconds < 10) {
-          timeCell.innerHTML = "00:0" + seconds;
-        }
-        else {
-          timeCell.innerHTML = "00:" + seconds;
-        }
-      }
-      else if (minutes < 10) {
-        if (seconds < 10) {
-          timeCell.innerHTML = "0" + minutes + ":0" + seconds;
-        }
-        else {
-          timeCell.innerHTML = "0" + minutes + ":" + seconds;
-        }
-      }
-      else {
-        if (seconds < 10) {
-          timeCell.innerHTML = minutes + ":0" + seconds;
-        }
-        else {
-          timeCell.innerHTML = minutes + ":" + seconds;
-        }
-      }
+      sort(table);
       break;
     case "2":
-      name = document.playerInfo2.playerName.value;
       table = document.getElementById("tableLeaderboard2");
-
-      row = table.insertRow(-1);
-      nameCell = row.insertCell(0);
-      bubbleCell = row.insertCell(1);
-      timeCell = row.insertCell(2);
-
-      bubbleCell.innerHTML = number;
-      if (minutes === 0) {
-        if (seconds < 10) {
-          timeCell.innerHTML = "00:0" + seconds;
-        }
-        else {
-          timeCell.innerHTML = "00:" + seconds;
-        }
-      }
-      else if (minutes < 10) {
-        if (seconds < 10) {
-          timeCell.innerHTML = "0" + minutes + ":0" + seconds;
-        }
-        else {
-          timeCell.innerHTML = "0" + minutes + ":" + seconds;
-        }
-      }
-      else {
-        if (seconds < 10) {
-          timeCell.innerHTML = minutes + ":0" + seconds;
-        }
-        else {
-          timeCell.innerHTML = minutes + ":" + seconds;
-        }
-      }
+      sort(table);
       break;
   }
+  scoreCell.innerHTML = score;
+  name = document.playerInfo0.playerName.value;
   nameCell.innerHTML = name;
+}
+
+function sort(leaderboard) {
+  numberOfRows = leaderboard.children[0].children.length;
+
+  if (numberOfRows === 1) {
+    row = table.insertRow(1);
+    placeCell = row.insertCell(0);
+    nameCell = row.insertCell(1);
+    scoreCell = row.insertCell(2);
+    placeCell.innerHTML = 1;
+  }
+  else if (numberOfRows === 2) {
+    if (score > leaderboard.children[0].children[1].children[2].innerHTML) {
+      row = table.insertRow(1);
+      placeCell = row.insertCell(0);
+      placeCell.innerHTML = 1;
+      leaderboard.children[0].children[2].children[0].innerHTML = 2;
+    }
+    else {
+      row = table.insertRow(2);
+      placeCell = row.insertCell(0);
+      placeCell.innerHTML = 2;
+    }
+    nameCell = row.insertCell(1);
+    scoreCell = row.insertCell(2);
+  }
+  else {
+    inserted=0;
+    x=numberOfRows - 1;
+    while (!inserted) {
+      if (score <= leaderboard.children[0].children[x].children[2].innerHTML) {
+        row = table.insertRow(x+1);
+        placeCell = row.insertCell(0);
+        nameCell = row.insertCell(1);
+        scoreCell = row.insertCell(2);
+        break;
+      }
+      x--;
+      if (x==-1) {
+        row = table.insertRow(1);
+        placeCell = row.insertCell(0);
+        nameCell = row.insertCell(1);
+        scoreCell = row.insertCell(2);
+        break;
+      }
+    }
+    for (y=1; y<=numberOfRows; y++) {
+      leaderboard.children[0].children[y].children[0].innerHTML = y;
+    }
+  }
 }
 
 function generateLeaderboard() {

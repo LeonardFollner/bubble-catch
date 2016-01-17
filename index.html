@@ -47,9 +47,9 @@
         <form name="input" onsubmit="return false">
           Anzahl Bubbles: <input type="number" id="displayNumber" class="display" value="10" min="1" max="50" step="1" maxlength="2" onchange="updateDisplay('number', this.value)">
           <input type="range" name="number" id="number" min="1" max="50" step="1" value="10" onchange="updateDisplay('displayNumber', this.value);"><br>
-          Maximale Geschwindigkeit: <input type="number" id="displaySpeed" class="display" value="10" min="1" max="50" step="1" maxlength="2" onchange="updateDisplay('speed', this.value)">
+          Maximale Geschwindigkeit: <input type="number" id="displaySpeed" class="display" value="10" min="0" max="50" step="1" maxlength="2" onchange="updateDisplay('speed', this.value)">
           <input type="range" name="speed" id="speed" min="0" max="50" step="1" value="10" onchange="updateDisplay('displaySpeed', this.value);"><br>
-          Tails: <input type="checkbox" id="tails"></br>
+          Tails: <input type="checkbox" id="tails"><br>
           Sounds <p class="display grey">(experimentell)</p>:
           <input type="checkbox" id="sound"><br>
           <h3>Wähle einen Spielmodus</h3>
@@ -90,7 +90,7 @@
         </div>
         <div id="gameOver2" class="noDisplay">
           <p class="display">Du hast im Puzzle-Modus <div id="time2" class="display"></div> für <div id="count2" class="display"></div> Bubbles gebraucht.</p>
-          <p class="display">Du hast <div id="clickCounter2" class="display"></div> Klicks gemacht.</p>
+          <p class="display">Du hast <div id="clickCounter2" class="display"></div> Klicks gemacht. Das bringt dir <div id="points2" class="display"></div> Punkte.</p>
           <form name="playerInfo2" autocomplete="off" onsubmit="return false">
             Gib deinen Namen ein:
             <input type="text" name="playerName" value="player1"/>
@@ -106,27 +106,25 @@
           <li class="button" id ="leaderboard1" onclick="toggleLeaderboard(this.id)">Geordnet</li>
           <li class="button" id ="leaderboard2" onclick="toggleLeaderboard(this.id)">Puzzle</li>
         </ul>
-        <table id="tableLeaderboard0" class="noDisplay">
+        <table id="tableLeaderboard0">
           <tr>
+            <th>Platz</th>
             <th>Spieler</th>
             <th>Punkte</th>
-            <th>Bubbles</th>
-            <th>Klicks</th>
           </tr>
         </table>
         <table id="tableLeaderboard1" class="noDisplay">
           <tr>
+            <th>Platz</th>
             <th>Spieler</th>
             <th>Punkte</th>
-            <th>Bubbles</th>
-            <th>Zeit</th>
           </tr>
         </table>
         <table id="tableLeaderboard2" class="noDisplay">
           <tr>
+            <th>Platz</th>
             <th>Spieler</th>
-            <th>Bubbles</th>
-            <th>Zeit</th>
+            <th>Punkte</th>
           </tr>
         </table>
 
