@@ -846,139 +846,138 @@ function generateGameOver() {                                                   
     case "1":                                                                   //Spielmodus "Geordnet", wie oben
       score = Math.floor(speed*number/klicks*(currentScore-((minutes*60+seconds)/number/number))); //Berechnung des Scores
 
-      document.playerInfo1.playerName.value = name;
+      document.playerInfo1.playerName.value = name;                             //Einfügen der Informationen aus dem Spiel in die Ausgabe; Name
       if (minutes === 0) {
-        document.getElementById('time1').innerHTML = seconds + " Sekunden";
+        document.getElementById('time1').innerHTML = seconds + " Sekunden";     //benötigte Zeit
       }
       else {
-        document.getElementById('time1').innerHTML = minutes + " Minuten und " + seconds + " Sekunden";
+        document.getElementById('time1').innerHTML = minutes + " Minuten und " + seconds + " Sekunden"; //benötigte Zeit, wenn mehr als 1 Minute
       }
-      document.getElementById('count1').innerHTML = number;
-      document.getElementById('points1').innerHTML = score;
-      document.getElementById('clickCounter1').innerHTML = klicks;
+      document.getElementById('count1').innerHTML = number;                     //Anzahl Bubbles
+      document.getElementById('points1').innerHTML = score;                     //erreichte Punktzahl
+      document.getElementById('clickCounter1').innerHTML = klicks;              //benötigte Klicks
 
-      if (number == klicks) {
-        document.getElementById("1gz1").style.display = "inline-block";
+      if (number == klicks) {                                                   //wenn für jede Bubble genau ein Mal geklickt wurde
+        document.getElementById("1gz1").style.display = "inline-block";         //soll die Nachricht 1 angezeigt werden
       }
       else {
-        document.getElementById("1gz1").style.display = "none";
+        document.getElementById("1gz1").style.display = "none";                 //ansonsten soll sie nicht angezeigt werden
       }
 
-      document.getElementById("gameOver0").style.display = "none";
-      document.getElementById("gameOver1").style.display = "inline-block";
+      document.getElementById("gameOver0").style.display = "none";              //Ausblenden der anderen GameOver-Bilschirme
+      document.getElementById("gameOver1").style.display = "inline-block";      //Anzeigen des richtigen GameOver-Bildschirms
       document.getElementById("gameOver2").style.display = "none";
       break;
     case "2":                                                                   //Spielmodus "Puzzle", wie oben
       score = Math.floor(10*number*number/klicks*speed);                        //Berechnung des Scores
 
-      document.playerInfo2.playerName.value = name;
+      document.playerInfo2.playerName.value = name;                             //Einfügen der Informationen aus dem Spiel in die Ausgabe; Name
       if (minutes === 0) {
-        document.getElementById('time2').innerHTML = seconds + " Sekunden";
+        document.getElementById('time2').innerHTML = seconds + " Sekunden";     //benötigte Zeit
       }
       else {
-        document.getElementById('time2').innerHTML = minutes + " Minuten und " + seconds + " Sekunden";
+        document.getElementById('time2').innerHTML = minutes + " Minuten und " + seconds + " Sekunden"; //benötigte Zeit für mehr als 60 Sekunden
       }
-      document.getElementById('count2').innerHTML = number;
-      document.getElementById('clickCounter2').innerHTML = klicks;
-      document.getElementById('points2').innerHTML = score;
+      document.getElementById('count2').innerHTML = number;                     //Anzahl Bubbles
+      document.getElementById('clickCounter2').innerHTML = klicks;              //benötigte Klicks
+      document.getElementById('points2').innerHTML = score;                     //erreichte Punktzahl
 
-      if (number == klicks) {
-        document.getElementById("2gz1").style.display = "inline-block";
+      if (number == klicks) {                                                   //wenn für jede Bubble nur ein Mal geklickt wurde
+        document.getElementById("2gz1").style.display = "inline-block";         //soll die Nachricht 1 angezeigt werden
       }
       else {
-        document.getElementById("2gz1").style.display = "none";
+        document.getElementById("2gz1").style.display = "none";                 //sonst nicht
       }
 
-      document.getElementById("gameOver0").style.display = "none";
+      document.getElementById("gameOver0").style.display = "none";              //Ausblenden der anderen GameOver-Bilschirme
       document.getElementById("gameOver1").style.display = "none";
-      document.getElementById("gameOver2").style.display = "inline-block";
+      document.getElementById("gameOver2").style.display = "inline-block";      //Anzeigen des richtigen GameOver-Bildschirms
       break;
   }
 }
 
-function generateLeaderboardWithoutdisplay() {                                  //Funktion, die eine Bestenliste erstellt
-  switch (gameMode) {
-    case "0":
-      table = document.getElementById("tableLeaderboard0");
-      sort(table);
+function generateLeaderboardWithoutdisplay() {                                  //Funktion, die eine Bestenliste erstellt, diese jedoch nicht anzeigt (zB, wenn man im BIldschirm "GameOver" auf die Einstellungen klickt oder ein neues Spiel startet)
+  switch (gameMode) {                                                           //für jeden Spielmodus muss eine eigene Bestenliste erzeugt werden
+    case "0":                                                                   //für den Spielmodus "Standard"
+      table = document.getElementById("tableLeaderboard0");                     //Deklaration der entsprechenden Bestenliste
+      sort(table);                                                              //Übergabe der Bestenliste an die Sortier- und Einfügefunktion
       break;
-    case "1":
-      table = document.getElementById("tableLeaderboard1");
-      sort(table);
+    case "1":                                                                   //für den Spielmodus "Geordnet"
+      table = document.getElementById("tableLeaderboard1");                     //Deklaration der entsprechenden Bestenliste
+      sort(table);                                                              //Übergabe der Bestenliste an die Sortier- und Einfügefunktion
       break;
-    case "2":
-      table = document.getElementById("tableLeaderboard2");
-      sort(table);
+    case "2":                                                                   //für den Spielmodus "Puzzle"
+      table = document.getElementById("tableLeaderboard2");                     //Deklaration der entsprechenden Bestenliste
+      sort(table);                                                              //Übergabe der Bestenliste an die Sortier- und Einfügefunktion
       break;
   }
-  scoreCell.innerHTML = score;
-  name = document.playerInfo0.playerName.value;
-  nameCell.innerHTML = name;
+  scoreCell.innerHTML = score;                                                  //Einfügen der Punkte in die von der Funktion sort() erstellte Punkte-Zelle
+  name = document.playerInfo0.playerName.value;                                 //Abrufen des eingegeben Namens
+  nameCell.innerHTML = name;                                                    //Einfügen des Namens in die von der Funktion sort() erstellte Namens-Zelle
 }
 
-function sort(leaderboard) {
-  numberOfRows = leaderboard.children[0].children.length;
+function sort(leaderboard) {                                                    //Funktion, die die erreichten Werte in die Bestenlisten einsortiert; Bubblesort :D
+  numberOfRows = leaderboard.children[0].children.length;                       //Abfrage der Einträge, die schon in der jeweiligen Bestenliste sind (-1 für die Titelzeile)
 
-  if (numberOfRows === 1) {
-    row = table.insertRow(1);
-    placeCell = row.insertCell(0);
-    nameCell = row.insertCell(1);
-    scoreCell = row.insertCell(2);
-    placeCell.innerHTML = 1;
+  if (numberOfRows === 1) {                                                     //wenn keine Einträge in der Bestenliste sind (abgesehen von der Titelzeile)
+    row = table.insertRow(1);                                                   //soll in der zweiten Zeile eine neue Zeile eingefügt werden
+    placeCell = row.insertCell(0);                                              //die erste Zelle dieser neuen Zeile ist für den Platz vorgesehen
+    nameCell = row.insertCell(1);                                               //die zweite Zelle dieser neuen Zeile ist für den Namen des Spielers vorgesehen
+    scoreCell = row.insertCell(2);                                              //die dritte Zelle ist für die erreichte Punktzahl
+    placeCell.innerHTML = 1;                                                    //da das der erste und einzige Eintrag ist, wird der Platz auf 1 gesetzt
   }
-  else if (numberOfRows === 2) {
-    if (score > leaderboard.children[0].children[1].children[2].innerHTML) {
-      row = table.insertRow(1);
-      placeCell = row.insertCell(0);
-      placeCell.innerHTML = 1;
-      leaderboard.children[0].children[2].children[0].innerHTML = 2;
+  else if (numberOfRows === 2) {                                                //wenn schon ein Eintrag in der Bestenliste ist
+    if (score > leaderboard.children[0].children[1].children[2].innerHTML) {    //wenn die aktuelle Punktzahl größer ist als die des bereits eingetragenen Ergebnisses
+      row = table.insertRow(1);                                                 //wird der Eintrag nach der Titelzeile eingefügt
+      placeCell = row.insertCell(0);                                            //Erzeugen der Platzzelle
+      placeCell.innerHTML = 1;                                                  //Platz auf 1 setzen
+      leaderboard.children[0].children[2].children[0].innerHTML = 2;            //Platz des alten Eintrags auf 2 ändern
     }
-    else {
-      row = table.insertRow(2);
-      placeCell = row.insertCell(0);
-      placeCell.innerHTML = 2;
+    else {                                                                      //wenn die aktuelle Punktzahl kleiner als di schon eingetragene ist
+      row = table.insertRow(2);                                                 //einfügen der neuen Zelle am Ende der Tabelle
+      placeCell = row.insertCell(0);                                            //Erzeugen der Platzzelle
+      placeCell.innerHTML = 2;                                                  //Platze auf 2 setzen
     }
-    nameCell = row.insertCell(1);
-    scoreCell = row.insertCell(2);
+    nameCell = row.insertCell(1);                                               //Erzeugen der Namens-Zelle
+    scoreCell = row.insertCell(2);                                              //Erzeugen der Punkte-Zelle
   }
-  else {
-    inserted=0;
-    x=numberOfRows - 1;
-    while (!inserted) {
-      if (score <= leaderboard.children[0].children[x].children[2].innerHTML) {
-        row = table.insertRow(x+1);
-        placeCell = row.insertCell(0);
-        nameCell = row.insertCell(1);
-        scoreCell = row.insertCell(2);
-        break;
+  else {                                                                        //wenn mindestens 2 Einträge in der Bestenliste sind
+    x=numberOfRows - 1;                                                         //Anzahl Einträge = Zeilenzahl - 1 (für Titelzeile)
+    while (1) {                                                                 //endlose Schleife zum Einfügen des Ergebnisses; die Abbruchbedinung hat dummerweise nicht funktioniert, also löse ich das über ein 'break;'
+      if (score <= leaderboard.children[0].children[x].children[2].innerHTML) { //wenn das neue Ergebnis kleiner ist, als der letze Eintrag
+        row = table.insertRow(x+1);                                             //Einfügen der neuen Zeile am Tabellenende
+        placeCell = row.insertCell(0);                                          //Erzeugen der Platz-
+        nameCell = row.insertCell(1);                                           //Namens-
+        scoreCell = row.insertCell(2);                                          //und Punkte-Zellen
+        break;                                                                  //Unterbrechen der Schleife, da der neue Eintrag eingefügt wurde
       }
-      x--;
-      if (x==-1) {
-        row = table.insertRow(1);
-        placeCell = row.insertCell(0);
-        nameCell = row.insertCell(1);
-        scoreCell = row.insertCell(2);
-        break;
+      x--;                                                                      //Ändern der zu betrachtenden Zeile, um 1 nach oben
+      if (x==-1) {                                                              //wenn die nächste zu betrachtende Zeile wieder die letzte Zeile ist
+        row = table.insertRow(1);                                               //muss es der größte erreichte Punktwert sein, dementsprechend wird die Zeile an erster Stelle nach der Titelzeile eingefügt
+        placeCell = row.insertCell(0);                                          //Erzeugen der Platz-
+        nameCell = row.insertCell(1);                                           //Namens-
+        scoreCell = row.insertCell(2);                                          //und Punkte-Zellen
+        break;                                                                  //Unterbrechen der Schleife, da der neue Eintrag eingefügt wurde
       }
     }
-    for (y=1; y<=numberOfRows; y++) {
-      leaderboard.children[0].children[y].children[0].innerHTML = y;
+    for (y=1; y<=numberOfRows; y++) {                                           //neues Nummerieren der Plätze nach Einfügen des neuen Eintrags
+      leaderboard.children[0].children[y].children[0].innerHTML = y;            //der Platz jeder Zeile entspricht der Zeilennummer in der Tablle
     }
   }
 }
 
-function generateLeaderboard() {
-  generateLeaderboardWithoutdisplay();
-  displayInsteadOfCanvas('gameOverButton');
+function generateLeaderboard() {                                                //Funktion, die eine Bestenlist erstellt und diese auch anzeigt
+  generateLeaderboardWithoutdisplay();                                          //Aufrufen der Funktion, die die Bestenliste erzeugt
+  displayInsteadOfCanvas('gameOverButton');                                     //Anzeigen der Bestenliste
 }
 
-window.onload=paint;
+window.onload=paint;                                                            //Zeichnen des TitelCanvas, sobald das Fenster geladen ist
 
-/*ToDo
-* fix bubbles anklicken!
-* fix footer margin-top
-* (add sorting algorithm)
-* clean up code
-* rename dates
-* deutsch ODER englisch
-*/
+/* ToDo
+ * fix bubbles anklicken!
+ * fix footer margin-top
+ * (add sorting algorithm)
+ * clean up code
+ * rename dates
+ * deutsch ODER englisch
+ */
